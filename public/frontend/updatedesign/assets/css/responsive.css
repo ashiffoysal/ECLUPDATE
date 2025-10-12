@@ -1,0 +1,1577 @@
+@media all and (max-width: 1400px){
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+	max-width: 100%;
+    width: 95%;
+}
+.navbar {
+    gap: 20px;
+}
+.high_standard_single {
+    max-width: 300px;
+}
+.ucas_exam_center_london_item {
+	padding: 35px 22px 22px 22px;
+	max-width: 300px;
+	text-align: center;
+}
+.ucas_exam_center_london_item h3 {
+	font-size: 25px;
+}
+.ucas_exam_center_london_item p {
+	margin-top: 16px;
+}
+.faqs_contents .panel-title {
+	padding-right: 55px;
+}
+.our_pricing_contents {
+	gap: 20px;
+}
+.ucas_exam_center_london_contents {
+	gap: 20px;
+}
+.dashboard_left_logout {
+    margin-top: 125px;
+}
+
+}
+
+
+
+@media all and (max-width: 1199px){
+.header_main{
+	overflow-x: hidden;
+	height: auto;
+}
+.header_inherit{
+	position: initial;
+	z-index: 6;
+	margin-bottom: -130px;
+}
+.banner_main {
+	padding-top: 121px;
+}
+.ucas_application_main {
+	padding-top: 150px;
+}
+.sub_menu_main {
+	padding-top: 135px;
+}
+.menu {
+	display: none;
+}
+.header_top_call a {
+	display: none;
+}
+.menu_icon{
+	display: block;
+}
+.logo {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+body {
+	position: relative;
+	z-index: 2;
+}
+.dropdown_menu_main {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 320px;
+	height: 100vh;
+	background: #FFF;
+	z-index: 5;
+	transform: translateX(100%);
+	transition: 0.5s;
+}
+.dropdown_menu_main_show{
+	transform: translateX(0%);
+}
+/*.header_fixed{
+	overflow: hidden;
+}
+.header_fixed::before{
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 3;
+}*/
+.header_fixed {
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.navbar {
+	gap: 0px;
+	flex-direction: column;
+}
+.navbar li {
+	width: 100%;
+}
+.navbar li a {
+	font-size: 14px;
+	font-weight: 500;
+	border-top: 1px solid rgba(0,0,0,0.10);
+	width: 100%;
+	padding: 10px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.navbar li a:hover::before, .navbar .active::before {
+	display: none;
+}
+.navbar li a i{
+	display: block;
+}
+.menu_icon a img{
+	width: 30px;
+	height: auto;
+}
+.dropdown_menu_header{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+}
+.dropdown_menu_header a img{
+	width: 150px;
+	height: auto;
+}
+.dropdown_menu_header a i{
+	font-size: 25px;
+	color: #000;
+}
+.dropdown_menu_mobile_design{
+	display: block;
+}
+.dropdown_menu {
+	left: 0;
+	width: 100%;
+	visibility: visible;
+	opacity: 1;
+	border: none;
+	position: inherit;
+	box-shadow: none;
+	display: none;
+}
+.dropdown_menu li a {
+	font-size: 14px !important;
+	border-bottom: none;
+}
+.dropdown_menu {
+    display: none; /* Default hidden */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+}
+.header_main {
+	padding: 25px 0px;
+}
+.header_main.fixedheader {
+	padding: 25px 0px 0px 0px;
+}
+.banner {
+	padding: 0px 0px 40px 40px;
+	flex-direction: column;
+	gap: 40px;
+}
+.banner_left {
+	order: 2;
+}
+.banner_right_img {
+	margin-bottom: 0px;
+}
+/*.banner_left {
+	order: 2;
+}*/
+.exam_board_items ul li a img {
+	width: 110px;
+	height: auto;
+}
+.contact_us {
+	gap: 30px;
+	flex-direction: column;
+}
+.high_standard_single {
+	max-width: 100%;
+	flex: 0 0 48.9%;
+}
+.panel.panel-default.custom_accordion_single h4 {
+	padding-right: 65px;
+}
+.footer_contents {
+	gap: 20px;
+}
+.footer_contents_single_mail input {
+	width: 350px;
+}
+.a_level_exams_practical_contents {
+	max-width: 410px;
+}
+.a_lavel_exam_bodies_calender {
+	flex-direction: column;
+	align-items: center;
+}
+.a_lavel_exam_bodies_calender_img {
+	max-width: 100%;
+	border-bottom: 1px solid #247E3D4D;
+	padding: 40px 10px 40px 10px;
+	border-right: 0;
+}
+.a_lavel_exam_bodies_calender_contents {
+	text-align: center;
+}
+.alebcc_btns {
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.a_level_exams_right {
+	max-width: 630px;
+}
+.a_lavel_endorsement_contents {
+	gap: 20px;
+}
+.ucas_exam_center_london_contents {
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 30px;
+}
+.important_deadlines_single_img {
+	max-width: 100% !important;
+}
+.ucas_application_process_single_arrow {
+	display: none;
+}
+.ucas_application_process_contents {
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 60px;
+}
+.our_pricing_contents {
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 40px;
+}
+.exam_fees_popup {
+	justify-content: center;
+}
+.exam_fees_popup_single {
+	flex: 0 0 47%;
+}
+.table_design_default {
+	overflow-x: scroll;
+}
+.table_design_default table {
+	width: 1000px;
+}
+.exam_fees_modal_table_title {
+	gap: 25px;
+}
+.non_exam_right {
+	order: 2;
+}
+.single_form_column3 {
+	flex: 0 0 calc((100% / 2) - 25px);
+}
+.single_form_step2_checks .single_form_step2_check {
+	flex: 0 0 48%;
+}
+.single_form_parent textarea {
+	height: 170px;
+}
+.step4_exam_fees_payments {
+	max-width: 600px;
+}
+.payment_tabs_contents_main {
+	flex-direction: column;
+	gap: 30px;
+}
+.payment_tabs_table .table_design_default table {
+	width: 100% !important;
+}
+.login_page {
+	flex-direction: column;
+	gap: 50px;
+}
+.login_page_carousel {
+	margin-top: 60px;
+}
+.login_page_left {
+	order: 2;
+}
+.login_page_main {
+	padding: 140px 0px 40px 0px;
+}
+.coursework_fees_top_left {
+	max-width: 440px;
+	padding: 0px 20px;
+}
+.content_structure_single .a_lavel_exam_bodies_calender_img {
+	border-bottom: none;
+}
+.explore_courses_single ul {
+	gap: 15px;
+}
+.blog_details_right_contents {
+	padding: 25px 20px 40px 20px;
+}
+.bdrs_tags li a {
+	font-size: 12px;
+}
+
+.dashboard_design {
+	flex-direction: column;
+}
+.dashboard_main {
+	padding: 130px 0px 40px 0px;
+}
+.dashboard_left_menu_bar {
+	display: none;
+}
+.dashboard_left_header {
+	justify-content: center;
+}
+.dashboard_design {
+	position: relative;
+}
+.dashboard_design_overley::before {
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+	z-index: 3;
+	border-radius: 22px;
+	transition: 0.2s;
+}
+.dashboard_left_main {
+	max-width: 280px;
+	position: absolute;
+	background: #FFF;
+	z-index: 4;
+	top: 5px;
+	right: 4px;
+	border-radius: 22px;
+	display: none;
+}
+.dashboard_mobile_menu_close{
+	display: block;
+}
+.dashboard_mobile_menu_close i{
+	font-size: 25px;
+	color: #0B0D1E;
+}
+.dashboard_logo{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	gap: 25px;
+}
+.dashboard_mobile_menu_bar{
+	display: block !important;
+}
+.dashboard_mobile_menu_bar img{
+	border-radius: 0 !important;
+}
+.dashboard_right_header_profile {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+.dashboard_right_book_exam_contents .high_standard_single {
+	flex: 0 0 31%;
+}
+.dashboard_logo a img {
+	margin-left: 0px;
+}
+
+}
+
+
+
+@media all and (max-width: 991px){
+.exam_center_london_contents {
+	flex-direction: column;
+}
+.high_standard_single {
+	flex: 0 0 48.4%;
+}
+.faqs_contents {
+	flex-direction: column;
+}
+.faqs_contents .panel.panel-default {
+	margin-top: 20px;
+}
+.contact_us_right {
+	max-width: 630px;
+	width: 100%;
+}
+.contact_us {
+	padding: 20px 20px 20px 20px;
+}
+.footer_contents {
+	flex-wrap: wrap;
+	gap: 35px;
+}
+.footer_contents_single {
+	flex: 0 0 47%;
+}
+.footer_contents_single_mail input {
+	width: 100%;
+}
+.sub_menu ul li {
+	font-size: 13px;
+}
+.sub_menu ul li a {
+	font-size: 15px;
+}
+.alebcc_btns {
+	gap: 10px;
+}
+.a_lavel_exam_bodies_calender_img img {
+	width: 130px;
+}
+.a_level_exams_practical {
+	align-items: center;
+	flex-direction: column;
+	gap: 80px;
+}
+.a_lavel_exam_booking {
+	padding: 50px 40px;
+}
+.a_lavel_endorsement_contents {
+	gap: 30px;
+	flex-direction: column;
+}
+.a_lavel_endorsement_fees {
+	padding: 55px 60px 45px 60px;
+	margin-top: 60px;
+}
+.exam_board_items ul li a img {
+	width: 110px !important;
+}
+.exam_board_items ul {
+	margin-top: 30px;
+}
+.exam_fees_modal_table_title {
+	gap: 25px;
+	flex-wrap: wrap;
+}
+.modal-dialog {
+	max-width: 90%;
+	margin: auto;
+}
+.non_exam_assesment_right {
+	order: 2;
+}
+.single_form_step3 {
+	flex: 0 0 calc((100% / 2) - 10px);
+}
+.single_form_parent {
+	margin-top: 30px;
+	gap: 20px;
+}
+.single_form_column5 {
+	flex: 0 0 calc((100% / 3) - 20px);
+}
+.single_form_parent_step2 {
+	justify-content: flex-start;
+}
+.single_form_column2 {
+	flex: 0 0 calc((100%) - 0px);
+}
+.form_step2_title p {
+	display: inline-block;
+	text-align: center;
+}
+.blogs_content_single {
+	flex: 0 0 48%;
+}
+.course_overview_contents {
+	justify-content: center;
+	gap: 30px;
+}
+.content_structure_contents {
+	justify-content: center;
+}
+.course_structure_contents {
+	flex-wrap: wrap;
+}
+.course_structure_contents::before,.course_structure_contents::after,.course_structure_contents_border,
+.course_structure_single::before,.course_structure_single::after {
+	display: none;
+}
+.course_structure_contents {
+	margin-top: 0px;
+	padding-top: 50px;
+	justify-content: center;
+	gap: 15px;
+}
+.explore_courses_contents {
+	justify-content: center;
+	margin-top: 10px;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+.explore_courses_single {
+	margin-top: 40px;
+}
+
+.blog_details {
+	flex-direction: column;
+	gap: 50px;
+}
+.bdrs_tags li a {
+	font-size: 16px;
+}
+.dashboard_right_counting {
+	flex-wrap: wrap;
+	gap: 20px;
+}
+.dashboard_counting_single {
+	flex: 0 0 31%;
+}
+.dashboard_right_book_exam_contents .high_standard_single {
+	flex: 0 0 40%;
+}
+.ebdc_basic_information_single {
+	gap: 20px;
+	padding: 10px 10px 10px 28px;
+	flex-direction: column;
+}
+.ebdc_bis_active {
+	background: transparent;
+	border: none;
+	border-radius: 0px;
+	margin-bottom: 0px;
+}
+
+}
+
+
+
+@media all and (max-width: 767px){
+h1 {
+	font-size: 40px;
+}
+.banner_left b, .section_title b {
+	padding: 10px 20px;
+	font-size: 14px;
+}
+.banner {
+	padding: 0px 0px 40px 30px;
+	gap: 40px;
+}
+.banner_right_content1_left span img {
+	width: 45px;
+}
+h2 {
+	font-size: 28px;
+}
+.banner_right_content1_left_text p {
+	margin-top: 3px;
+	font-size: 15px;
+}
+.banner_right_content1 {
+	padding: 14px 19px;
+	border-radius: 15px;
+	gap: 40px;
+}
+.banner_right_content1_left {
+	gap: 15px;
+}
+.banner_right_content1_left_text2::before {
+	left: -14px;
+}
+.banner_right_img_pos img {
+	width: 115px;
+}
+.banner_right_img_pos {
+	position: absolute;
+	top: 27%;
+	left: -5%;
+}
+.banner_right_content2 {
+	left: -20px;
+}
+.banner_right_border img {
+	width: 205px;
+}
+.exam_board_items ul {
+	flex-wrap: wrap;
+	gap: 25px;
+}
+.exam_board_items ul li {
+	flex: 0 0 22%;
+}
+.exam_center_london_title h2 {
+	font-size: 35px;
+	margin: 20px 0px 18px 0px;
+}
+.section_title p {
+	font-size: 16px;
+}
+.contact_a2 {
+	right: -50px;
+}
+.contact_a5 {
+	margin-left: -60px;
+}
+.contact_us_left {
+	padding: 50px 20px;
+}
+.contact_us_right_contents ul li {
+	font-size: 18px;
+}
+.high_standard_single {
+	flex: 0 0 100%;
+}
+.get_in_touch_right_items ul {
+	width: 400px;
+	height: 365px;
+}
+.footer_contents_single {
+	flex: 0 0 46%;
+}
+.footer_copyright {
+	margin-top: 50px;
+	flex-direction: column;
+	gap: 10px;
+}
+.a_lavel_endorsement_fees {
+	padding: 45px 40px 40px 40px;
+}
+.exam_fees_popup_single {
+	flex: 0 0 100%;
+}
+.exam_fees_modal_table_title {
+	gap: 15px;
+}
+.single_form_step3 {
+	flex: 0 0 calc((100%) - 0px);
+}
+.sisingle_form_column3 {
+	flex: 0 0 calc((100%) - 0px);
+}
+.a_level_exam_booking_form {
+	padding: 30px 20px;
+	border-radius: 15px;
+	margin-top: 40px;
+}
+.step .icon svg {
+	width: 30px;
+	height: auto;
+}
+.step .icon {
+	width: 60px;
+	height: 60px;
+	font-size: 20px;
+}
+.step p {
+	margin-top: 8px;
+	font-size: 15px;
+}
+.step.active p {
+	font-size: 15px;
+}
+.form_file_upload input[type="file"] + label {
+	margin-top: 5px;
+}
+.single_form_parent {
+	margin-top: 30px;
+	gap: 30px;
+}
+.form_single_step_btns {
+	margin-top: 60px;
+}
+.a_level_exam_booking_header_btns {
+	gap: 15px;
+	flex-direction: column;
+}
+.single_form_column5_close {
+	right: -10px;
+}
+.single_form_column3 {
+	flex: 0 0 calc((100%) - 0px);
+}
+.payment_tabs_table th:first-child, .payment_tabs_table td:first-child {
+	padding: 13px 10px 13px 25px;
+}
+.payment_tabs_table th:last-child, .payment_tabs_table td:last-child {
+	padding: 10px 25px 10px 10px;
+}
+.payment_page_tabs_menu .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	width: 250px;
+	height: 39px;
+	font-size: 14px;
+}
+.payment_page_tabs_menu .nav-pills .nav-link {
+	width: 250px;
+	height: 39px;
+	font-size: 14px;
+}
+.payment_page_tabs_menu #pills-profile-tab {
+	margin-left: -20px;
+}
+.blogs_content_single {
+	flex: 0 0 75%;
+}
+.blogs_contents {
+	justify-content: center;
+}
+.login_page_carousel {
+	max-width: 100%;
+	width: 100%;
+}
+.coursework_fees_top {
+	flex-direction: column;
+	align-items: center;
+	gap: 50px;
+}
+.coursework_fees_bottom ul {
+	gap: 5px;
+	flex-direction: column;
+}
+.course_overview_contents {
+	gap: 40px;
+	flex-direction: column;
+	align-items: center;
+}
+.coursework_fees_courses {
+	padding: 45px 15px 50px 15px;
+}
+.why_choose_course_left .alevel_exams2 {
+	top: 50px !important;
+}
+.why_choose_course_left .alevel_exams4 {
+	bottom: 35px;
+}
+
+.blog_details_left_contents_main {
+	border-radius: 10px;
+}
+.blog_details_left_title {
+	padding: 30px 10px 0px 10px;
+}
+.blog_details_left_contents {
+	padding: 5px 10px 30px 10px;
+}
+.blog_details_left_form {
+	margin-left: 0px;
+}
+.dashboard_counting_single {
+	flex: 0 0 47%;
+}
+.dashboard_right_counting {
+	justify-content: center;
+}
+.dashboard_right_book_exam_contents .high_standard_single {
+	flex: 0 0 47%;
+}
+.edit_profile_user_img img {
+	width: 160px;
+	height: 150px;
+	border-radius: 20px;
+}
+.dashboard_edit_profile_tabs #pills-profile-tab {
+    margin-left: 0px !important;
+}
+.dashboard_edit_profile_tabs {
+	margin-bottom: -21px;
+	max-width: 240px;
+}
+
+}
+
+
+
+@media all and (max-width: 575px){
+.dropdown_menu_main {
+	width: 300px;
+}
+.header_top {
+	padding: 18px 25px;
+}
+.banner {
+	padding: 0px 0px 30px 15px;
+}
+.btn_style {
+	font-size: 16px;
+	padding: 7px 10px 7px 30px;
+}
+.banner_left h1 {
+	letter-spacing: -1px;
+}
+.exam_center_london_title h2 {
+	font-size: 30px;
+	letter-spacing: -1px;
+}
+.exam_center_london_btn .btn_style {
+	padding: 10px 10px 10px 35px;
+}
+.banner_right_content2 {
+	left: -7px;
+	bottom: 40px;
+}
+.banner_right_img_pos {
+	top: 35%;
+}
+.banner_right_img {
+	margin-bottom: 20px;
+}
+.banner_right_border {
+	top: 13%;
+	left: 98%;
+}
+.banner_right_border img {
+	width: 80px;
+}
+.exam_board_items ul li {
+	flex: 0 0 45%;
+	text-align: center;
+}
+.contact_us_left_items ul li a {
+	padding: 10px 15px 10px 15px;
+	font-size: 15px;
+}
+.contact_us_left_items ul li a img {
+	width: 17px;
+	margin-right: 8px;
+}
+.contact_a2 {
+	right: -13px;
+}
+.banner_left b, .section_title b {
+	text-align: center;
+}
+.contact_us_right_contents ul li {
+	font-size: 16px;
+}
+.get_in_touch_right_items ul {
+	width: 285px;
+	height: 310px;
+}
+.get_in_touch_left {
+	padding: 35px !important;
+}
+.get_in_touch_right_title p {
+	font-size: 16px;
+}
+.footer_contents_single {
+	flex: 0 0 100%;
+}
+.footer_copyright p {
+	font-size: 14px;
+	text-align: center;
+}
+.phone-input {
+	position: relative;
+}
+.phone-input span {
+	position: absolute;
+	top: 50%;
+	right: 15px;
+	transform: translateY(-50%);
+	display: none;
+}
+.footer_contents_single ul li a {
+	margin-top: 5px;
+	font-size: 16px;
+}
+.footer_contents {
+	gap: 25px;
+}
+.footer_main {
+	padding: 65px 0px 40px 0px;
+}
+.footer_copyright {
+	margin-top: 40px;
+}
+.sub_menu_main {
+	padding-bottom: 15px;
+}
+.sub_menu ul li a {
+	font-size: 14px;
+}
+.alevel_exams3 {
+	left: 10px !important;
+	bottom: 20px !important;
+}
+h3{
+	font-size: 21px;
+}
+.a_level_exams_right_title h3 {
+	font-size: 21px;
+}
+.a_level_exams_right_contents ul li {
+	flex: 0 0 47%;
+	font-size: 16px;
+}
+.a_level_exams_right_title p {
+	font-size: 16px;
+}
+.a_lavel_exam_bodies_title p {
+	line-height: 25px;
+	font-size: 16px;
+}
+.a_lavel_exam_bodies_calender_contents {
+	padding: 25px 15px;
+}
+.a_lavel_exam_bodies_calender_contents p {
+	font-size: 16px;
+}
+.a_level_exams_practical img {
+	width: 30px;
+}
+.a_lavel_exam_booking {
+	padding: 30px 15px;
+}
+.a_lavel_exam_booking_title p {
+	font-size: 17px;
+	margin: 15px 0px 25px 0px;
+	letter-spacing: -0.3px;
+}
+.a_level_exams_practical {
+	padding: 0px 10px;
+}
+.a_level_exams_practical_contents p {
+	font-size: 16px;
+}
+.a_level_exams_practical_contents {
+	text-align: center;
+}
+.a_lavel_endorsement_contents_right p {
+	font-size: 16px;
+}
+.a_lavel_endorsement_fees {
+	padding: 30px 15px 25px 15px;
+}
+.a_lavel_endorsement_fees p {
+	font-size: 16px;
+}
+.a_lavel_endorsement_fees p img {
+	width: 13px;
+	margin-right: 15px;
+}
+.a_lavel_endorsement_fees_title h2 {
+	padding: 1px 15px;
+}
+.session_details_left ul li a {
+	font-size: 13px;
+}
+.a_level_exams_endorsement_contents ul li {
+	font-size: 16px !important;
+}
+.a_level_exams_endorsement_contents ul {
+	margin: 15px 0px;
+	gap: 10px;
+}
+.a_lavel_endorsement_contents_right {
+	padding: 0px 5px;
+}
+.exam_center_london_main {
+	margin: 40px 0px 60px 0px;
+}
+.exam_board_items ul {
+	margin-top: 20px;
+}
+.a_lavel_exam_bodies_calender_img img {
+	width: 130px !important;
+}
+.contact_a1 {
+	margin-left: -40px;
+}
+.ucas_register_a2 {
+	right: -15px;
+}
+.contact_a5 {
+	margin-left: -30px;
+}
+.ucas_register_title h2 {
+	font-size: 28px;
+}
+.ucas_application_process_title h2 {
+	font-size: 33px;
+}
+.ucas_application_process_single h4 {
+	font-size: 18px;
+	line-height: 28px;
+}
+.ucas_application_process_single p {
+	font-size: 16px;
+}
+.ucas_application_process_contents {
+	gap: 50px;
+}
+.our_pricing_title h2 {
+	font-size: 33px;
+}
+.our_pricing_single h3 {
+	font-size: 24px;
+	line-height: 35px;
+}
+.our_pricing_single_text p {
+	font-size: 16px;
+}
+.our_pricing_single b {
+	font-size: 25px;
+}
+.custom_accordion_ucas.panel-group a {
+	font-size: 18px;
+	line-height: 28px;
+}
+.our_pricing_contents {
+	gap: 30px;
+}
+.a_lavel_exam_bodies_calender_date {
+	top: 50%;
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+	max-width: 100%;
+    width: 100%;
+}
+.header_inherit {
+	margin-bottom: -130px;
+}
+.sub_menu_main {
+	padding-top: 130px;
+}
+.modal-dialog {
+	max-width: 94%;
+}
+.exam_fees_modal_body {
+	padding: 14px 0px 10px 0px;
+}
+.efmtt_search input {
+	padding: 8px 10px;
+}
+.efmtt_select select {
+	padding: 8px 10px;
+}
+.exam_fees_popup {
+    gap: 20px;
+}
+.exam_fees_popup_single {
+	border-radius: 20px;
+}
+.exam_fees_modal_header h4 {
+	font-size: 18px;
+}
+.steps_to_get_started_contents p {
+	margin-top: 35px;
+}
+.our_refund_policy_title h2 {
+    padding: 35px 0px;
+}
+.contact_us {
+	gap: 20px;
+}
+.non_exam_assesment_main {
+	margin-top: -70px;
+}
+.non_exam_assessment_left {
+    padding: 20px 20px !important;
+}
+.a_level_exam_booking_header_btns a {
+	font-size: 16px;
+}
+.a_level_exam_booking_header_btns a i {
+	font-size: 16px;
+	margin-right: 10px;
+}
+.step-indicator {
+	flex-wrap: wrap;
+	gap: 20px;
+	flex-direction: column;
+}
+.divider {
+	flex: inherit;
+	height: 3px;
+	width: 40px;
+	display: none;
+}
+/*.step {
+	flex: 0 0 45%;
+}*/
+.step .icon svg {
+	width: 35px;
+	height: auto;
+}
+.step .icon {
+	width: 70px;
+	height: 70px;
+	font-size: 20px;
+}
+.step.active p {
+	font-size: 17px;
+}
+.form_file_upload input[type="file"] + label {
+	padding: 15px 10px 15px 10px;
+}
+.form_file_upload label p span {
+	padding: 7px 0px 12px 0px;
+}
+.form_file_upload label p a {
+	padding: 8px 17px;
+	font-size: 14px;
+}
+.form_step2_title p {
+	padding: 12px 15px;
+	font-size: 16px;
+}
+.single_form_column5 {
+	flex: 0 0 calc((100%) - 0px);
+}
+.single_form_column5_close {
+	right: inherit;
+	left: 0;
+	bottom: -35px;
+}
+.single_form_parent_step2 {
+    margin-top: 50px;
+}
+.form_step_addsubject_btn a {
+    margin-top: 50px;
+}
+.form_step1_radio_single [type="radio"]:checked + label::before, .form_step1_radio_single [type="radio"]:not(:checked) + label::before {
+	top: -5px;
+	transform: inherit;
+}
+.form_step1_radio_single [type="radio"]:checked + label::after, .form_step1_radio_single [type="radio"]:not(:checked) + label::after {
+	top: 3px;
+}
+.single_form_h4 {
+	font-size: 16px;
+}
+.single_form_step2_check input {
+	max-width: 200px;
+}
+.single_form_p h4 {
+	font-size: 20px;
+}
+.form_single_step_btns {
+	display: flex;
+	justify-content: center;
+	gap: 25px;
+	margin-top: 70px;
+}
+.single_form_step2_checks .single_form_step2_check {
+	flex: 0 0 100%;
+}
+.single_form_parent textarea {
+	height: 150px;
+}
+.step4_exam_fees_payments {
+	flex-direction: column;
+	gap: 30px;
+}
+.step4_exam_fees_payment_single_bar span {
+	width: 150px;
+	height: 1px;
+}
+.step4_term_conditions .single_form_step2_check label {
+	font-size: 16px;
+}
+.step4_exam_fees_payment_title p {
+	font-size: 18px;
+}
+.step4_exam_fees_payment_title {
+	top: -14px;
+}
+.step5_exam_fees3 {
+	padding: 70px 15px 50px 15px;
+	margin-top: 70px;
+}
+.step5_exam_fees3 .step4_exam_fees_payment_title p {
+	font-size: 16px;
+	max-width: 85%;
+}
+.step5_exam_fees3 .step4_exam_fees_payment_title {
+	top: -35px;
+}
+input#id76 {
+    width: 45px;
+}
+.a_level_exam_booking_form {
+    padding: 30px 15px;
+}
+canvas#signature {
+    border: none;
+}
+.signature-pad-container {
+    overflow: hidden;
+    padding: 0px 17px 10px 17px;
+}
+.payment_page_tabs_menu .nav-pills {
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+}
+.payment_page_tabs_menu .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	background: #247E3D;
+	width: 100%;
+	height: auto;
+	padding: 13px 15px;
+	font-size: 16px;
+}
+.payment_page_tabs_menu .nav-pills .nav-link {
+	background: rgba(36, 126, 61, 0.05);
+	width: 100%;
+	height: auto;
+	padding: 13px 15px;
+	font-size: 16px;
+}
+.payment_page_tabs_menu #pills-profile-tab {
+	margin-left: -0px;
+}
+.payment_page_tabs_menu {
+	padding: 10px 50px;
+}
+.payment_page_tabs_menu #pills-profile-tab:hover{
+	background: #247E3D;
+	color: #FFF;
+}
+.payment_page_tabs_menu .nav-pills li{
+	width: 100%;
+}
+.sub_menu ul {
+	flex-wrap: wrap;
+}
+.payment_tabs_promo_code {
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.payment_tabs_table {
+	max-width: 600px;
+	width: 600px;
+}
+.payment_tabs_table_main {
+	overflow-x: scroll;
+}
+.table_design_default p {
+	padding: 12px 25px 0px 25px;
+}
+.table_design_default p span {
+	font-size: 20px;
+}
+.radio-buttons .radio-label {
+	width: 150px;
+	height: 145px;
+	padding: 15px 10px 15px 10px;
+}
+.radio-buttons .radio-label .radio-icon {
+	width: 45px;
+}
+.radio-buttons .radio-label .radio-text {
+	font-size: 16px;
+}
+.radio-buttons .radio-label .radio-circle::before {
+	top: -6.5px;
+	left: -6.5px;
+	width: 26px;
+	height: 26px;
+}
+.radio-buttons .radio-label .radio-circle {
+	width: 15px;
+	height: 15px;
+}
+.radio-buttons {
+	justify-content: center;
+	gap: 20px;
+}
+.payment_card_contents_target {
+	left: -50px;
+}
+.payment-content.card-content .btn_style {
+	margin-top: 40px;
+}
+.payment_tabs_alert_title p {
+	padding: 0px 10px;
+}
+.payment_tabs_alert {
+	padding: 20px 15px;
+}
+.blogs_content_single {
+	flex: 0 0 100%;
+}
+.blog_page_count ul li a {
+	width: 35px;
+	height: 35px;
+}
+.blog_page_count ul li a span {
+	width: 25px;
+	height: 25px;
+}
+.blog_page_count ul li:first-child {
+	margin-right: 15px;
+}
+.blog_page_count ul li:last-child {
+	margin-left: 15px;
+}
+.login_page {
+	padding: 20px 15px;
+}
+.login_page_register p {
+	margin-top: 30px;
+	font-size: 16px;
+}
+.login_page_register p a {
+	font-size: 16px;
+}
+.login_page_forgot {
+	margin: 35px 0px;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 7px;
+}
+.lpf_left .single_form_step2_check input#id76 {
+	width: 25px;
+}
+.login_page_forgot .single_form_step2_check label {
+	font-size: 16px;
+}
+.login_page_forgot a {
+	font-size: 16px;
+}
+.login_page_form .btn_style {
+	padding: 13px 20px;
+	font-size: 16px;
+}
+.login_page_with_google a img {
+	width: 25px;
+	margin-right: 10px;
+}
+.login_page_with_google a {
+	padding: 8px 20px;
+	font-size: 16px;
+}
+.banner_right_img_pos img {
+	width: 100px;
+}
+.refund_policy_title h2 {
+	font-size: 25px;
+}
+.refund_policy_border::before {
+	height: 1.2px;
+	padding: 1.2px;
+}
+.refund_policy_border {
+	margin: 45px 0px;
+}
+.refund_policy_no_refund img {
+	width: 65px;
+	height: 65px;
+}
+.refund_policy_no_refund {
+	padding: 35px 15px 25px 15px;
+}
+.coursework_fees_title h2 {
+	max-width: 90%;
+	margin: auto;
+}
+.feedback_service_left ul {
+	background: url(../images/non-exam-assesment/feedback-service.png) no-repeat scroll 50% 0 / cover;
+	height: 270px;
+}
+.nea_main {
+	padding: 30px 0px 60px 0px;
+}
+.nea_section_single_contents h3 {
+	width: 65px;
+	height: 58px;
+}
+.nea_section_single_contents {
+	top: -20px;
+}
+.nea_section_single_contents h4 {
+	margin: 15px 0px 15px 0px;
+	font-size: 18px;
+}
+.nea_section_single_contents p {
+	max-width: 250px;
+	font-size: 13px;
+}
+.nea_section_communicate {
+	margin-top: 60px;
+	padding: 0px 20px 25px 20px;
+}
+.coursework_fees_bottom ul {
+	gap: 0px;
+}
+.coursework_fees {
+    padding: 90px 0px 50px 0px;
+}
+.course_overview_title ul {
+	flex-wrap: wrap;
+}
+.coursework_fees_courses {
+	padding: 40px 0px 50px 0px;
+}
+.course_structure_title h1 {
+	font-size: 36px;
+}
+
+.bdlcm_img .btn_style {
+	top: 10px;
+	left: 10px;
+	font-size: 13px;
+	padding: 6px 15px 6px 7px;
+}
+.bdlcm_img .btn_style span {
+	width: 24px;
+	height: 24px;
+	line-height: 21px;
+	margin-right: 5px;
+}
+.bdlcm_img .btn_style span img {
+	width: 13px;
+}
+.blog_details_left_title h3 {
+	font-size: 25px;
+	line-height: 35px;
+}
+.blog_details_left_title p {
+	font-size: 17px;
+}
+.blog_details_left_contents p {
+	font-size: 16px;
+	margin-top: 20px;
+}
+.blog_details_tip_box {
+	border-radius: 15px;
+	padding: 20px 20px;
+	gap: 15px;
+}
+.blog_details_main {
+	padding: 25px 0px 60px 0px;
+}
+.blog_details_left_contents h4 {
+	font-size: 19px;
+}
+.blog_details_left_form_post {
+	text-align: center;
+}
+.bdlf_post_submit {
+	flex-direction: column;
+	gap: 10px;
+}
+.blog_details_left_form input, .blog_details_left_form textarea {
+	padding: 12px 19px;
+	border-radius: 10px;
+}
+.blog_details_right_contents {
+	padding: 25px 15px 30px 15px;
+	border-radius: 15px;
+}
+.blog_details_right_single_mt {
+	margin-top: 55px;
+}
+.blog_details_right_single_title p {
+	font-size: 22px;
+}
+.bdrs_tags li a {
+	font-size: 14px;
+}
+.dashboard_counting_single {
+	flex: 0 0 100%;
+}
+.dashboard_counting_single a {
+	padding: 25px 10px 25px 10px;
+}
+.dashboard_counting_single a p {
+	margin: 15px 0px 15px 0px;
+}
+.dashboard_right_book_exam_contents .high_standard_single {
+	flex: 0 0 100%;
+}
+.dashboard_edit_profile_tabs {
+	margin-bottom: 0px;
+	max-width: 135px;
+	padding: 0px !important;
+}
+.dashboard_edit_profile_tabs #pills-profile-tab {
+	font-size: 12px;
+}
+.dashboard_edit_profile_tabs .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	font-size: 12px;
+}
+.dashboard_edit_profile_header {
+	align-items: flex-start;
+	padding: 20px 20px;
+}
+.edit_profile_right_contents {
+	padding: 30px 15px 40px 15px;
+}
+.edit_profile_user_img img {
+	width: 140px;
+	height: 130px;
+}
+.exam_booking_list_page_counting {
+	margin-top: 30px;
+	flex-direction: column;
+	gap: 5px;
+}
+.eblpc_text {
+	order: 2;
+}
+
+.ebdc_basic_information_title p {
+	padding: 25px 15px 0px 15px;
+}
+.ebdc_basic_information_single {
+	padding: 10px 15px 10px 15px;
+}
+.dashboard_exam_booking_details_table {
+	padding: 0px 15px;
+	margin-top: 10px;
+}
+.ebdc_personal_information {
+	padding: 0px 15px;
+	gap: 35px;
+}
+.ebdc_pi_single_upload {
+	gap: 15px;
+	flex-direction: column;
+	align-items: center;
+}
+.ebdc_pi_single .single_form_step {
+	max-width: 100%;
+}
+.ebdc_pi_single .signature-pad-container {
+	width: 100%;
+	border: 1px solid #CACACA;
+}
+.ebdc_update_btn {
+	margin-top: 30px;
+	padding: 0px 15px;
+	align-items: center;
+	flex-direction: column;
+	gap: 20px;
+}
+.ebdc_other_information {
+	padding: 0px 15px;
+}
+
+}
+
+
+@media all and (max-width: 450px){
+
+}
+
+

@@ -1,0 +1,2056 @@
+@extends('layouts.frontend')
+@section('title', 'Exam Booking')
+@section('content')
+<link rel="stylesheet" href="{{ asset('frontend') }}/datepicker/mc-calendar.min.css" />
+<script src="{{ asset('frontend') }}/datepicker/mc-calendar.min.js"></script>
+<script src="{{ asset('frontend') }}/js/ovi.js"></script>
+
+
+<div id="preloader" style="display:none">
+	<div id="status">Processing ! Please wait! &nbsp;</div>
+</div>
+<style>
+#preloader {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:#fff;/* change if the mask should be a color other than white */
+	z-index:99; /* makes sure it stays on top */
+}
+
+#status {
+	width:200px;
+	height:200px;
+	position:absolute;
+	left:50%; /* centers the loading animation horizontally on the screen */
+	top:50%; /* centers the loading animation vertically on the screen */
+	background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvkXciXd_bcjuWYuJTgHML765AeIo5zqaGJEWHkYz0Yq5j0PBB'); /* path to your loading animation */
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:-100px 0 0 -100px; /* is width and height divided by two */
+}
+
+
+</style>
+
+
+  @if($maindata)
+    @php
+    $booking_id=Auth::user()->id.rand(11111,99999);
+    @endphp
+  @else
+    @php
+      $booking_id=Auth::user()->id.rand(11111,99999);
+    @endphp
+  @endif
+
+<style>
+.row.mybyclicking {
+    background: azure;
+    justify-content: end;
+    border: 1px solid azure;
+    border: dotted;
+}
+  .kbw-signature {
+    width: 430px !important;
+    height: 220px !important;
+  }
+   img.img_ {
+    width: 60% !important;
+}
+
+  label.file_upload p {
+   /*   color: #5FAAE1;
+      display: block !important;
+      width: auto;*/
+      color: #ffffff !important;
+      display: block !important;
+      width: auto;
+      padding: 10px;
+      background: #c7aaed00;
+      border-radius: 20px;
+      margin: 10px 0px;
+      font-size: 11px;
+  }
+
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12.spartan_item_wrapper {
+      padding: 0px !important;
+  }
+  .col-xl-12.col-md-12.col-sm-12.col-xs-12.spartan_item_wrapper {
+      padding: 0px;
+  }
+
+  label.file_upload{
+
+      background: #f0f4ff !important;
+  }
+
+
+    .modal-content {
+      border-radius: 30px;
+  }
+    .form-label {
+      margin-top: 26px;
+      margin-bottom: 0rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+  }
+  .sec-title .text {
+
+      font-size: 16px !important;
+  }
+  .news-section.style-two {
+  padding-top: 46px;
+      padding-bottom: 40px;
+  }
+  .news-section .pattern-layer {
+     
+      top: 200px !important;
+      
+  }
+  .content {
+      background-color: #c2c2c20d;
+  }
+  .form-control.form-control-solid {
+      background-color: #f0f4ff !important;
+      border-color: #d2daef !important;
+      color: #000000 !important;
+      padding: 20px 10px !important;
+      border-radius: 5px;
+  }
+
+  select.form-select.form-select-lg.form-select-solid {
+       background-color: #f0f4ff !important;
+      border-color: #d2daef !important;
+      color: #000000 !important;
+      padding: 20px 10px !important;
+      border-radius: 5px;
+  }
+  .form-select form-select-lg form-select-solid{
+     background-color: #f0f4ff !important;
+      border-color: #d2daef !important;
+      color: #000000 !important;
+      padding: 20px 10px !important;
+      border-radius: 5px;
+  }
+  .form-select.form-select-solid {
+             background-color: #f0f4ff !important;
+      border-color: #d2daef !important;
+      color: #000000 !important;
+      padding: 20px 10px !important;
+      border-radius: 5px;
+  }
+</style>
+<!-- pdf -->
+<style>
+.button {
+    background: #c7aaed!important;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    /* letter-spacing: 0.02em; */
+    padding: 10px 20px;
+    text-align: center;
+    /* text-shadow: 0px 1px 2px rgb(0 0 0 / 75%); */
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+  background : #005f95;
+}
+
+.btn:active {
+  background : #005f95;
+}
+
+input[type="file"] {
+  display : none;
+}
+
+#file-drag {
+    background: aliceblue;
+    border: 1px dashed #b1aeae;
+    border-radius: 7px;
+    color: #555;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    margin: 1em 0;
+    padding: 3em;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+}
+
+
+
+#file-progress {
+  display : none;
+  margin  : 1em auto;
+  width   : 100%;
+}
+
+#file-upload-btn {
+  margin : auto;
+}
+
+#file-upload-btn:hover {
+  background : #5FAAE1;
+}
+
+#file-upload-form {
+  margin : auto;  
+  width  : 40%;
+}
+
+progress {
+  appearance    : none;
+  /*background    : #eee;*/
+  border        : none;
+  border-radius : 3px;
+  /*box-shadow    : 0 2px 5px rgba(0, 0, 0, 0.25) inset;*/
+  height        : 10px;
+}
+
+progress[value]::-webkit-progress-value {
+  background :
+    -webkit-linear-gradient(-45deg, 
+      transparent 33%,
+      rgba(0, 0, 0, .2) 33%, 
+      rgba(0,0, 0, .2) 66%,
+      transparent 66%),
+    -webkit-linear-gradient(right,
+      #005f95,
+      #07294d);
+  background :
+    linear-gradient(-45deg, 
+      transparent 33%,
+      rgba(0, 0, 0, .2) 33%, 
+      rgba(0,0, 0, .2) 66%,
+      transparent 66%),
+    linear-gradient(right,
+      #005f95,
+      #07294d);
+  background-size : 60px 30px, 100% 100%, 100% 100%;
+  border-radius   : 3px;
+}
+
+progress[value]::-moz-progress-bar {
+  background :
+  -moz-linear-gradient(-45deg, 
+    transparent 33%,
+    rgba(0, 0, 0, .2) 33%, 
+    rgba(0,0, 0, .2) 66%,
+    transparent 66%),
+  -moz-linear-gradient(right,
+    #005f95,
+    #07294d);
+  background :
+    linear-gradient(-45deg, 
+      transparent 33%,
+      rgba(0, 0, 0, .2) 33%, 
+      rgba(0,0, 0, .2) 66%,
+      transparent 66%),
+    linear-gradient(right,
+      #005f95,
+      #07294d);
+  background-size : 60px 30px, 100% 100%, 100% 100%;
+  border-radius   : 3px;
+}
+
+ul {
+  list-style-type : none;
+  margin          : 0;
+  padding         : 0;
+}
+</style>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- drop zone -->
+
+
+
+
+<style>
+  .form-select-lg {
+    
+  font-size: 12px !important;
+}
+.form-control-lg {
+    font-size: 12px !important;
+}
+</style>
+
+  <style>
+    h1, h2, h3, h4, h5, h6 {
+    color: #102039;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
+    line-height: 1.2;
+    margin-bottom: 0;
+  }
+    .breadcrumb-section {
+  padding: 50px 0;
+  background-image: url("frontend/breadcrumb-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .breadcrumb-section {
+      padding: 80px 0; } }
+  @media (max-width: 767.98px) {
+    .breadcrumb-section {
+      padding: 60px 0; } }
+  .breadcrumb-section ul {
+    margin-top: 10px; }
+    .breadcrumb-section ul li {
+      display: inline-block;
+      text-transform: capitalize;
+      font-size: 18px;
+      margin: 0 2px; }
+      @media (min-width: 768px) and (max-width: 991.98px) {
+        .breadcrumb-section ul li {
+          font-size: 16px; } }
+      @media (max-width: 767.98px) {
+        .breadcrumb-section ul li {
+          font-size: 16px; } }
+      .breadcrumb-section ul li a {
+        color: #606060;
+        -webkit-transition: all 0.3s ease-in;
+        -o-transition: all 0.3s ease-in;
+        transition: all 0.3s ease-in; }
+        .breadcrumb-section ul li a:hover {
+          color: #fe630e; }
+
+</style>
+<!-- new css -->
+<style>
+          .content {
+    background-color: #fdfdfd !important;
+}
+
+
+.form-control.form-control-solid {
+    background-color: #ffffff !important;
+    border-color: #07080a !important;
+    color: #000000 !important;
+    padding: 15px 10px !important;
+    border-radius: 3px;
+}
+
+
+.stepper.stepper-links .stepper-nav .stepper-item.completed .stepper-title {
+    color: #00ed07 !important;
+}
+
+.form-label {
+   
+    font-weight: 700 !important;
+}
+
+.js--image-preview {
+    height: 200px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-image: url(index-23.html);
+    background-color: white;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px dotted #43b97e;
+}
+.upload-options {
+    position: relative;
+    height: 75px;
+    background-color: #43b97e;
+    cursor: pointer;
+    overflow: hidden;
+    text-align: center;
+    transition: background-color ease-in-out 150ms;
+}
+
+
+.upload-options label::after {
+    content: "Upload file";
+    /* font-family: "Material Icons"; */
+    position: absolute;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    top: calc(50% - 24.5px);
+    left: calc(50% - 41.25px);
+    z-index: 0;
+}
+
+
+select.form-select.form-select-lg.form-select-solid {
+    background-color: #ffffff !important;
+    border-color: #000000 !important;
+    color: #000000 !important;
+    padding: 15px 10px !important;
+    border-radius: 5px;
+}
+</style>
+
+    <section class="breadcrumb-section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>IGCSE EXAM BOOKING</h2>
+                    <ul>
+                      <li><a href=""><span style="text-transform: none;"> Please Call or Email us if you need any help with the form
+                           <br>
+
+                        Phone: 02086162526 Or
+                        <br>
+                        E-mail: info@examcentrelondon.co.uk</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="{{asset('backend')}}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+
+  <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+            <!--begin::Toolbar-->
+            <div class="toolbar" id="kt_toolbar">
+              <!--begin::Container-->
+              <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                <!--begin::Page title-->
+                <div data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+                  <!--begin::Title-->
+                  
+                  <!--end::Title-->
+                  <!--begin::Separator-->
+                  <span class="h-20px border-gray-200 border-start mx-4"></span>
+             
+               
+                  <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+                <!--begin::Actions-->
+                <div class="d-flex align-items-center py-1">
+                  <!--begin::Wrapper-->
+                  <div class="me-4">
+                  
+                  </div>
+               
+                  <!--end::Button-->
+                </div>
+                <!--end::Actions-->
+              </div>
+              <!--end::Container-->
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Post-->
+            <div class="post d-flex flex-column-fluid" id="kt_post">
+              <!--begin::Container-->
+              <div id="kt_content_container" class="container">
+                <!--begin::Card-->
+                <div class="card" style="border-radius:55px">
+                  <!--begin::Card body-->
+                  <div class="card-body">
+                    <!--begin::Stepper-->
+                    <div class="stepper stepper-links d-flex flex-column" id="kt_create_account_stepper">
+                      <!--begin::Nav-->
+                      <div class="stepper-nav py-5 mt-5">
+                        <!--begin::Step 1-->
+                        <div class="stepper-item current" data-kt-stepper-element="nav">
+                          <h3 class="stepper-title">Student Info</h3>
+                        </div>
+                        <!--end::Step 1-->
+                        <!--begin::Step 2-->
+                        <div class="stepper-item" data-kt-stepper-element="nav">
+                          <h3 class="stepper-title">Exam Details</h3>
+                        </div>
+                        <!--end::Step 2-->
+                        <!--begin::Step 3-->
+                        <div class="stepper-item" data-kt-stepper-element="nav">
+                          <h3 class="stepper-title">Special Arrangements</h3>
+                        </div>
+                        <!--end::Step 3-->
+                        <!--begin::Step 4-->
+                        <div class="stepper-item" data-kt-stepper-element="nav">
+                          <h3 class="stepper-title">Payment Details</h3>
+                        </div>
+                        <!--end::Step 4-->
+                        <!--begin::Step 5-->
+                        <div class="stepper-item" data-kt-stepper-element="nav">
+                          <h3 class="stepper-title">Completed</h3>
+                        </div>
+                        <!--end::Step 5-->
+                      </div>
+                      <!--end::Nav-->
+                      <!--begin::Form-->
+                      <form class="mx-auto mw-1000px w-100 pt-15 pb-10" novalidate="novalidate" id="kt_create_account_form" action="{{ url('/exam-booking-igcse') }}" method="post" enctype="multipart/form-data">
+                        <div class="current" data-kt-stepper-element="content">
+                          <!--begin::Wrapper-->
+                          <div class="w-100">
+                            <div class="fv-row">
+                              <!--begin::Row-->
+                              <div class="row">
+                                   <div class="col-lg-12">
+                                         @csrf
+                                    @error('thumbnail_img')
+                                        <div style="color:red">Please upload Recent photo</div><br>
+                                    @enderror
+
+                                    @error('fileUpload')
+                                        <div style="color:red">Please upload Photo Id</div><br>
+                                    @enderror
+
+                                      
+                                </div>
+                                <!--begin::Col-->
+                                <div class="col-md-10">
+                                    <!--begin::Label-->
+                                  <label class="form-label mb-3">Legal First Name <span class="required"></span> </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="hidden" id="booking_id"  name="booking_id" value="{{  $booking_id }}" />
+                                  <input type="hidden" id="user_id"  name="user_id" value="{{ Auth::user()->id }}" />
+
+                                  <input type="text" onchange="insertmybooking()" class="form-control form-control-lg form-control-solid" id="first_name" name="first_name" placeholder="Please Enter Legal First name" value="@if($maindata){{$maindata->first_name}}@else{{ Auth::user()->name }}@endif" />
+
+                                  <input type="hidden" id="main_exam_type" name="main_exam_type" value="IGCSE"/>
+                                  <!--end::Input-->
+                                </div>
+                                <div class="col-md-10 mt-2">
+                                    <label for="middle_name" class="form-label">Middle Name(s)</label>
+                                    <input type="text" onchange="insertmybooking()" name="middle_name" id="middle_name" class="form-control form-control-lg form-control-solid" placeholder="Please Enter Middle name" value="@if($maindata){{$maindata->middle_name}}@else{{ Auth::user()->middle_name }}@endif" aria-describedby="passwordHelpBlock">
+                                </div>
+                                <div class="col-md-10 mt-2">
+                                    <label for="last_name" class="form-label">Legal Last Name <span class="required"></span></label>
+                                    <input type="text" onchange="insertmybooking()" name="last_name" id="last_name" class="form-control form-control-lg form-control-solid" placeholder="Please Enter Legal Last Name" value="@if($maindata){{$maindata->last_name}}@else{{ Auth::user()->last_name }}@endif"aria-describedby="passwordHelpBlock">
+                                </div>
+                                  <div class="col-md-5 mt-2">
+                                    <label for="email" class="form-label">Email <span class="required"></span></label>
+                                    <input type="email" onchange="insertmybooking()" name="email" id="email" class="form-control form-control-lg form-control-solid" placeholder="Please Enter Email" value="@if($maindata){{$maindata->email}}@else{{ Auth::user()->email }}@endif" aria-describedby="passwordHelpBlock">
+                                </div>
+                                 <div class="col-md-5 mt-2">
+                                    <label for="phone" class="form-label">Phone Number <span class="required"></span></label>
+                                    <input type="text" onchange="insertmybooking()" id="phone" name="phone" class="form-control form-control-lg form-control-solid" placeholder="Please Enter Phone Number" value="@if($maindata){{$maindata->phone}}@else{{ Auth::user()->phone }}@endif" aria-describedby="passwordHelpBlock">
+                                </div>
+                                 <div class="col-lg-5 mt-2">
+                                    <label for="inputPassword5" class="form-label">Address line 1 <span class="required"></span></label>
+                                    <textarea type="text" onchange="insertmybooking()" name="address_line_1" id="address_line_1" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" placeholder="Please Enter Address Line 1">@if($maindata){{ $maindata->address_line_1 }}@else{{ Auth::user()->address_line_1 }}@endif</textarea>
+                                </div>
+                                  <div class="col-lg-5 mt-2">
+                                    <label for="inputPassword5" class="form-label">Address line 2</label>
+                                    <textarea onchange="insertmybooking()" type="text" name="address_line_2" id="address_line_2" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" placeholder="Please Enter Address Line 2">@if($maindata){{ $maindata->address_line_2 }}@else{{ Auth::user()->address_line_2 }}@endif</textarea>
+                                </div>
+                                <div class="col-md-5 mt-2">
+                                    <label for="=" class="form-label">City</label>
+                                    <input type="text" onchange="insertmybooking()" id="city" class="form-control form-control-lg form-control-solid city" name="city" value="@if($maindata){{ $maindata->city }}@else{{ Auth::user()->city }}@endif" aria-describedby="passwordHelpBlock" placeholder="Please Enter City">
+                                </div>
+                                <div class="col-md-5 mt-2">
+                                    <label for="inputPassword5" class="form-label">Post-code</label>
+                                    <input type="text" onchange="insertmybooking()" id="postcode" placeholder="Please Enter Post Code" name="postcode" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" value="@if($maindata){{ $maindata->postcode }}@else{{ Auth::user()->zip }}@endif">
+                                </div>
+                                <div class="col-md-5 mt-2">
+                                    <label for="emergency_contact_number" class="form-label">Emergency Number/ Home Phone <span class="required"></span></label>
+                                    <input type="text" onchange="insertmybooking()" id="emergency_contact_number" placeholder="Please Enter Emergency Contact Number" name="emergency_contact_number" class="form-control form-control-lg form-control-solid" value="@if($maindata){{$maindata->emergency_contact_number}}@else{{ Auth::user()->emergency_contact_number }}@endif" aria-describedby="passwordHelpBlock">
+                                </div>
+                                 <div class="col-md-5 mt-3">
+                                    <label for="inputPassword5" class="form-label">Date of birth <span class="required"></span></label>
+                                    <input type="text" onchange="insertmybooking()" id="date_of_birth" class="form-control form-control-lg form-control-solid"  name="date_of_birth" aria-describedby="passwordHelpBlock" value="@if($maindata){{ $maindata->date_of_birth }}@else{{Auth::user()->date_of_birth}}@endif" placeholder="Please Enter Date of Birth">
+                                </div>
+                                <div class="col-md-5 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Gender <span class="required"></span></label>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input gender" type="radio" id="male" onchange="insertmybooking()"  name="gender" value="Male"/>
+                                    <label class="form-check-label" for="male">
+                                     Male
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                   <input class="form-check-input gender" type="radio" name="gender" id="female" value="Female" onchange="insertmybooking()"/>
+                                    <label class="form-check-label" for="Female">
+                                     Female
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-10 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Has the candidate sat exams with Merit Tutors?</label>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" onchange="insertmybooking()" id="has_a_candidate_no" type="radio" placeholder="Please Enter Candidate Number" name="has_a_candidate" value="no">
+                                    <label class="form-check-label" for="has_a_candidate_no">
+                                     No
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" onchange="insertmybooking()" type="radio" id="has_a_candidate_yes" name="has_a_candidate" 
+                                    value="yes"/>
+                                    <label class="form-check-label" for="has_a_candidate_yes">
+                                     Yes
+                                    </label>
+                                  </div>
+                                </div>
+                                <!--  -->
+                                <div class="col-md-5 mt-2" id="has_a_candidate_section" @if($maindata) @if($maindata->has_a_candidate=='yes') @else style="display:none" @endif @else style="display:none" @endif > 
+                                  <label for="" class="form-label">Exams Candidate Number*</label><br>
+                                  <span>This will be on Previous Timetables and Results Information</span>
+                                    <input type="text" onchange="insertmybooking()"  name="has_a_candidate_number" id="has_a_candidate_number" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" max="4" placeholder="Please Enter Candidate Number">
+                                 </div> 
+
+                                <div class="col-md-10 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Do you have a UCI Number ( 13 digits )?</label>
+                                  <span>This will be on Previous Timetables and Results Information.<a type="button"data-bs-toggle="modal" data-bs-target="#staticBackdrop">FAQs</a></span>
+
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input  onchange="insertmybooking()"  class="form-check-input uci" id="no" type="radio"  name="uci" value="no" />
+                                    <label class="form-check-label" for="no">
+                                     No
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                     <input onchange="insertmybooking()" class="form-check-input uci" type="radio" id="yes" name="uci" value="yes"/>
+                                    <label class="form-check-label" for="yes">
+                                     Yes
+                                    </label>
+                                  </div>
+                                </div>
+                                
+                                <div class="col-md-5 mt-2" id="uci_section" @if($maindata) @if($maindata->uci=='yes') @else style="display:none" @endif @else style="display:none" @endif >
+                                  <label for="UCI" class="form-label">UCI Number ( 13 digits )</label>
+                                    <input type="text" onchange="insertmybooking()" name="uci_number" class="form-control form-control-lg form-control-solid uci_number" aria-describedby="passwordHelpBlock" value="@if($maindata){{$maindata->uci_number}}@endif" placeholder="Please Enter UCI Number ( 13 digits )">
+                                     
+                                 </div> 
+
+                                  <div class="col-md-8 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Do you have a ULN Number ( 10 digits )? </label>
+                                   <span>This will be on Previous Timetables and Results Information.<a type="button"data-bs-toggle="modal" data-bs-target="#uln_modal">FAQs</a></span>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" id="uln_no" type="radio"  onchange="insertmybooking()" name="uln"  value="no"/>
+                                    <label class="form-check-label" for="uln_no">
+                                     No
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                      <input class="form-check-input" id="uln_yes" type="radio" name="uln"  onchange="insertmybooking()" value="yes"/>
+                                    <label class="form-check-label" for="uln_yes">
+                                     Yes
+                                    </label>
+                                  </div>
+                                </div>
+                                 <div class="col-md-5 mt-2" id="uln_section"  @if($maindata) @if($maindata->uln=='yes') @else style="display:none" @endif @else style="display:none" @endif >
+                                  <label for="UCI" class="form-label">ULN Number ( 10 digits )</label>
+                                    <input type="text" onchange="insertmybooking()" max="10" name="uln_number" id="uln" class="form-control form-control-lg form-control-solid uln_number" aria-describedby="passwordHelpBlock" value="@if($maindata){{ $maindata->uln_number }}@endif" placeholder="Please Enter ULN Number ( 10 digits )">
+                                    
+                                 </div>
+                                <div class="row mb-5 mt-5">
+                                    <div class="col-md-5">
+                                      <label for="" class="d-flex align-items-center form-label">Photo Id (PDF or image file. max size: 5MB, Passport / Driving license)<span class="required"></span></label>
+                                      <input type="file" name="fileUpload" accept="image/jpeg,image/jpg,image/gif,image/png,application/pdf,image/x-eps" class="form-control form-control-lg form-control-solid" style="display: inherit !important;">
+                                    </div>
+                                    <div class="col-md-5">
+                                      <label for="" class="d-flex align-items-center form-label">Recent Photo (PDF or image file. max size: 5MB, Own Recent Photo)<span class="required"></span></label>
+                                      <input type="file" name="thumbnail_img" accept="image/jpeg,image/jpg,image/gif,image/png,application/pdf,image/x-eps" class="form-control form-control-lg form-control-solid" style="display: inherit !important;">
+                                    </div>
+                                </div> 
+                               
+                                <!--end::Col-->
+                              </div>
+                              <!--end::Row-->
+                            </div>
+                            <!--end::Input group-->
+                          </div>
+                          <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 1-->
+                        <!--begin::Step 2-->
+                        <div data-kt-stepper-element="content">
+                          <!--begin::Wrapper-->
+                          <div class="w-100">
+                            <!--begin::Heading-->
+                            <div class="pb-10 pb-lg-15">
+                              <!--begin::Title-->
+                              <h2 class="fw-bolder text-dark">Exam Info</h2>
+                              <!--end::Title-->
+                              <!--begin::Notice-->
+                              <div class="text-gray-400 fw-bold fs-6">
+                                 <a data-toggle="modal" data-target="#exampleModalLongss" href="#">Click here</a> to view the option codes.
+                              <a href="#" class="link-primary fw-bolder">
+                              </a>
+                           </div>
+
+                              <!--end::Notice-->
+                            </div>
+
+                            <div class="mb-10 fv-row row">
+                               <div class="col-md-11">
+                                    <!--begin::Label-->
+                                  <label class="form-label mb-3">EXAM SERIES</label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                   <select name="exam_series"  onchange="myseris(this)" id="exam_series_0" class="form-select form-select-lg form-select-solid">
+                                    
+                                    @foreach($allseries as $series)
+                                     <option value="{{$series->id}}">{{$series->exam_name}}</option>
+                                    @endforeach
+                                    
+                                    
+                                    
+                                  </select>
+                                </div>
+                            </div>
+
+
+
+
+                             <div class="mb-10 fv-row row">
+                                <div class="col-md-2" style="margin-bottom:8px">
+                                  <label class="form-label mb-3">EXAM BOARD</label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="hidden" name="type[]" value="IGCSE">
+                                 <select name="exam_board[]" onchange="typecheange(this)" id="type_0" class="form-select form-select-lg form-select-solid">
+
+                                      @foreach ($allexamboard as $examboard)
+                                         <option value="{{$examboard}}">{{$examboard}}</option>
+                                     @endforeach
+                                 
+                                 </select>
+
+                                </div>
+                                
+                                 <div class="col-md-3">
+                                    <!--begin::Label-->
+                                   <label class="form-label mb-3">SUBJECT <span style="color:red">*</span></label>
+                                   <select name="subject[]" onchange="subjectcheange(this)" id="subject_0"  class="form-select form-select-lg form-select-solid subject">
+                                      <option selected value="">Select</option>
+                                      @foreach($allsub as $sub)
+                                      <option value="{{ $sub->id }}">{{$sub->subject_name}}</option>
+                                      @endforeach
+                                  </select>
+                                </div>
+                                 <div class="col-md-2">
+                                    <!--begin::Label-->
+                                  <label class="form-label mb-3">UNIT CODE</label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" class="form-control form-control-lg form-control-solid" name="unit_code[]" id="unit_code_0" />
+                                </div>
+                                  <div class="col-md-2">
+                                    <!--begin::Label-->
+                                  <label class="form-label mb-3">OPTION CODE</label>
+                                  <select class="form-select form-select-lg form-select-solid subject" name="option_code[]" id="option_code_0">
+
+                                      <option selected disabled>Select</option>
+
+                                  </select>
+                                 
+                                  <!-- <input type="text" class="form-control form-control-lg form-control-solid" name="option_code[]" id="option_code_0" /> -->
+                                </div>
+                                 <div class="col-md-2">
+                                    <!--begin::Label-->
+                                  <label class="form-label mb-3">FEES</label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" class="form-control form-control-lg form-control-solid" id="fees_demo_0" disabled/>
+                                  <input type="hidden" class="fees" name="fees[]" id="fees_0"/>
+                                   <input type="hidden" id="totalmain_amount" class="totalmain_amount" value="0"/>
+                                </div>
+
+                                <div class="col-md-1 mt-5">
+                                    
+                                </div>
+                              <!--end::Input-->
+                            </div>
+                            <div class="mb-10 fv-row row" id="add_more">
+
+                            </div>
+                            <div class="mb-10 fv-row row">
+                              <div class="col-md-12 text-end">
+                                <button type="button" onclick="addmore()" class="btn-sm btn-success" style="color: #fff;">Add Subjects</button>
+                              </div>
+                            </div>
+
+
+
+                        <div class="mb-10 fv-row row">
+                              <div class="col-lg-12 ">
+                                <label for="" class="d-flex align-items-center form-label">Mock Exams (Please refer to fees list for cost)*</label><br>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" name="mock_test" type="radio" id="mock_test_no"   value="mock_test_no"  onclick="mockexams(this)">
+                                    <label class="form-check-label" for="mock_test_no">
+                                      I do not require a mock for this exam
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" name="mock_test" id="mock_test_yes" type="radio" value="mock_test_yes" onclick="mockexams(this)">
+                                    <label class="form-check-label" for="mock_test_yes">
+                                      I would like to book a mock for this exam
+                                    </label>
+                                  </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-10 fv-row row" id="papers_section" style="display: none">
+                          
+
+
+
+                        </div>
+                        <div class="mb-10 fv-row row">
+                              <div class="col-lg-12 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Type of Learner</label>
+                                  
+                                  
+                                  <div class="form-check" style="margin:10px 0px">
+                                   <input class="form-check-input" id="Private_Candidate" type="radio" name="type_of_learner" value="Private Candidate"/>
+                                    <label class="form-check-label" for="Private_Candidate">
+                                     Private Candidate
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" id="Learning_via" type="radio"  name="type_of_learner"  value="Learning via, or registered with, one of our Partners" />
+
+                                    <label class="form-check-label" for="Learning_via">
+                                     Learning via, or registered with, one of our Partners
+                                    </label>
+                                  </div>
+                                  
+                                </div>
+
+                                <div class="col-lg-12 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Are you retaking these exams?*</label>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" id="retaking_exams_no" type="radio" name="retaking_exams" value="no" />
+                                    <label class="form-check-label" for="retaking_exams_no">
+                                    No
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                      <input class="form-check-input" id="retaking_exams_yes" type="radio" name="retaking_exams" value="yes"/>
+                                    <label class="form-check-label" for="retaking_exams_yes">
+                                     Yes
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-lg-8 mt-2" id="retaking_section" style="display:none">
+                                  <label for="retaking_exams" class="form-label">Please specify which exams you are retaking?</label>
+                                  <input type="text" name="retaking_exams_name" placeholder="Please Enter Retaking Exam Name" id="retaking_exams_name" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" value="@if($maindata) {{ $maindata->retaking_exams_name }} @endif">
+                                </div>
+                                <div class="col-lg-7 mt-2">
+                                  <label for="" class="d-flex align-items-center form-label">Are you carring forward your practical endorsement /course work/ spoken/ or any other assessment?</label>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input class="form-check-input" id="caring_forwad_no" type="radio" name="caring_forwad" value="no"/>
+                                    <label class="form-check-label" for="caring_forwad_no">
+                                    No
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                      <input class="form-check-input" id="caring_forwad_yes" type="radio" name="caring_forwad" value="yes"/>
+                                    <label class="form-check-label" for="caring_forwad_yes">
+                                     Yes
+                                    </label>
+                                  </div>
+                                </div>
+                                
+                              <div class="col-lg-8 mt-2" id="caring_forwad_section" style="display:none">
+                               
+                                  <label for="UCI"  class="form-label">Please Specify the details including exam board & grade.
+                                  </label>
+                                  <input type="text"  placeholder="Please enter details including exam board & grade" name="caring_forwad_details" id="caring_forwad_details" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock">
+                               </div>
+                                  
+                               <div class="col-lg-8 mt-2" id="caring_forwad_section_pdf" style="display:none">
+                                
+                                <label for=""  class="form-label">Proof of carring forward documents (PDF or image file. max size: 5MB). </label>
+                                <input type="file" name="proof_of_evidence" accept="image/jpeg,image/jpg,image/gif,image/png,application/pdf,image/x-eps" class="form-control form-control-lg form-control-solid" style="display: inherit !important;">
+                                  
+                               
+                              </div>
+                            </div>
+                          </div>
+                          <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 2-->
+                        <!--begin::Step 3-->
+                        <div data-kt-stepper-element="content">
+                          <!--begin::Wrapper-->
+                          <div class="w-100">
+                            <!--begin::Heading-->
+                            <div class="pb-10 pb-lg-12">
+                              <!--begin::Title-->
+                              <h2 class="fw-bolder text-dark">Special Arrangements</h2>
+                              <!--end::Title-->
+                              <!--begin::Notice-->
+                                 <div class="text-gray-400 fw-bold fs-6">For any enquiries, 
+                               <a target="_blank" href="{{ url('/special-access') }}" class="link-primary fw-bolder">please visit the Special Access Fee Information page</a>.
+                             </div>
+                            </div>
+
+                            <div class="col-lg-10 mt-2 fv-row">
+                                <label for="" class="d-flex align-items-center form-label">Need Special Access?</label>
+                                <div class="form-check" style="margin:10px 0px">
+                                  <input type="radio" name="need_special_access" class="form-check-input" id="Need_Special_Access_no" value="0"/>
+                                  <label class="form-check-label" for="Need_Special_Access_no"> No </label>
+                                </div>
+                                <div class="form-check" style="margin:10px 0px">
+                                    <input type="radio" name="need_special_access"class="form-check-input" id="Need_Special_Access_yes"  value="1"/>
+                                  <label class="form-check-label" for="Need_Special_Access_yes"> Yes </label>
+                                </div>
+                            </div>
+                          
+
+                              <div class="col-lg-10 mt-2 fv-row" style="display:none" id="update_special_section">
+                                  <span style="color:#f00;font-weight: 500;">We charge £25 extra to check your documents.</span>
+                                  <span style="color:#f00;font-weight: 500;">Note: You will be informed of the special access fee after checking your documents.</span>
+                                  <label for="" class="d-flex align-items-center form-label">Do you require special access requirements during your exam?*</label>
+                                  <div class="form-check" style="margin:10px 0px">
+                                    <input  onchange="insertmybooking()" class="form-check-input special_acces_yes" id="Anxiety_or_Mental_Health" type="checkbox"  name="special_access_requirements[]" value="Anxiety or Mental Health" />
+                                    <label class="form-check-label" for="Anxiety_or_Mental_Health">
+                                    Anxiety or Mental Health
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px">
+                                      <input onchange="insertmybooking()" class="form-check-input special_acces_yes" id="Learning_Difficulties" type="checkbox" name="special_access_requirements[]" value="Learning Difficulties"/>
+                                    <label class="form-check-label" for="Learning_Difficulties">
+                                      Learning Difficulties
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin:10px 0px"> 
+                                      <input onchange="insertmybooking()" class="form-check-input special_acces_yes" id="Medical_Condition" type="checkbox" name="special_access_requirements[]" value="Medical Condition"/>
+                                    <label class="form-check-label" for="Medical_Condition">
+                                      Medical Condition
+                                    </label>
+                                  </div>
+                              </div>
+                             <div class="col-lg-10 mt-2 fv-row" id="evidence_section" style="display:none">
+                                  <label for="UCI" class="form-label">Please select all that apply to the candidates current way of working. </label>
+                                   <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input " id="None" type="checkbox" name="special_acces[]" value="Anxiety" />
+                                        <label class="form-check-label" for="Anxiety">Anxiety</label>
+                                    </div>
+                                    <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input " id="Extra_Time_25" type="checkbox" name="special_acces[]" value="Extra Time 25%" />
+                                        <label class="form-check-label" for="Extra_Time_25">Extra Time 25%</label>
+                                    </div>
+                                    <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input " id="Extra_Time_50" type="checkbox" name="special_acces[]" value="Extra Time 50%" />
+                                        <label class="form-check-label" for="Extra_Time_50">Extra Time 50%</label>
+                                    </div>
+                                     <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input" id="Practical_Assistant" type="checkbox" name="special_acces[]" value="Practical Assistant" />
+                                        <label class="form-check-label" for="Practical_Assistant">Practical Assistant</label>
+                                    </div>
+                                     <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input " id="Laptop" type="checkbox" name="special_acces[]" value="Laptop" />
+                                        <label class="form-check-label" for="Laptop">Laptop</label>
+                                    </div>
+                                    <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input " id="Own_Room" type="checkbox" name="special_acces[]" value="Own Room" />
+                                        <label class="form-check-label" for="Own_Room">Own Room</label>
+                                    </div>
+                                    <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input" id="Home_Invigilation" type="checkbox" name="special_acces[]" value="Home Invigilation" />
+                                        <label class="form-check-label" for="Home_Invigilation">Home Invigilation</label>
+                                    </div>
+                                    <div class="form-check" style="margin:10px 0px">
+                                        <input onchange="insertmybooking()"  class="form-check-input" id="Alternative_Site" type="checkbox" name="special_acces[]" value="Alternative Site" />
+                                        <label class="form-check-label" for="Alternative_Site">Alternative Site</label>
+                                    </div>
+                                    <div class="col-lg-12 mt-2 row mb-10 ">
+                                      <label for="" class="form-label">Please Provide any further details about the candidates current way of working*</label>
+                                      <textarea name="special_acces_evidence" placeholder="Enter details about the candidates current way of working." class="form-control form-control-lg form-control-solid"></textarea>
+                                    </div>
+                                    <div class="col-lg-12 mt-2 row mb-10 fv-row">
+                                        <label for=""  class="form-label">Uploads file(PDF or image file. max size: 5MB)<span class="required"></span> </label>
+                                        <input type="file" name="evidence_documents" accept=".pdf" class="form-control form-control-lg form-control-solid" style="display: inherit !important;">
+                                    </div>
+                              </div>
+                               <div class="col-lg-12 mt-2 fv-row">
+                                <label for="" class="d-flex align-items-center form-label"> If you are not the candidate but the person responsible for the candidate please tell us the relationship.</label>
+                                <div class="form-check" style="margin:10px 0px">
+                                  <input class="form-check-input" type="radio" name="relationship_identification" id="I_am_Booking" onchange="whoiam(this)" value="I am booking my exam"/>
+                                  <label class="form-check-label" for="I_am_Booking">
+                                    I am Booking my Exam
+                                  </label>
+                                </div>
+                                <div class="form-check" style="margin:10px 0px">
+                                    <input  class="form-check-input"  type="radio"  id="some_one_else" onchange="whoiam(this)" name="relationship_identification" value="Someone else"/>
+                                  <label class="form-check-label" for="some_one_else">
+                                   Someone else
+                                  </label>
+                                </div>
+                              </div>
+                            
+                            <div class="col-lg-10 row" id="some_one_else_section" style="display:none; padding-left:10px">
+                                 <div class="col-lg-12 mt-2 fv-row">
+                                  <label for="" class="form-label">Relation</label>
+                                  <input type="text" name="relationship" placeholder="Please enter relationship with candidate" id="relationship" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" value="@if($maindata){{$maindata->relationship}}@endif">
+                                  
+                                </div>
+                            </div>
+                                   
+                            <div class="col-lg-10 row" style=" padding-left:10px">
+                                <div class="col-lg-12 mt-2 fv-row">
+                                  <label for="relation_name" class="form-label"> Your Name</label>
+                                  <input type="text" name="relation_name" id="relation_name" class="form-control form-control-lg form-control-solid" aria-describedby="passwordHelpBlock" value="{{ Auth::user()->name }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mt-2 fv-row">
+                              <label  class="form-label">Signature</label><br>
+                              <div id="sig"></div>
+                              <textarea name="signed" id="signature" style="display:none"></textarea>
+                              <p style="clear: both;"><button type="button" id="clear">Clear</button></p>
+                            </div>
+                          
+                          </div>
+                          <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 3-->
+                        <!--begin::Step 4-->
+                        <div data-kt-stepper-element="content">
+                          <!--begin::Wrapper-->
+                          <div class="w-100">
+                            <!--begin::Heading-->
+                            <div class="pb-10 pb-lg-15">
+                              <!--begin::Title-->
+                              <h2 class="fw-bolder text-dark">Payment Details</h2>
+                              <!--end::Title-->
+                              <!--begin::Notice-->
+                             
+                              <!--end::Notice-->
+                            </div>
+                            <!--end::Heading-->
+                            <!--begin::Input group-->
+                            <div class="row" style="margin:10px 0px">
+                              <div class="col-md-12">
+                                <div class="col-md-12">
+                               <p> Our exam fees can be found on the website or you can call us at 02086162526 We cannot make entries until we have received the full payment. We accept payment via cash, card or bank transfer. The centre does not accept cheques as a method of payment.</p>
+                                <br>
+                                <h5>Refund</h5>
+                               <p>Candidates may wish to withdraw from their examinations by e-mailing or calling us before the ﬁrst deadline entry. We will refund the amount to you after deducting £30.00 per exam as administrative costs. Please note that the centre cannot provide refund if after the ﬁrst entry deadline have passed. We also cannot provide refund if the candidate is absent from the exam.<p>
+                                <br>
+
+                                     <div class="fv-row">
+                                           <input type="checkbox" id="aggre_condition" name="aggre_condition">
+                                         <span for="aggre_condition">I agree to the terms and conditions </span> 
+                                        <a style="color:red" target="_blank" href="{{ url('/terms-condition') }}">
+                                            Terms and Conditions</a>
+                                        <br>
+                                    </div>
+                              </div>
+                          
+                              </div>  
+                            </div>
+                        
+                 
+                          </div>
+                          <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 4-->
+                        <!--begin::Step 5-->
+                        <div data-kt-stepper-element="content">
+                          <!--begin::Wrapper-->
+                          <div class="w-100">
+                            <!--begin::Heading-->
+                            <div class="pb-8 pb-lg-10">
+                              <!--begin::Title-->
+                              <h2 class="fw-bolder text-dark" style="text-transform: none !important;">Almost done! Submit your application now and proceed to make the payment</h2>
+                        
+                            </div>
+                            <!--end::Heading-->
+                            <!--begin::Body-->
+                            <div class="mb-0">
+                              <!--begin::Text-->
+                              <div class="fs-6 text-gray-600 mb-5"></div>
+                              <!--end::Text-->
+                              <!--begin::Alert-->
+                              <!--begin::Notice-->
+                              <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
+                                <!--begin::Icon-->
+                                <!--begin::Svg Icon | path: icons/duotone/Code/Warning-1-circle.svg-->
+                                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                    <rect fill="#000000" x="11" y="7" width="2" height="8" rx="1" />
+                                    <rect fill="#000000" x="11" y="16" width="2" height="2" rx="1" />
+                                  </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <!--end::Icon-->
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-stack flex-grow-1">
+                                  <!--begin::Content-->
+                                  <div class="fw-bold">
+                                Data Protection Act 1998: The information given on this form will be held electronically for administration purposes within Exam Centre London only and will be destroyed when the student leaves permanently. Data will not be disclosed to any third parties to anyone external without your express written consent.
+                                    Private candidates are required to take complete responsibility in being aware of the terms and conditions stated in this form.
+                                    Exam Centre London cannot be held liable for any errors upon the completion of the form.
+                                  </div>
+                                  <!--end::Content-->
+                                </div>
+                                <!--end::Wrapper-->
+                              </div>
+                              
+                                  <div class="row mybyclicking" style="margin:20px 0px">
+                                      <div class="col-md-12">
+                                        <div class="col-md-12 ">
+                                       <p style="color:black; padding-top: 22px;
+                                        font-weight: 600;">By clicking, you confirm to book your exams with Exam Centre London and agree to make the full payment.</p>
+                                        <br>
+                                      
+                                       
+                                      </div>
+                                     
+                                      </div>  
+                                    </div>
+                              <!--end::Notice-->
+                              <!--end::Alert-->
+                            </div>
+                            <!--end::Body-->
+                          </div>
+                          <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 5-->
+                        <!--begin::Actions-->
+                        <div class="d-flex flex-stack pt-15">
+                          <!--begin::Wrapper-->
+                          <div class="mr-2">
+                            <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
+                            <!--begin::Svg Icon | path: icons/duotone/Navigation/Left-2.svg-->
+                            <span class="svg-icon svg-icon-4 me-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                  <polygon points="0 0 24 0 24 24 0 24" />
+                                  <rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000)" x="14" y="7" width="2" height="10" rx="1" />
+                                  <path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997)" />
+                                </g>
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon-->Back</button>
+                          </div>
+                          <!--end::Wrapper-->
+                          <!--begin::Wrapper-->
+                          <div>
+                            <button type="submit" data-kt-stepper-action="submit" onclick="preloading()" class="mainsubmit btn btn-primary btn btn-lg btn-primary me-3">
+                              <span class="indicator-label">Go To Payment Page
+                              <!--begin::Svg Icon | path: icons/duotone/Navigation/Right-2.svg-->
+                              <span class="svg-icon svg-icon-3 ms-2 me-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                    <rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <!--end::Svg Icon--></span>
+                              <span class="indicator-progress">Please wait...
+                              <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                            <button type="button" class="btn btn-lg btn-success" data-kt-stepper-action="next">Continue
+                            <!--begin::Svg Icon | path: icons/duotone/Navigation/Right-2.svg-->
+                            <span class="svg-icon svg-icon-4 ms-1 me-0">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                  <polygon points="0 0 24 0 24 24 0 24" />
+                                  <rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1" />
+                                  <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                </g>
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon--></button>
+                          </div>
+                          <!--end::Wrapper-->
+                        </div>
+                        <!--end::Actions-->
+
+                      </form>
+                      <!--end::Form-->
+                    </div>
+                    <!--end::Stepper-->
+                  </div>
+                  <!--end::Card body-->
+                </div>
+                <!--end::Card-->
+              </div>
+              <!--end::Container-->
+            </div>
+            <!--end::Post-->
+          </div>
+
+
+
+
+
+<script>
+ function mockexams(el){
+        myvalue=el.value;
+        // alert(myvalue);
+  }
+</script>
+
+
+
+
+
+<script>
+     function subjectcheange(el){
+         
+          var s_id=el.value;
+          var index_id = el.id; 
+          var total_amount = $("#total_amount").val();
+          var arr = index_id.split('_');
+          var mainid=arr[1];
+          var seris=$('#exam_series_0').val();
+          if(s_id) {
+             $.ajax({
+                 url: "{{  url('/get/subject-details/individual') }}",
+                 type:"GET",
+                 data: { 
+                    'exam_booking_type':"IGCSE",
+                    'subject_id':s_id,
+                    'exam_booking_series':seris
+
+
+                 },
+                 success:function(data) {
+                    
+                        $('#option_code_'+mainid).empty();
+                        $('#unit_code_'+mainid).val(data.unit_code);
+                        $('#fees_demo_'+mainid).val(data.fees);
+                        $('#fees_'+mainid).val(data.fees);
+                        var amou=parseInt(data.fees);
+
+
+                        var customers = data.option_code_details;
+                            
+                         for (var i = 0; i < customers.length; i++) {
+
+                            var select = document.getElementById("option_code_"+mainid);
+                            var option = document.createElement("option");
+                            option.text = customers[i].option_code;
+                            option.value = customers[i].option_code;
+                        
+                            select.add(option);
+                        }
+                        
+                        
+                        
+                         addmockexam();
+
+                  
+                      
+                        
+                     }
+             });
+         } else {
+             alert('sorry data not found');
+         }
+    }
+
+</script>
+
+
+
+ <script>
+    var i=1;
+    function addmore(){
+        $("#add_more").append('<div class="mb-10 fv-row row"><div class="col-md-2" style="margin-bottom:8px"><label class="form-label mb-3">EXAM BOARD</label><select id="type_'+i+'" onchange="typecheange(this)" data-id="'+i+'"  name="exam_board[]" class="form-select form-select-lg form-select-solid">  @foreach ($allexamboard as $examboard)<option value="{{$examboard}}">{{$examboard}}</option>@endforeach  </select><inout type="hidden" name="type[]"  value="IGCSE"></div><div class="col-md-3"><label class="form-label mb-3">SUBJECT <span style="color:red">*</span></label><select name="subject[]" id="subject_'+i+'" onchange="subjectcheange(this)" data-id="'+i+'" class="form-select form-select-lg form-select-solid subject"><option selected disabled>Select</option>@foreach($allsub as $sub)<option value="{{ $sub->id }}">{{$sub->subject_name}}</option>@endforeach</select></div><div class="col-md-2"><label class="form-label mb-3">UNIT CODE</label><input type="text" class="form-control form-control-lg form-control-solid" name="unit_code[]" id="unit_code_'+i+'" /></div><div class="col-md-2"><label class="form-label mb-3">OPTION CODE</label><select  class="form-select form-select-lg form-select-solid"  name="option_code[]" id="option_code_'+i+'"><option value=""></option></select></div><div class="col-md-2"><label class="form-label mb-3">FEES</label><input type="text" class="form-control form-control-lg form-control-solid" id="fees_demo_'+i+'" disabled/><input type="hidden" class="amount_fees" name="fees[]" id="fees_'+i+'"/></div> <div class="col-md-1 mt-5"><label class="form-label mb-3"></label><a style="cursor:pointer;color:red;padding:5px 4px" onclick="deleterow(this)"><i style="color:red" class="fa fa-times"></i></a> </div>  </div>');
+      i++
+    }
+    
+  </script>
+  
+  
+  <script>
+    function whoiam(el){
+        
+        var mainid=el.id;
+       if(mainid=='some_one_else'){
+           $("#some_one_else_section").show();
+          
+       }
+        if(mainid=='I_am_Booking'){
+           $("#some_one_else_section").hide();
+          
+       }
+        
+    }
+</script>
+  
+  
+<script>
+  
+  function insertmybooking(){
+
+            var main_exam_type = $("#main_exam_type").val();
+            var user_id = $("#user_id").val();
+            var booking_id = $("#booking_id").val();
+            var first_name=$("#first_name").val();
+            var middle_name=$("#middle_name").val();
+            var last_name=$("#last_name").val();
+            var email=$("#email").val();
+            var phone=$("#phone").val();
+            var emergency_contact_number=$("#emergency_contact_number").val();
+            var address_line_1=$("#address_line_1").val();
+            var address_line_2=$("#address_line_2").val();
+            var date_of_birth=$("#date_of_birth").val();
+            var postcode=$("#postcode").val();
+            var city=$("#city").val();
+            var gender = $("input[name='gender']:checked").val();
+            var candidatebefore = $("input[name='has_a_candidate']:checked").val();
+            var uci = $("input[name='uci']:checked").val();
+            var uln = $("input[name='uln']:checked").val();
+            var has_a_candidate_number = $("#has_a_candidate_number").val();
+            var uci_number = $(".uci_number").val();
+            var uln_number = $(".uln_number").val();
+
+            var type_of_learner =  $("input[name='type_of_learner']:checked").val();
+            var retaking_exams = $("input[name='retaking_exams']:checked").val();
+            var retaking_exams_name = $("#retaking_exams_name").val();
+            var caring_forwad = $("input[name='caring_forwad']:checked").val();
+            var caring_forwad_details = $("#caring_forwad_details").val();
+
+            var special_acces =$("input[name='special_acces']:checked").val();
+            var special_acces_evidence = $("#special_acces_evidence").val();
+
+            var mental_conditions = $("input[name='mental_conditions']:checked").val();
+            var mental_condition_details = $("#mental_condition_details").val();
+
+            var condition_disability =$("input[name='condition_disability']:checked").val();
+            var condition_disability_details = $("#condition_disability_details").val();
+            var relationship = $("#relationship").val();
+            var relation_name = $("#relation_name").val();
+            $.ajax({
+
+               url: "{{  url('/') }}",
+               type:"GET",
+               data:{
+
+                  'type_of_learner':type_of_learner,
+                  'user_id':user_id,
+                  'retaking_exams':retaking_exams,
+                  'retaking_exams_name':retaking_exams_name,
+                  'caring_forwad':caring_forwad,
+                  'caring_forwad_details':caring_forwad_details,
+                  'special_acces':special_acces,
+                  'special_acces_evidence':special_acces_evidence,
+                  'mental_conditions':mental_conditions,
+                  'mental_condition_details':mental_condition_details,
+                  'condition_disability':condition_disability,
+                  'condition_disability_details':condition_disability_details,
+                  'relationship':relationship,
+                  'relation_name':relation_name,
+               
+                  'main_exam_type':main_exam_type,
+                  'booking_id': booking_id,
+                  'first_name':first_name,
+                  'middle_name':middle_name,
+                  'last_name':last_name,
+                  'emergency_contact_number':emergency_contact_number,
+                  'phone':phone,
+                  'email':email,
+                  'address_line_1':address_line_1,
+                  'address_line_2':address_line_2,
+                  'date_of_birth':date_of_birth,
+                  'postcode':postcode,
+                  'city':city,
+                  'gender':gender,
+                  'candidatebefore':candidatebefore,
+                  'has_a_candidate_number':has_a_candidate_number,
+                  'uci':uci,
+                  'uci_number':uci_number,
+                  'uln':uln,
+                  'uln_number':uln_number,
+
+               },
+               success:function(data) {
+                   
+                  
+
+                }
+           });
+
+  }
+</script>
+
+<script>
+ $(function() {
+$( "#datepicker" ).datepicker();
+});
+
+</script>
+
+
+  
+  
+  
+  
+  <script>
+function deleterow(em) {
+ 
+     
+   var okkk=$(em).closest(".row").find('.amount_fees').val();
+   var oldamount=$(".total_amount").val();
+   var finalamount= oldamount - okkk ;
+   $(".total_amount").val(finalamount)
+
+   $(em).closest(".row").remove();
+       addmockexam();
+    // countamout();
+
+}
+</script>
+
+
+
+
+
+
+
+  <script>
+  $(document).ready(function(){
+
+    $("#yes").click(function(){
+      $("#uci_section").show();
+    });
+
+    $("#no").click(function(){
+      $("#uci_section").hide();
+    });
+
+    $("#uln_yes").click(function(){
+      $("#uln_section").show();
+    });
+
+    $("#uln_no").click(function(){
+      $("#uln_section").hide();
+    });
+     // retaking exam
+      $("#retaking_exams_yes").click(function(){
+        $("#retaking_section").show();
+      });
+
+      $("#retaking_exams_no").click(function(){
+        $("#retaking_section").hide();
+      });
+
+     // 
+      // caring forwad exam
+      $("#caring_forwad_yes").click(function(){
+        $("#caring_forwad_section").show();
+        $("#caring_forwad_section_pdf").show();
+        
+      });
+
+      $("#caring_forwad_no").click(function(){
+        $("#caring_forwad_section").hide();
+        $("#caring_forwad_section_pdf").hide();
+      });
+     //
+      // caring forwad exam
+       // caring forwad exam
+       $(".special_acces_yes").click(function(){
+        $("#evidence_section").show();
+        
+        
+        $('#None').prop('checked', false);
+      });
+
+      $(".special_acces_no").click(function(){
+        $("#evidence_section").hide();
+        
+        
+        $('#Anxiety_or_Mental_Health').prop('checked', false); // Checks it
+        $('#Learning_Difficulties').prop('checked', false); // Unchecks it
+        $('#Medical_Condition').prop('checked', false); //    Unchecks it
+
+     
+      });
+
+     //  mental_conditions_section
+
+     // mental_conditions_section
+
+        $("#mental_conditions_yes").click(function(){
+        $("#mental_conditions_section").show();
+      });
+
+      $("#mental_conditions_no").click(function(){
+        $("#mental_conditions_section").hide();
+      });
+
+       // mental_conditions_section
+
+        $("#condition_disability_yes").click(function(){
+          $("#condition_disability_section").show();
+        });
+
+      $("#condition_disability_no").click(function(){
+        $("#condition_disability_section").hide();
+      });
+       
+
+        $("#card_transfer").click(function(){
+          $("#cardsection").show();
+          $("#banksection").hide();
+        });
+        $("#bank_transfer").click(function(){
+          $("#cardsection").hide();
+          $("#banksection").show();
+        });
+
+// before 
+
+    $("#has_a_candidate_yes").click(function(){
+          $("#has_a_candidate_section").show();
+        });
+
+      $("#has_a_candidate_no").click(function(){
+        $("#has_a_candidate_section").hide();
+      });
+
+
+
+      $("#mock_test_yes").click(function(){
+        $("#papers_section").show();
+        $("#marked_section").show();
+      });
+
+      $("#mock_test_no").click(function(){
+         $("#papers_section").hide();
+         $("#marked_section").hide();
+      });
+       
+
+
+
+  });
+  </script>
+
+<script>
+    function editimageremove(em) {
+        $("#editimage").hide();
+        $("#thumbnail_img").show();
+    }
+</script>
+    <script>
+      $(document).ready(function() {
+          $('.js-example-basic-multiple').select2();
+      });
+    </script>
+    
+  <script>
+   function myseris(el){
+   
+        $("#add_more").empty();
+        $('#unit_code_0').val('');
+        $('#option_code_0').empty();
+        $('#fees_demo_0').val('');
+        $('#fees_0').val('');
+        $('#subject_0').empty();
+        
+        
+        var type_id=$("#type_0").val();
+        
+        var series_id =$("#exam_series_0").val();
+        
+          if(type_id) {
+             $.ajax({
+                 url: "{{  url('/get/igcse/subject/all/') }}/"+type_id+'/'+series_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+                   
+                       
+                        $('#subject_0').empty();
+                        $('#subject_0').append('<option selected disabled>Select</option>');
+                        $.each(data,function(index,districtObj){
+
+                         $('#subject_0').append('<option value="' + districtObj.id + '">'+districtObj.subject_name+'</option>');
+                         
+                       });
+                            if(data==null){
+                                console.log("null")
+                            }
+                        $('#unit_code_0').val('');
+                        $('#option_code_0').empty();
+                        $('#fees_demo_0').val('');
+                        $('#fees_0').val('');
+                        
+
+                     }
+             });
+         } else {
+             alert('sorry data not found');
+         }
+    
+   }
+</script>
+  <script>
+    function typecheange(el){
+          var type_id=el.value;
+          var index_id = el.id; 
+          var arr = index_id.split('_');
+          var mainid=arr[1];
+          var series_id =$("#exam_series_0").val();
+          
+          if(type_id) {
+             $.ajax({
+                 url: "{{  url('/get/igcse/subject/all/') }}/"+type_id+'/'+series_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+                   
+
+                        $('#subject_'+mainid).empty();
+                        $('#subject_'+mainid).append('<option selected disabled>Select</option>');
+                        $.each(data,function(index,districtObj){
+
+                         $('#subject_'+mainid).append('<option value="' + districtObj.id + '">'+districtObj.subject_name+'</option>');
+                         
+                       });
+
+                        $('#unit_code_'+mainid).val('');
+                        $('#option_code_'+mainid).empty();
+                        $('#fees_demo_'+mainid).val('');
+                        $('#fees_'+mainid).val('');
+                        
+
+                     }
+             });
+         } else {
+             alert('sorry data not found');
+         }
+    }
+  
+
+  </script>
+  <script>
+
+    function addmockexam(){
+
+      $('#papers_section').empty();
+
+            $.ajax({
+                 url: "{{  url('/get/gcse-mockexams/subject') }}",
+                 type:"GET",
+                data:$('#kt_create_account_form').serialize(),
+                 success:function(data) { 
+                    
+                     $('#papers_section').html(data);
+
+
+                  }
+             });
+
+
+
+
+
+    }
+  </script>
+
+ 
+
+
+
+
+
+    <script src="{{asset('backend')}}/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="{{asset('backend')}}/assets/js/scripts.bundle.js"></script>
+     <script src="{{asset('backend')}}/assets/js/custom/modals/update-account.js"></script>
+    <script src="{{asset('backend')}}/assets/js/custom/widgets.js"></script>
+    <script src="{{asset('backend')}}/assets/js/custom/apps/chat/chat.js"></script>
+    <script src="{{asset('backend')}}/assets/js/custom/modals/create-app.js"></script>
+    <script src="{{asset('backend')}}/assets/js/custom/modals/upgrade-plan.js"></script>
+
+
+
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Help Section</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       Option code/ Help Text Here or pdf or Docx File ..........................................
+        ................
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalLongss" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Option Code Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @php
+        $alloptioncode=App\Models\Subject::where('exam_type','IGCSE')->where('has_option_code',1)->orderBy('id','DESC')->get();
+        @endphp
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Level</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Option Code & Details</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($alloptioncode as $yes => $code)
+            <tr>
+              <th scope="row">{{++ $yes}}</th>
+              <th>{{ $code->exam_type }}</th>
+              <td>{{$code->subject_name}}</td>
+              <td>
+                <table class="table">
+                  <tbody>
+                    @foreach(json_decode($code->option_code_details) as $opcode)
+                    <tr>
+                      <td>{{$opcode->option_code}}</td>
+                      <td>{{$opcode->description}}</td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </td>
+              
+            </tr>
+            @endforeach
+           
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalLongpp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Payment Policy</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       Payment Policy text here.................................
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">What is a UCI?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Every student has one 13-character code that’s unique to them. It’s used to collect results for each student across time and different exam boards, schools or colleges. All students need a UCI. If you have sat exams recently at another venue, they will have your UCI, or it will appear on your entry and results information from them. You will need your UCI if you are resitting a qualification. We can issue new UCI’s for new learners.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="uln_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">What is a ULN?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Every student has one 10-character code that’s unique to them. It’s used to collect results for each student across time and different exam boards, schools or colleges. All students need a ULN. If you have sat exams recently at another venue, they will have your ULN, or it will appear on your entry and results information from them. You will need your UCI if you are resitting a qualification. We can issue new ULN’s for new learners.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+var uciminLength = 13;
+var ucimaxLength = 13;
+$(document).ready(function(){
+    $('.uci_number').on('keydown keyup change', function(){
+        var char = $(this).val();
+        var charLength = $(this).val().length;
+        if(charLength < uciminLength){
+            $('#warning-message').text('Length is short, minimum '+uciminLength+' required.');
+        }else if(charLength > ucimaxLength){
+            $('#warning-message').text('Length is not valid, maximum '+ucimaxLength+' allowed.');
+            $(this).val(char.substring(0, ucimaxLength));
+        }else{
+            $('#warning-message').text('');
+        }
+    });
+});
+</script>
+<script>
+var minLength = 10;
+var maxLength = 10;
+$(document).ready(function(){
+    $('.uln_number').on('keydown keyup change', function(){
+        var char = $(this).val();
+        var charLength = $(this).val().length;
+        if(charLength < minLength){
+            $('#new-message').text('Length is short, minimum '+minLength+' required.');
+        }else if(charLength > maxLength){
+            $('#new-message').text('Length is not valid, maximum '+maxLength+' allowed.');
+            $(this).val(char.substring(0, maxLength));
+        }else{
+            $('#new-message').text('');
+        }
+    });
+});
+</script>
+<script>
+var numberminLength = 4;
+var numbermaxLength = 4;
+$(document).ready(function(){
+    $('#has_a_candidate_number').on('keydown keyup change', function(){
+        var char = $(this).val();
+        var charLength = $(this).val().length;
+        if(charLength < numberminLength){
+            $('#candidate_number_new_message').text('Length is short, minimum '+numberminLength+' required.');
+        }else if(charLength > numbermaxLength){
+            $('#candidate_number_new_message').text('Length is not valid, maximum '+numbermaxLength+' allowed.');
+            $(this).val(char.substring(0, numbermaxLength));
+        }else{
+            $('#candidate_number_new_message').text('');
+        }
+    });
+});
+</script>
+<script>
+            const myDatePicker = MCDatepicker.create({ 
+                el: '#date_of_birth',
+                dateFormat: 'DD-MMM-YYYY',
+            });
+        </script>
+          <script>
+            const mydDatePicker = MCDatepicker.create({ 
+                el: '#exampletwo',
+                dateFormat: 'DD-MMM-YYYY',
+            });
+        </script>
+        <style>
+          .logo{
+                margin-left:20px!important;
+          }
+      ul.list {
+    margin-left: -24px !important;
+}
+        </style>
+        
+        
+        
+<script>
+	
+								function initImageUpload(box) {
+									let uploadField = box.querySelector('.image-upload');
+								  
+									uploadField.addEventListener('change', getFile);
+								  
+									function getFile(e){
+									  let file = e.currentTarget.files[0];
+									  checkType(file);
+									}
+									
+									function previewImage(file){
+									  let thumb = box.querySelector('.js--image-preview'),
+										  reader = new FileReader();
+								  
+									  reader.onload = function() {
+										thumb.style.backgroundImage = 'url(' + reader.result + ')';
+									  }
+									  reader.readAsDataURL(file);
+									  thumb.className += ' js--no-default';
+									}
+								  
+									function checkType(file){
+									  let imageType = /image.*/;
+									  if (!file.type.match(imageType)) {
+										throw 'Datei ist kein Bild';
+									  } else if (!file){
+										throw 'Kein Bild gewählt';
+									  } else {
+										previewImage(file);
+									  }
+									}
+									
+								  }
+								  
+								  // initialize box-scope
+								  var boxes = document.querySelectorAll('.box');
+								  
+								  for (let i = 0; i < boxes.length; i++) {
+									let box = boxes[i];
+									initDropEffect(box);
+									initImageUpload(box);
+								  }
+								  
+								  
+								  
+								  /// drop-effect
+								  function initDropEffect(box){
+									let area, drop, areaWidth, areaHeight, maxDistance, dropWidth, dropHeight, x, y;
+									
+									// get clickable area for drop effect
+									area = box.querySelector('.js--image-preview');
+									area.addEventListener('click', fireRipple);
+									
+									function fireRipple(e){
+									  area = e.currentTarget
+									  // create drop
+									  if(!drop){
+										drop = document.createElement('span');
+										drop.className = 'drop';
+										this.appendChild(drop);
+									  }
+									  // reset animate class
+									  drop.className = 'drop';
+									  
+									  // calculate dimensions of area (longest side)
+									  areaWidth = getComputedStyle(this, null).getPropertyValue("width");
+									  areaHeight = getComputedStyle(this, null).getPropertyValue("height");
+									  maxDistance = Math.max(parseInt(areaWidth, 10), parseInt(areaHeight, 10));
+								  
+									  // set drop dimensions to fill area
+									  drop.style.width = maxDistance + 'px';
+									  drop.style.height = maxDistance + 'px';
+									  
+									  // calculate dimensions of drop
+									  dropWidth = getComputedStyle(this, null).getPropertyValue("width");
+									  dropHeight = getComputedStyle(this, null).getPropertyValue("height");
+									  
+									  // calculate relative coordinates of click
+									  // logic: click coordinates relative to page - parent's position relative to page - half of self height/width to make it controllable from the center
+									  x = e.pageX - this.offsetLeft - (parseInt(dropWidth, 10)/2);
+									  y = e.pageY - this.offsetTop - (parseInt(dropHeight, 10)/2) - 30;
+									  
+									  // position drop and animate
+									  drop.style.top = y + 'px';
+									  drop.style.left = x + 'px';
+									  drop.className += ' animate';
+									  e.stopPropagation();
+									  
+									}
+								  }
+								  
+							</script>      
+              
+              
+              <script>
+                $("#Need_Special_Access_no").click(function(){
+                       $("#update_special_section").hide();
+                       $("#evidence_section").hide();
+                     });
+              
+                   $("#Need_Special_Access_yes").click(function(){
+                     $("#update_special_section").show();
+                     $("#evidence_section").show();
+              
+                   });
+              </script>
+              
+              <script>
+  $(document).ready(function(){
+    $("#kt_create_account_form").on("submit", function(){
+      
+      $("#preloader").fadeIn();
+    });
+  });
+  </script>
+     <script>
+
+  function addExamtype(){
+    var student_id=$("#user_id").val();
+    var main_exam=$("#main_exam_type").val();
+  
+  
+    $.ajax({
+            url: "{{  url('get/insert-exam-type/update') }}",
+            type:"GET",
+            data:{
+              'student_id':student_id,
+              'main_exam':main_exam,
+            },
+            success:function(data) {
+                console.log(data);
+            }
+      });
+  
+  
+  }
+  addExamtype();
+  
+  </script>         
+@endsection

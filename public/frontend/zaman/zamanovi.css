@@ -1,0 +1,289 @@
+@media (max-width: 575.98px) {
+    a.paybtn {
+        padding: 10px 5px !important;
+        font-size: 12px !important;
+    }
+
+    .radio_contain .radio-label-main {
+        font-size: 9px !important;
+    }
+
+    .radio_contain .radio {
+
+        padding: 5px 9px !important;
+     
+        margin-right: 2px !important;
+
+    }
+    .radio input[type=radio]+.radio-label-main:before {
+        
+       
+        top: 1px !important;
+        margin-right: 6px !important;
+        width: 15px !important;
+    height: 15px !important;
+  
+    top: 2px !important;
+      
+    }
+    .major_part h4 {
+        font-size: 12px !important;
+      
+    }
+}
+
+
+
+@media (max-width: 767.98px) {}
+
+
+#payment_method {
+    padding: 40px 0px;
+}
+
+section.sltcn-banner-section {
+    background: #f3fef9;
+    padding: 40px 0px;
+
+    text-align: center;
+}
+
+.div_left {
+    background: #fbfbfb;
+    padding: 40px;
+    border-radius: 5px;
+}
+
+.div_right {
+
+    padding: 40px;
+    border: 1px dotted #43b97d;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    color: #fff;
+    background: #71d6c5 !important;
+    border-color: transparent !important;
+}
+
+span.cpn {
+    font-weight: 600;
+    position: relative;
+    bottom: 3px;
+    font-size: 12px;
+}
+
+input#coupon {
+    border: transparent;
+    margin-right: 6px;
+    padding: 7px;
+}
+
+.pmnt_smry h4 {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #fff;
+    background: #43b97d;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
+.exam_list h5 {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.payment_Alert {
+    background: #dee2e6;
+    padding: 20px;
+    border-radius: 5px;
+
+    margin-bottom: 20px;
+}
+
+.payment_Alert h5 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.payment_Alert span {
+    color: #28a745;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.exam_list ul li {
+    display: block;
+    color: #000;
+    border-bottom: 1px dotted #43b97d;
+    padding: 5px 0px;
+}
+
+.exam_list {
+    margin-bottom: 20px;
+    font-size: 14px;
+    margin-top: 30px !important;
+}
+
+.exam_list span {
+    font-size: 14px;
+}
+
+.total_pmnt {
+    background: #43b97d;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border-bottom: 5px solid #28a745;
+}
+
+.total_pmnt h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.total_pmnt span {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.div_right h4 {
+    color: #43b97d;
+    font-weight: 600;
+    font-size: 18px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    border-bottom: 1px solid #43b97d;
+}
+
+.tran_detail h5 {
+    color: #06142d;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+a.paybtn {
+    background: #71d6c5;
+    padding: 15px 80px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.tran_detail h5 {
+    color: #06142d;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+
+}
+
+.tran_detail p {
+    color: #06142d;
+    font-size: 14px;
+}
+
+.tran_detail_sec {
+    margin-top: 10px;
+}
+
+.tran_detail_sec h5 {
+    color: #06142d;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ecl_ac {
+    margin-bottom: 20px;
+}
+
+.ecl_ac h5 {
+    margin-bottom: 10px;
+}
+
+.ecl_ac span {
+    color: #06142d;
+}
+
+.tans_de {
+    color: #06142d;
+    /* font-weight: 600; */
+}
+
+.f2 {
+    font-weight: 600;
+}
+
+span.ref {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.upld_btn button.btn.btn-success {
+    font-weight: 600;
+    padding: 12px 0px;
+    border-radius: 5px;
+    width: 70%;
+    text-align: center;
+    background: #71d6c5;
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+    border: transparent;
+}
+
+.card_sec img {
+    width: 35%;
+}
+
+.card_sec {
+
+    padding: 5px 0px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+
+.exam_list .table {
+
+    padding: 5px !important;
+}
+
+tr.br_top2 {
+    background-color: #ededed;
+    color: #43b97d;
+}
+
+.major_part {
+    background: #f7f7f7;
+    padding: 20px 40px;
+    border-radius: 5px;
+    margin-bottom: 40px;
+}
+
+.major_part h4 {
+    font-size: 14px;
+    color: #000000;
+
+}
+
+.radio_contain {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #43b97d;
+}
+
+
+
+
+
+
