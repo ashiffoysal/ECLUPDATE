@@ -12,7 +12,43 @@
 					<span class="menu-title">DASHBOARD</span>
 				</a>
 			</div>
-				<div class="menu-item">
+
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('admin.allseries.candiates*') ? 'active' : '' }}" href="{{route('admin.allseries.candiates')}}">
+					<span class="menu-icon">
+						<i class="bi bi-house fs-3"></i>
+					</span>
+					<span class="menu-title">All Subjects Candidates</span>
+				</a>
+			</div>
+
+			<div data-kt-menu-trigger="click" class="menu-item menu-accordion  @if(request()->routeIs('admin.examrequest.gcse*')) here show @elseif(request()->routeIs('admin.examconfirmlist.gccse*')) here show @endif"> 
+				<span class="menu-link">
+					<span class="menu-icon">
+						<i class="bi bi-layers fs-3"></i>
+					</span>
+					<span class="menu-title">Series-Wise Candidates</span>
+					<span class="menu-arrow"></span>
+				</span>
+				<div class="menu-sub menu-sub-accordion menu-active-bg">
+					
+					@foreach ($allseries as $seriesName)
+						<div class="menu-item">
+							<a 
+								class="menu-link {{ request()->routeIs('admin.examseries-wise.candidates') && request()->route('id') == $seriesName->id ? 'active' : '' }}" 
+								href="{{ route('admin.examseries-wise.candidates', $seriesName->id) }}"
+							>
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">{{ $seriesName->exam_name }}</span>
+							</a>
+						</div>
+					@endforeach
+				</div>
+			</div>
+
+			<div class="menu-item">
 				<div class="menu-content pt-8 pb-2">
 					<span class="menu-section text-muted text-uppercase fs-8 ls-1">Exam Section</span>
 				</div>
@@ -51,8 +87,7 @@
 			</div>
 			
 			
-			<div data-kt-menu-trigger="click" class="menu-item menu-accordion  @if(request()->routeIs('admin.examrequest.gcse*')) here show @elseif(request()->routeIs('admin.examconfirmlist.gccse*')) here show @endif">
-			    
+			<div data-kt-menu-trigger="click" class="menu-item menu-accordion  @if(request()->routeIs('admin.examrequest.gcse*')) here show @elseif(request()->routeIs('admin.examconfirmlist.gccse*')) here show @endif"> 
 				<span class="menu-link">
 					<span class="menu-icon">
 						<i class="bi bi-layers fs-3"></i>
@@ -447,8 +482,6 @@
 			
 			
 			@if(Auth::user()->subjects==1)
-
-
 			<div class="menu-item">
 				<div class="menu-content pt-8 pb-2">
 					<span class="menu-section text-muted text-uppercase fs-8 ls-1">SUBJECT SECTION </span>
@@ -594,7 +627,7 @@
 					<span class="menu-icon">
 						<i class="bi bi-house fs-3"></i>
 					</span>
-					<span class="menu-title">RECEIVE PAYMENT</span>
+					<span class="menu-title">RECEIVE PAYMENT</span><span class="badge badge-light-danger">{{ $allSeen }}</span>
 				</a>
 			</div>
 				<div class="menu-item">

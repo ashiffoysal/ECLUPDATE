@@ -377,6 +377,25 @@
                                 </div>
                             </div>
                           </div>
+
+    @php
+        $mockprice = $data->mock_test == 'mock_test_yes' ? $data->mock_amount : 0;
+        $mainprice = 0;
+
+        if (!empty($data->exam_information)) {
+            $examInfo = json_decode($data->exam_information, true);
+            $subjectIds = array_column($examInfo, 'subject');
+
+            $subjects = App\Models\Subject::whereIn('id', $subjectIds)->get()->keyBy('id');
+
+            $mainprice = array_sum(
+                array_map(function ($mainsub) use ($subjects) {
+                    return optional($subjects[$mainsub['subject']])->fees ?? 0;
+                }, $examInfo),
+            );
+        }
+    @endphp
+
                           <div class="exam_booking_details_contents">
                             <div class="ebdc_basic_information">
                               
@@ -396,6 +415,8 @@
                                         <table>
                                             <thead>
                                                 <tr>
+                                                  
+                                                  <th>Total Amount</th>
                                                   <th>Paid Amount</th>
                                                   <th>Due Amount</th>
                                                   <th>Discount</th>
@@ -407,9 +428,10 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                  
+                                                  <td>£ {{ $data->ucas_reference_fee + $data->special_access_initial_fees + $data->total_amount - $data->discount_amount + $data->Installment_fee + $data->admin_specialaccess_amount }}</td>
                                                   <td>£ {{ $data->paid_amount }}</td>
-                                                  <td>£ {{ $data->due_amount }}</td>
-                                                  {{-- <td>£ {{ $data->ucas_reference_fee + $data->special_access_initial_fees + $data->total_amount - $data->discount_amount + $data->Installment_fee + $data->admin_specialaccess_amount - $data->paid_amount}}</td> --}}
+                                                  <td>£ {{ $data->ucas_reference_fee + $data->special_access_initial_fees + $data->total_amount - $data->discount_amount + $data->Installment_fee + $data->admin_specialaccess_amount - $data->paid_amount}}</td>
                                                   <td>£ {{  $data->discount_amount }}</td>
                                                   <td>{{ $data->booking_id }}</td> 
                                                   <td class="text-danger">{{ $data->main_exam_type }}</td>

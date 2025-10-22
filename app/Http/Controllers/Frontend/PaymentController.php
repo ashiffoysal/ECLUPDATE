@@ -20,6 +20,8 @@ use App\Mail\ExamBooking;
 use App\Mail\PaymentInvoice;
 use App\Mail\ExamBookingDetailsForAdmin;
 use DB;
+use App\Models\Subject;
+use App\Models\MockTest;
 
 class PaymentController extends Controller
 {
@@ -31,35 +33,114 @@ class PaymentController extends Controller
         
         
         
-           public function session(Request $request)
+    public function session(Request $request)
     {
+        if($request->payment_type=='mock'){
+            $booking=ExamRequest::where('id',$request->main_id)->select(['mock_amount','ucas_reference_fee','id','booking_id','is_mock_fees_paid'])->first();
         
-        
-       Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            if($booking->is_mock_fees_paid==0){
 
-        $session = \Stripe\Checkout\Session::create([
-            'line_items'  => [
-                    [
-                        'price_data' => [
-                            'currency'     => 'gbp',
-                            'product_data' => [
-                                'name' =>  "ECL Booking ID-".$request->booking_id,
+                Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+                $session = \Stripe\Checkout\Session::create([
+                    'line_items'  => [
+                            [
+                                'price_data' => [
+                                    'currency'     => 'gbp',
+                                    'product_data' => [
+                                        'name' =>  "ECL Booking ID-".$request->booking_id,
+                                    ],
+                                    'unit_amount'  => $booking->mock_amount*100,
+                                    
+
+
+                                ],
+                                'quantity'   => 1,
                             ],
-                            'unit_amount'  => $request->amount*100,
-                            
-
-
-                        ],
-                        'quantity'   => 1,
                     ],
-            ],
-            'mode'        => 'payment',
-            'success_url' => url('mybooked/'.$request->booking_id.'/'.$request->amount.'/success?session_id={CHECKOUT_SESSION_ID}'),
-            'cancel_url'  => route('checkout'),
+                    'mode'        => 'payment',
+                    'success_url' => url('mymock-fees-paid/'.$request->booking_id.'/'.$booking->mock_amount.'/success?session_id={CHECKOUT_SESSION_ID}'),
+                    'cancel_url'  => route('checkout'),
 
-        ]);
+                ]);
 
-        return redirect()->away($session->url);
+                return redirect()->away($session->url);
+
+
+            }else{
+                Alert::toast('Already Mock Fees Paid', 'success');
+                return redirect()->back();
+            }
+
+
+
+        }else{
+
+
+                $data=ExamRequest::where('id',$request->main_id)->first();
+
+
+            
+                $mockprice = $data->mock_test == 'mock_test_yes' ? $data->mock_amount : 0;
+                $mainprice = 0;
+
+                if (!empty($data->exam_information)) {
+                    $examInfo = json_decode($data->exam_information, true);
+                    $subjectIds = array_column($examInfo, 'subject');
+
+                    $subjects = Subject::whereIn('id', $subjectIds)->get()->keyBy('id');
+
+                    $mainprice = array_sum(
+                        array_map(function ($mainsub) use ($subjects) {
+                            return optional($subjects[$mainsub['subject']])->fees ?? 0;
+                        }, $examInfo),
+                    );
+
+                $examInfo = json_decode($data->exam_information, true);
+                $mainprice = 0;
+
+
+                if (!empty($examInfo)){
+                    $subjectIds = array_column($examInfo, 'subject');
+                    $subjects = Subject::whereIn('id', $subjectIds)->pluck('id')->toArray();
+
+                    $mainprice = array_sum(
+                        array_map(fn($mainsub) => in_array($mainsub['subject'], $subjects) ? $mainsub['fees'] : 0, $examInfo),
+                    );
+                }
+                
+                $amount=$data->ucas_reference_fee + $mainprice + $mockprice - $data->discount_amount + $data->admin_specialaccess_amount + $data->special_access_initial_fees-$data->paid_amount;
+
+
+                Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+                    $session = \Stripe\Checkout\Session::create([
+                        'line_items'  => [
+                                [
+                                    'price_data' => [
+                                        'currency'     => 'gbp',
+                                        'product_data' => [
+                                            'name' =>  "ECL Booking ID-".$request->booking_id,
+                                        ],
+                                        'unit_amount'  => $amount*100,
+                                        
+
+
+                                    ],
+                                    'quantity'   => 1,
+                                ],
+                        ],
+                        'mode'        => 'payment',
+                        'success_url' => url('mybooked/'.$request->booking_id.'/'.$amount.'/success?session_id={CHECKOUT_SESSION_ID}'),
+                        'cancel_url'  => route('checkout'),
+
+                    ]);
+
+                    return redirect()->away($session->url);
+
+                }
+
+         }
     }
 
     public function success(Request $request,$booking_id,$amount)
@@ -67,12 +148,15 @@ class PaymentController extends Controller
        
        try {
 
+
+                        $data=ExamRequest::where('booking_id',$request->booking_id)->select(['paid_amount','id','booking_id'])->first();
+                            $newPaidAmount = $data->paid_amount + $amount;
                         $update=ExamRequest::where('booking_id',$request->booking_id)->update([
                             'is_paid'=>1,
                             'is_paid_verify'=>1,
                             'payment_option'=>'Card',
                             'transection_id'=>$request->session_id,
-                            'paid_amount'=>$amount,
+                            'paid_amount'=>$newPaidAmount,
                             'due_amount'=>0,
                         ]);
          
@@ -80,7 +164,7 @@ class PaymentController extends Controller
                             'order_id'=>$booking_id,
                             'user_id'=>Auth::user()->id,
                             'amount_type'=>'Dabit',
-                            'amount'=>$amount,
+                            'amount'=>$newPaidAmount,
                             'paid_by'=>'Card',
                             'is_verified'=>1,
                             'transection_id'=>$request->session_id,
@@ -102,6 +186,84 @@ class PaymentController extends Controller
           echo json_encode(['error' => $e->getMessage()]);
         }
     }
+
+
+    public function mocksuccess(Request $request,$booking_id,$amount){
+         try {
+ 
+                        $data=ExamRequest::where('booking_id',$booking_id)->select(['paid_amount','id','booking_id'])->first();
+                        $examInfo = json_decode($data->exam_information, true);
+                        $mainprice = 0;
+                        if (!empty($examInfo)){
+                            $subjectIds = array_column($examInfo, 'subject');
+                            $subjects = App\Models\Subject::whereIn('id', $subjectIds)->pluck('id')->toArray();
+
+                            $mainprice = array_sum(
+                                array_map(fn($mainsub) => in_array($mainsub['subject'], $subjects) ? $mainsub['fees'] : 0, $examInfo),
+                            );
+                        }
+
+                         $mockprice = $data->mock_test == 'mock_test_yes' ? $data->mock_amount : 0;
+                            $mainprice = 0;
+
+                            if (!empty($data->exam_information)) {
+                                $examInfo = json_decode($data->exam_information, true);
+                                $subjectIds = array_column($examInfo, 'subject');
+
+                                $subjects = App\Models\Subject::whereIn('id', $subjectIds)->get()->keyBy('id');
+
+                                $mainprice = array_sum(
+                                    array_map(function ($mainsub) use ($subjects) {
+                                        return optional($subjects[$mainsub['subject']])->fees ?? 0;
+                                    }, $examInfo),
+                                );
+                            }
+                        $remaining_amount=$data->ucas_reference_fee + $mainprice + $mockprice - $data->discount_amount + $data->admin_specialaccess_amount + $data->special_access_initial_fees - $amount ;
+                        $update=ExamRequest::where('booking_id',$request->booking_id)->update([
+                            'is_mock_fees_paid'=>1,
+                            'is_mockpaid_verify'=>1,
+                            'mock_payment_option'=>'Card',
+                            'mock_transection_id'=>$request->session_id,
+                            'paid_amount'=>$amount,
+                            'due_amount'=>$remaining_amount,
+                        ]);
+
+                        $update=MockTest::where('booking_id',$request->booking_id)->update([
+                            'is_paid'=>1,
+                            'paid_amount'=>$amount,
+                            
+                        ]);
+         
+                        $insert=Wallet::insert([
+                            'order_id'=>$booking_id,
+                            'user_id'=>Auth::user()->id,
+                            'amount_type'=>'Dabit',
+                            'amount'=>$amount,
+                            'paid_by'=>'Card',
+                            'is_verified'=>1,
+                            'transection_id'=>$request->session_id,
+                            'date'=>Carbon::now(),
+                            'created_at'=>Carbon::now()->toDateTimeString(),
+                        ]);
+                        
+                        //  $email="admin@merittutors.co.uk";
+                         $maindata=ExamRequest::where('booking_id',$booking_id)->first();
+                        //  Mail::to($email)->send(new ExamBookingDetailsForAdmin($maindata));
+                        //  Mail::to($maindata->email)->send(new PaymentInvoice($maindata));
+                         Alert::toast('Payment Success!Please Wait For Confirmation', 'success');
+                         return redirect('/exam-booking-list');
+                        
+
+
+        } catch (Error $e) {
+          http_response_code(500);
+          echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
+
+
+
 
     public function checkout(){
         return redirect('/exam-booking-list');

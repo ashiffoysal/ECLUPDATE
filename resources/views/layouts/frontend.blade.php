@@ -280,6 +280,7 @@ src="https://www.facebook.com/tr?id=1055313146174856&ev=PageView&noscript=1"
                                             href="https://examcentrelondon.co.uk/uploads/Internal-Procedures-Policy-2025.pdf">Complaints
                                             & Appeals
                                         </a></li>
+                                        <li><a href="{{ url('/ilstalment-policy') }}">Ilstalment Policy</a></li>
                                     <li><a href="{{ url('/contact') }}">Contact</a></li>
                                     <li><a href="{{ url('/blogs') }}">Blogs</a></li>
                                 </ul>

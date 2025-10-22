@@ -32,7 +32,7 @@
 
 
                                           @if(Auth::user()->photo==null )
-                                          <span><img src="{{ asset('frontend/updatedesign') }}/assets/images/dashboard/profile.png" alt=""></span>
+                                          <span><img src="{{ asset('frontend/updatedesign') }}/assets/images/profile.png" alt=""></span>
                                         @else
                                         <span><img src="{{asset('/'.Auth::user()->photo)}}" alt=""></span>
                                         @endif
@@ -40,8 +40,8 @@
 
 
                                           <div class="cnasfu_upload epi_upload">
-                                            <input type="file" id="file" name="thumbnail_img">
-                                            <label for="file"><img src="{{ asset('frontend/updatedesign') }}/assets/images/dashboard/camera.png" alt=""></label>
+                                            <input type="file" id="file" name="photo">
+                                            <label for="file"><img src="{{ asset('frontend/updatedesign') }}/assets/images/camera.png" alt=""></label>
                                         </div>
                                         </div>
                                       </div>

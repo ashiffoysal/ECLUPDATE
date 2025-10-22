@@ -16,6 +16,7 @@ use App\Mail\ExamBooking;
 use App\Mail\PaymentInvoice;
 use App\Mail\ExamBookingDetailsForAdmin;
 use DB;
+use Stripe;
 
 
 class InstallmentController extends Controller

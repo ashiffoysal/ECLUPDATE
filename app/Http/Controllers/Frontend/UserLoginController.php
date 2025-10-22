@@ -133,7 +133,7 @@ class UserLoginController extends Controller
                 'phone' => $request->phone,
             ];
                 
-                Mail::to($user->email)->send(new RegistrationSuccessMail($message));
+                // Mail::to($user->email)->send(new RegistrationSuccessMail($message));
                 
                 Alert::toast('Successfully Verified Account', 'success');
                 return redirect('/student/dashboard');

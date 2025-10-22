@@ -45,8 +45,8 @@
       </div>
       @endforeach
     </div>
-
-    <div class="single_form_parent">
+  <input type="hidden" name="hidden_mock_price" id="hidden_mock_price" value="0">
+    {{-- <div class="single_form_parent">
       <div class="single_form_p">
         <input type="hidden" name="hidden_mock_price" id="hidden_mock_price" value="0">
         <h4>Total Mock Fees: £ <span id="mock_total_amount">0</span></h4>
@@ -64,7 +64,7 @@
         </div>
         
       </div>
-    </div>
+    </div> --}}
   @endif
           
 

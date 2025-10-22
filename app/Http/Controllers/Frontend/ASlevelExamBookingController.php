@@ -155,35 +155,53 @@ class ASlevelExamBookingController extends Controller
                 ]);
             }
 
-            if ($request->mock_test == "mock_test_yes" && $request->has('mock_subject_id')) {
-                $mock_exam_information = collect($request->mock_subject_id)->map(function ($id, $key) use ($request) {
-                    return [
-                        'mock_subject_name' => $request->mock_subject_name[$key],
-                        'mock_subject_id' => $id,
-                        'mock_test_paper_1' => $request->mock_test_paper_1[$key] ?? '',
-                        'mock_test_paper_2' => $request->mock_test_paper_2[$key] ?? '',
-                        'mock_test_paper_3' => $request->mock_test_paper_3[$key] ?? '',
-                        'mock_test_paper_4' => $request->mock_test_paper_4[$key] ?? '',
-                        'mock_exam_date_1' => $request->mock_exam_date_1[$key] ?? '',
-                        'mock_exam_date_2' => $request->mock_exam_date_2[$key] ?? '',
-                        'mock_exam_date_3' => $request->mock_exam_date_3[$key] ?? '',
-                        'mock_exam_date_4' => $request->mock_exam_date_4[$key] ?? '',
-                    ];
-                })->toArray();
+           if ($request->mock_test == "mock_test_yes" && $request->has('mock_subject_id')) {
+            $mock_exam_information = collect($request->mock_subject_id)->map(function ($id, $key) use ($request) {
+                return [
+                    'mock_subject_name' => $request->mock_subject_name[$key] ?? '',
+                    'mock_subject_id' => $id,
+                    'mock_test_paper_1' => $request->mock_test_paper_1[$key] ?? '',
+                    'mock_test_paper_2' => $request->mock_test_paper_2[$key] ?? '',
+                    'mock_test_paper_3' => $request->mock_test_paper_3[$key] ?? '',
+                    'mock_test_paper_4' => $request->mock_test_paper_4[$key] ?? '',
+                    'mock_exam_date_1' => $request->mock_exam_date_1[$key] ?? '',
+                    'mock_exam_date_2' => $request->mock_exam_date_2[$key] ?? '',
+                    'mock_exam_date_3' => $request->mock_exam_date_3[$key] ?? '',
+                    'mock_exam_date_4' => $request->mock_exam_date_4[$key] ?? '',
+                ];
+            })->toArray();
 
-                MockTest::insert([
-                    'exam_information' => json_encode($mock_exam_information),
-                    'total_amount' => $request->hidden_mock_price ?? 0,
-                    'booking_id' => $request->booking_id,
-                    'user_id' => Auth::user()->id,
-                    'first_name' => $request->first_name,
-                    'middle_name' => $request->middle_name,
-                    'last_name' => $request->last_name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'created_at' => Carbon::now()->toDateTimeString(),
-                ]);
-            }
+            $price_per_paper = 80;
+
+            // get keys so the callback receives $key (index)
+            $total_amount = collect($request->mock_subject_id)
+                ->keys()
+                ->sum(function ($key) use ($request, $price_per_paper) {
+                    $papers = [
+                        $request->mock_test_paper_1[$key] ?? '',
+                        $request->mock_test_paper_2[$key] ?? '',
+                        $request->mock_test_paper_3[$key] ?? '',
+                        $request->mock_test_paper_4[$key] ?? '',
+                    ];
+
+                    $paper_count = collect($papers)->filter(fn($p) => !empty($p))->count();
+
+                    return $paper_count * $price_per_paper;
+                });
+
+            MockTest::insert([
+                'exam_information' => json_encode($mock_exam_information),
+                'total_amount' => $total_amount,
+                'booking_id' => $request->booking_id,
+                'user_id' => Auth::id(),
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'created_at' => Carbon::now()->toDateTimeString(),
+            ]);
+        }
 
             if ($request->hasFile('fileUpload')) {
                 $this->uploadFile($request->file('fileUpload'), 'uploads/student/exambooking/', 'photo_id', $insert);

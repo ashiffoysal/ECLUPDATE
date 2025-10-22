@@ -86,7 +86,7 @@ class StudentDashboardController extends Controller
             'address_line_one' => 'required',
             'postcode' => 'required',
         ]);
-
+        $insertId=Auth::user()->id;
         $insert=User::where('id',Auth::user()->id)->update([
             'name'=>$request->first_name,
             'middle_name'=>$request->middle_name,
@@ -102,14 +102,10 @@ class StudentDashboardController extends Controller
             'address_two'=>$request->address_line_two,
             'zip'=>$request->postcode,
         ]);
-        // if ($request->hasFile('thumbnail_img')) {
-        //     $image = $request->file('thumbnail_img');
-        //     $ImageName = 'Student' . '_' . time() . '.' . $image->getClientOriginalExtension();
-        //     Image::make($image)->save('uploads/student/' . $ImageName);
-        //     User::where('id', Auth::user()->id)->update([
-        //         'photo' => 'uploads/student/' . $ImageName,
-        //     ]);
-        // }
+  
+        if ($request->hasFile('photo')) {
+            $this->uploadFile($request->file('photo'), 'uploads/student/', 'photo', $insertId);
+        }
         if ($insert) {
             Alert::toast('Update Success!', 'success');
             return Redirect()->back();
@@ -119,7 +115,15 @@ class StudentDashboardController extends Controller
         }
     }
     // 
-   
+     private function uploadFile($file, $path, $column, $insertId)
+        {
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($path), $fileName);
+            User::where('id', $insertId)->update([
+                $column => $path . $fileName,
+            ]);
+        }
+
     // exam centre
     public function exambookinglist(){
         $alldata=ExamRequest::where('is_visible',0)->where('is_deleted',1)->where('user_id',Auth::user()->id)->where('is_completed_from',1)->orderBy('id','DESC')->paginate(10);

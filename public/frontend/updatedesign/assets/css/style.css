@@ -3321,7 +3321,7 @@ select.error {
     display: inline-block;
 }
 .payment-content.card-content .btn_style {
-    margin-top: 85px;
+    margin-top: 15px;
     text-align: center;
 }
 .payment_bank_contents p{
@@ -3360,11 +3360,11 @@ select.error {
 	flex-direction: column !important;
 }
 .payment-content.bank-content .payment_content_btn{
-	margin-top: 40px;
+	margin-top: 10px;
 }
 .pay_1st_installment p{
 	margin-top: 40px !important;
-	display: flex;
+	/* display: flex; */
 	align-items: center;
 	gap: 8px !important;
 	font-size: 16px !important;

@@ -18,14 +18,12 @@ class PaymentController extends Controller
     public function receiveindex()
     {
         $alldata=Wallet::orderBy('id','DESC')->where('amount_type','Dabit')->get();
-        // $tamount=Wallet::orderBy('id','DESC')->where('amount_type','Dabit')->whereYear('created_at', '=', '2025')->sum('amount');
-        $tamount=Wallet::where('amount_type', 'Debit')
-    ->whereBetween('created_at', [
-        Carbon::create(2024, 1, 1)->startOfDay(),
-        Carbon::create(2024, 6, 25)->endOfDay()
-    ])
-    ->sum('amount');
-        return view('backend.paymentmanage.receive',compact('alldata','tamount'));
+        $tamount2022=Wallet::orderBy('id','DESC')->where('amount_type','Dabit')->whereYear('created_at', '=', '2022')->sum('amount');
+        $tamount2023=Wallet::orderBy('id','DESC')->where('amount_type','Dabit')->whereYear('created_at', '=', '2023')->sum('amount');
+        $tamount2024=Wallet::orderBy('id','DESC')->where('amount_type','Dabit')->whereYear('created_at', '=', '2024')->sum('amount');
+        $tamount2025=Wallet::orderBy('id','DESC')->where('amount_type','Dabit')->whereYear('created_at', '=', '2025')->sum('amount');
+
+        return view('backend.paymentmanage.receive',compact('alldata','tamount2023','tamount2024','tamount2025','tamount2022'));
     }
     public function payindex()
     {

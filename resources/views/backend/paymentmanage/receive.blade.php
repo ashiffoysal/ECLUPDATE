@@ -81,7 +81,7 @@ div.dataTables_wrapper div.dataTables_filter input {
                                     <!--begin::Table head-->
                                     <thead class="text-center">
                                         <tr class="fw-bolder text-muted">
-                                            <th class=""># {{ $tamount }}</th>
+                                            <th class=""># {{ $tamount2022 }}-{{ $tamount2023 }}-{{ $tamount2024 }}-{{ $tamount2025 }}-</th>
                                             <th class="min-w-140px">Date</th>
                                             <th class="min-w-140px">Booking Id</th>
                                             <th class="min-w-140px">Payment</th>
@@ -96,10 +96,23 @@ div.dataTables_wrapper div.dataTables_filter input {
                                         <tr>
                                             <td> {{ ++$key }} </td>
                                             <td>
-                                               {{ $data->created_at->format('F-d-Y') }}
+
+                                               <br>
+                                               {{ $data->created_at->format('F-d-Y') }} 
+                                               <br>
+@php
+    $createdDate = \Carbon\Carbon::parse($data->created_at);
+@endphp
+
+@if($data->is_seen == 0 && ($createdDate->isToday() || $createdDate->isYesterday()))
+    <span class="badge badge-light-danger">unseen</span>
+@endif
+
                                             </td>
                                             <td>
                                                {{ $data->order_id }}
+                                                <br>
+                                              
                                             </td>
                                             <td>
                                                 £ {{ $data->amount }}

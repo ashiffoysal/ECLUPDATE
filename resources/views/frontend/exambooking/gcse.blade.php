@@ -171,7 +171,7 @@ max-width: 80%;
                             <form id="multiStepForm" action="{{ url('/exam-booking-gcse') }}" method="post"
                                 enctype="multipart/form-data">
                                 <!-- Start Step 1: Student Info -->
-                                <div class="form-step active">
+                            <div class="form-step active">
                                     <div class="single_form_parent">
                                         <div class="single_form_step single_form_column3">
                                             @csrf
@@ -206,6 +206,12 @@ max-width: 80%;
                                                 placeholder="Please Enter Mail" required
                                                 value="{{ Auth::user()->email }}">
                                         </div>
+                                          <div class="single_form_step single_form_column2">
+                                            <label for="id6">Emergency Email</label>
+                                            <input type="text" id="id6"
+                                                placeholder="Please EnterEmergency Email" name="address_line_2"
+                                                value="{{ Auth::user()->address_line_two }}">
+                                        </div>
                                         <div class="single_form_step single_form_column2">
                                             <label for="flag1">Phone<span>*</span></label>
                                             <div class="phone-input flag_input_default">
@@ -226,29 +232,7 @@ max-width: 80%;
                                                     class="phone-number" required value="{{ Auth::user()->phone }}">
                                             </div>
                                         </div>
-                                        <div class="single_form_step single_form_column2">
-                                            <label for="id5">Address Line 1<span>*</span></label>
-                                            <input type="text" id="id5"
-                                                placeholder="Please Enter Address Line 1" name="address_line_1" required
-                                                value="{{ Auth::user()->address }}">
-                                        </div>
-                                        <div class="single_form_step single_form_column2">
-                                            <label for="id6">Address Line 2<span>*</span></label>
-                                            <input type="text" id="id6"
-                                                placeholder="Please Enter Address Line 2" name="address_line_2"
-                                                value="{{ Auth::user()->address_line_two }}">
-                                        </div>
-                                        <div class="single_form_step single_form_column2">
-                                            <label for="id7">City<span>*</span></label>
-                                            <input type="text" id="id7" placeholder="Please Enter City"
-                                                name="city" required value="{{ Auth::user()->city }}">
-                                        </div>
-                                        <div class="single_form_step single_form_column2">
-                                            <label for="id8">Post Code<span>*</span></label>
-                                            <input type="text" id="id8" placeholder="Please Enter Post Code"
-                                                name="postcode" required value="{{ Auth::user()->zip }}">
-                                        </div>
-                                        <div class="single_form_step single_form_column2">
+                                         <div class="single_form_step single_form_column2">
                                             <label for="flag2">Emergency Phone<span>*</span></label>
                                             <div class="phone-input flag_input_default">
                                                 <div class="flag-select">
@@ -269,6 +253,24 @@ max-width: 80%;
                                                     value="{{ Auth::user()->emergency_contact_number }}">
                                             </div>
                                         </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id5">Address<span>*</span></label>
+                                            <input type="text" id="id5"
+                                                placeholder="Please Enter Address Line 1" name="address_line_1" required
+                                                value="{{ Auth::user()->address }}">
+                                        </div>
+                                      
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id7">City<span>*</span></label>
+                                            <input type="text" id="id7" placeholder="Please Enter City"
+                                                name="city" required value="{{ Auth::user()->city }}">
+                                        </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id8">Post Code<span>*</span></label>
+                                            <input type="text" id="id8" placeholder="Please Enter Post Code"
+                                                name="postcode" required value="{{ Auth::user()->zip }}">
+                                        </div>
+                                       
                                         <div class="single_form_step single_form_column2">
                                             <label for="id9">Date of Birth<span>*</span></label>
                                             <input type="text" id="id9" placeholder="Please Enter Date"
@@ -367,38 +369,39 @@ max-width: 80%;
                                             </div>
                                         </div>
                                     </div>
+                             
+
                                     <div class="single_form_parent">
-                                        <div class="single_form_step single_form_column2">
-                                            <label for="real-file-1">Passport / Driving license<span>*</span></label>
-                                            <div class="form_file_upload_design">
-                                                <input type="file" id="real-file-1" class="real-file"
-                                                    name="fileUpload" hidden="hidden" required  accept="image/jpeg,image/jpg,image/png,application/pdf" />
-                                                <button type="button" class="custom-button">
-                                                    <p class="custom-text">PDF or image file<br>
-                                                        <span>max size: 5MB</span>
-                                                        <a>Choose File</a>
-                                                    </p>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="single_form_step single_form_column2">
-                                            <label for="real-file-2">Own Recent Photo<span>*</span></label>
-                                            <div class="form_file_upload_design">
-                                                <input type="file" name="thumbnail_img" id="real-file-2"
-                                                    class="real-file" hidden="hidden" required   accept="image/jpeg,image/jpg,image/png,application/pdf"/>
-                                                <button type="button" class="custom-button">
-                                                    <p class="custom-text">PDF or image file<br>
-                                                        <span>max size: 5MB</span>
-                                                        <a>Choose File</a>
-                                                    </p>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                      <div class="single_form_step single_form_column2">
+                                          <label for="real-file-1">Passport / Driving license<span>*</span></label>
+                                          <div class="form_file_upload_design">
+                                              <input type="file"  name="fileUpload" id="real-file-1" class="real-file" hidden="hidden" required   accept="image/jpeg,image/jpg,image/png,application/pdf"/>
+                                              <button type="button" class="custom-button">
+                                                  <p class="custom-text">PDF or image file<br>
+                                                      <span>max size: 5MB</span>
+                                                      <a>Choose File</a>
+                                                  </p>
+                                              </button>
+                                          </div>
+                                      </div>
+                                      <div class="single_form_step single_form_column2">
+                                          <label for="real-file-2">Own Recent Photo<span>*</span></label>
+                                          <div class="form_file_upload_design">
+                                              <input type="file" id="real-file-2" name="thumbnail_img" class="real-file" hidden="hidden" required  accept="image/jpeg,image/jpg,image/png,application/pdf"/>
+                                              <button type="button" class="custom-button">
+                                                  <p class="custom-text">PDF or image file<br>
+                                                      <span>max size: 5MB</span>
+                                                      <a>Choose File</a>
+                                                  </p>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
 
+                                  
                                     <p class="error-message" style="display: none; color: red;">
-
-                                    </p>
+                                      <!-- Please Field your Unfield input -->
+                                  </p>
                                     <div class="form_single_step_btns">
                                         <button type="button" class="btn_style next-btn">Continue <span><img
                                                     src="{{ asset('frontend/updatedesign') }}/assets/images/home/arrow-right.png"

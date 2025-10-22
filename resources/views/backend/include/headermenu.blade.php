@@ -37,9 +37,7 @@
 													<span class="menu-title badge badge-warning" style="color:#fff !important;">For Seating Plan</span>
 												</a>
 											</div>
-											@php
-											    $allseries=DB::table('examessuedates')->where('is_deleted',0)->get();
-											@endphp
+									
 											
 									@if(Auth::user()->create_exam_booking==1)
 											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
@@ -242,8 +240,51 @@
 															<span class="menu-title">Checking Subject</span>
 														</a>
 													</div>
-													
+
+
+													<div class="menu-item">
+														<a class="menu-link py-3" href="{{ url('admin/all-refunded-candidates') }}" target="__blank">
+															<span class="menu-icon">
+																<i class="bi bi-grid fs-3"></i>
+															</span>
+															<span class="menu-title">Refund Candidates </span>
+														</a>
+													</div>
 														<div class="menu-item">
+														<a class="menu-link py-3" href="{{ url('admin/all-withdrawn-candidates') }}" target="__blank">
+															<span class="menu-icon">
+																<i class="bi bi-grid fs-3"></i>
+															</span>
+															<span class="menu-title">Withdrawn Candidates  </span>
+														</a>
+													</div>
+													<div class="menu-item">
+														<a class="menu-link py-3" href="{{ url('admin/all-nea-candidates') }}" target="__blank">
+															<span class="menu-icon">
+																<i class="bi bi-grid fs-3"></i>
+															</span>
+															<span class="menu-title">NEA Candidates  </span>
+														</a>
+													</div>
+													<div class="menu-item">
+														<a class="menu-link py-3" href="{{ url('admin/soft-delete/index') }}" target="__blank">
+															<span class="menu-icon">
+																<i class="bi bi-grid fs-3"></i>
+															</span>
+															<span class="menu-title">SoftDelete Candidates  </span>
+														</a>
+													</div>
+													<div class="menu-item">
+														<a class="menu-link py-3" href="{{ url('admin/unverified-candidates/index') }}" target="__blank">
+															<span class="menu-icon">
+																<i class="bi bi-grid fs-3"></i>
+															</span>
+															<span class="menu-title">Unverified Candidates  </span>
+														</a>
+													</div>
+
+													
+													<div class="menu-item">
 														<a class="menu-link py-3" href="{{ url('/') }}" target="__blank">
 															<span class="menu-icon">
 																<i class="bi bi-grid fs-3"></i>

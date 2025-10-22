@@ -111,7 +111,7 @@ Route::get('/exam-timetables', [App\Http\Controllers\Frontend\FrontendController
 
 Route::get('/refund-policy', [App\Http\Controllers\Frontend\FrontendController::class, 'refundpolicy']);
 // 
-Route::get('/ilstallment-refund-policy', [App\Http\Controllers\Frontend\FrontendController::class, 'ilstallmentrefundpolicy']);
+Route::get('/ilstalment-policy', [App\Http\Controllers\Frontend\FrontendController::class, 'ilstallmentrefundpolicy']);
 
 //
 
@@ -321,6 +321,15 @@ Route::get('admin/merit-custom-invoice/delete/{id}', [App\Http\Controllers\Admin
 Route::get('admin/merit-custom-invoice/edit/{id}', [App\Http\Controllers\Admin\AboutUsController::class, 'meritinvoiceEdit']);
 
 
+
+Route::get('admin/soft-delete/index', [App\Http\Controllers\Admin\DeletedCandidatesController::class, 'index']);
+Route::get('admin/hard-delete/exambooking/{id}', [App\Http\Controllers\Admin\DeletedCandidatesController::class, 'hardDelete']);
+Route::get('admin/unverified-candidates/index', [App\Http\Controllers\Admin\DeletedCandidatesController::class, 'unverifiedCandidates']);
+
+Route::get('admin/student/verify/{id}', [App\Http\Controllers\Admin\DeletedCandidatesController::class, 'verifiedCandidates']);
+
+
+
 // supports
 Route::get('admin/candidate-certificate/index', [App\Http\Controllers\Admin\AboutUsController::class, 'certificateIndex']);
 Route::get('admin/candidate-certificate-list/create', [App\Http\Controllers\Admin\AboutUsController::class, 'certificateCreate']);
@@ -405,6 +414,9 @@ Route::get('/due-payment-ilstallment-mybooked/{booking_id}/{amount}/success', [A
 
 Route::post('/myonlinepayment/session', [App\Http\Controllers\Frontend\PaymentController::class, 'session'])->name('myonlinepayment.session');
 Route::get('/mybooked/{booking_id}/{amount}/success', [App\Http\Controllers\Frontend\PaymentController::class, 'success'])->name('success');
+Route::get('mymock-fees-paid/{booking_id}/{amount}/success', [App\Http\Controllers\Frontend\PaymentController::class, 'mockSuccess'])->name('mocksuccess');
+
+
 Route::get('/checkout', [App\Http\Controllers\Frontend\PaymentController::class, 'checkout'])->name('checkout');
 
 
@@ -430,8 +442,8 @@ Route::get('/', [App\Http\Controllers\Frontend\FrontendController::class, 'home'
 Route::get('/iseb-details
 ', [App\Http\Controllers\Frontend\FrontendController::class, 'isebDetails']);
 
-Route::get('/special-access
-', [App\Http\Controllers\Frontend\FrontendController::class, 'specialAccessPage']);
+// Route::get('/special-access
+// ', [App\Http\Controllers\Frontend\FrontendController::class, 'specialAccessPage']);
 
 
 
@@ -440,138 +452,62 @@ Route::get('/application-form', [App\Http\Controllers\Frontend\FrontendControlle
 Route::get('/filter-shop', [App\Http\Controllers\Frontend\FrontendController::class, 'filter_shop']);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-
-
 Route::get('admin/student-first-payment-all-send/send', [App\Http\Controllers\Admin\DashboardController::class, 'StudentFirstallEmailSend']);
 Route::get('admin/student-second-payment-all-send/send', [App\Http\Controllers\Admin\DashboardController::class, 'StudentSecondallEmailSend']);
-
-
 Route::get('admin/bulk-email-send/create', [App\Http\Controllers\Admin\DashboardController::class, 'bulkEmailSend'])->name('admin.bulk-email-send.create');
 Route::post('admin/bulk-email-send/create', [App\Http\Controllers\Admin\DashboardController::class, 'bulkEmailSendStore']);
-
-
-
 Route::get('/payment-receipt/print/{id}', [App\Http\Controllers\Admin\DashboardController::class, 'paymentReceivedPrint']);
-
 Route::get('/payment-receipt/index', [App\Http\Controllers\Admin\DashboardController::class, 'paymentReceivedIndex']);
-
 Route::get('/payment-receipt/create', [App\Http\Controllers\Admin\DashboardController::class, 'paymentReceivedCreate']);
-
 Route::get('/payment-receipt/edit/{id}', [App\Http\Controllers\Admin\DashboardController::class, 'paymentReceivedEdit']);
-
 Route::post('/payment-receipt/update', [App\Http\Controllers\Admin\DashboardController::class, 'paymentReceivedUpdate']);
-
 Route::post('/payment-receipt/create', [App\Http\Controllers\Admin\DashboardController::class, 'paymentReceivedStore']);
-
-
 Route::get('/admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.home');
-
-
 Route::get('/admin/profile', [App\Http\Controllers\Admin\DashboardController::class, 'adminProfile'])->name('admin.profile');
 Route::get('/admin/profile-update', [App\Http\Controllers\Admin\DashboardController::class, 'adminProfileUpdate'])->name('admin.ProfileUpdate');
-Route::post('/admin/profile-update', [App\Http\Controllers\Admin\DashboardController::class, 'adminProfileUpdateSubmit'])->name('admin.ProfileUpdate');
-
-// 
-
-
+Route::post('/admin/profile-update', [App\Http\Controllers\Admin\DashboardController::class, 'adminProfileUpdateSubmit'])->name('admin.ProfileUpdate'); 
 // ucas
 Route::get('/ucas-application', [App\Http\Controllers\Frontend\UcasController::class, 'create']);
-
-
 Route::post('/ucas-application', [App\Http\Controllers\Frontend\UcasController::class, 'store']);
-
 Route::get('/make-payment/ucas-booking/{ucas_booking_id}', [App\Http\Controllers\Frontend\UcasController::class, 'payment']);
-
 Route::post('/make-payment/onlinepayment/ucas-booking/', [App\Http\Controllers\Frontend\UcasController::class, 'onlinepayment']);
 Route::post('/make-payment/bankpayment/ucas-booking/', [App\Http\Controllers\Frontend\UcasController::class, 'bankpayment']);
-
-
-
-
 Route::get('/myucasbooked/{booking_id}/{amount}/success', [App\Http\Controllers\Frontend\UcasController::class, 'success'])->name('ucas.success');
 Route::get('/ucas/checkout', [App\Http\Controllers\Frontend\UcasController::class, 'checkout'])->name('ucas.checkout');
-
-
 // ucas
-
 Route::get('/admin/candidate-exam-date/index', [App\Http\Controllers\Admin\ExamdatemanageController::class, 'candidateExamDate']);
-
-
-
-
 Route::get('admin/ucas-confirmation/delete/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'ucasConfirmationDelete']);
 Route::get('/admin/ucas/notes', [App\Http\Controllers\Admin\UcasManageController::class, 'notesUpdate']);
-
 Route::get('/admin/ucas/index', [App\Http\Controllers\Admin\UcasManageController::class, 'index'])->name('admin.ucas.index');
 Route::get('admin/ucas-predicted-grades/index/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'indexPredicted'])->name('admin.ucas.indexPredicted');
 Route::post('admin/ucas-grades/confirmation', [App\Http\Controllers\Admin\UcasManageController::class, 'indexPredictedConfirmation']);
-
 Route::get('admin/ucas-grades/delete/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'indexPredictedDelete']);
 Route::get('admin/send/predicted-grades/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'indexPredictedSend']);
-
-
-
-
-
-
 Route::get('/admin/ucas/details/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'details']);
-
 Route::get('/admin/ucas/delete/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'delete']);
-
 Route::get('admin/get/ucasbooking/updateapaymentstatus/', [App\Http\Controllers\Admin\UcasManageController::class, 'updateapaymentstatus']);
-
 Route::get('admin/ucasbooking/export/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'exportucas']);
-
 Route::get('admin/ucasbooking/confirmexam/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'confirmexam']);
-
 Route::get('admin/ucasbooking/iscompleted/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'iscompleted']);
-
 Route::get('admin/ucasbooking/iscancel/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'iscancel']);
-
-
-
 Route::post('admin/ucas-test/confirmation/submit', [App\Http\Controllers\Admin\UcasManageController::class, 'confirmexamSubmit']);
-
-
-
-
-
 Route::get('/admin/ucas/basicinformation-update', [App\Http\Controllers\Admin\UcasManageController::class, 'basicInformationupdate']);
-
 Route::post('/admin/ucas/payment-update', [App\Http\Controllers\Admin\UcasManageController::class, 'paymentUpdate']);
-
-
 Route::get('/admin/ucas/exam-date-manage', [App\Http\Controllers\Admin\UcasManageController::class, 'ucasDateManage']);
-
 Route::get('/admin/ucas/exam-date-manage/active/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'ucasDateactive']);
-
-
-
 Route::get('/admin/ucas/exam-date-manage/deactive/{id}', [App\Http\Controllers\Admin\UcasManageController::class, 'ucasDatedeactive']);
-
-// 
-
-
 Route::get('/admin/notify/index', [App\Http\Controllers\Admin\MailSendController::class, 'mainindex'])->name('admin.notify.tutor');
-
 Route::post('/admin/admin-update-password', [App\Http\Controllers\Admin\DashboardController::class, 'adminUpdatePassword'])->name('admin.adminUpdatePassword');
-
 Route::post('/admin/email-update', [App\Http\Controllers\Admin\DashboardController::class, 'adminEmailUpdate'])->name('admin.email.update');
-
 Route::get('/admin/logout', [App\Http\Controllers\Admin\DashboardController::class, 'logout'])->name('admin.logout');
 // login controler
 Route::get('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'loginSubmit'])->name('admin.login');
 // settings controller
 Route::get('/admin/company-information', [App\Http\Controllers\Admin\SettingsController::class, 'companyInformation'])->name('admin.companyInformation');
-
 Route::post('/admin/company-information', [App\Http\Controllers\Admin\SettingsController::class, 'companyInformationSubmit'])->name('admin.companyInformation');
-
 Route::get('/admin/seo-information', [App\Http\Controllers\Admin\SettingsController::class, 'seoInformation'])->name('admin.seoInformation');
 Route::post('/admin/seo-information', [App\Http\Controllers\Admin\SettingsController::class, 'seoInformationSubmit'])->name('admin.seoInformation');
-
 Route::get('/admin/social-information', [App\Http\Controllers\Admin\SettingsController::class, 'socialInformation'])->name('admin.socialInformation');
 Route::post('/admin/social-information', [App\Http\Controllers\Admin\SettingsController::class, 'socialInformationSubmit'])->name('admin.socialInformation');
 
@@ -584,29 +520,13 @@ Route::get('/admin/cupon/index', [App\Http\Controllers\Admin\SettingsController:
 
 // exam series controller
 Route::get('/admin/exam-series/index', [App\Http\Controllers\Admin\ExamSeriesController::class, 'index'])->name('admin.series.index');
-
 Route::get('/admin/exam-series/create', [App\Http\Controllers\Admin\ExamSeriesController::class, 'create'])->name('admin.series.create');
 Route::post('/admin/exam-series/create', [App\Http\Controllers\Admin\ExamSeriesController::class, 'store'])->name('admin.series.create');
-
 Route::get('/admin/exam-series/edit/{id}', [App\Http\Controllers\Admin\ExamSeriesController::class, 'edit']);
-
 Route::post('/admin/exam-series/update', [App\Http\Controllers\Admin\ExamSeriesController::class, 'update'])->name('admin.series.update');
-
 Route::get('/admin/exam-series/active/{id}', [App\Http\Controllers\Admin\ExamSeriesController::class, 'active']);
-
-
 Route::get('/admin/exam-series/deactive/{id}', [App\Http\Controllers\Admin\ExamSeriesController::class, 'deactive']);
-
-
 Route::get('/admin/exam-series/delete/{id}', [App\Http\Controllers\Admin\ExamSeriesController::class, 'delete']);
-//
-
-
-
-
-
-
-
 
 // slider Create
 Route::get('/admin/slider/create', [App\Http\Controllers\Admin\SliderController::class, 'create'])->name('admin.slider.create');
@@ -622,36 +542,15 @@ Route::get('/admin/slider/delete/{id}', [App\Http\Controllers\Admin\SliderContro
 // about us
 Route::get('/admin/about-us/update', [App\Http\Controllers\Admin\AboutUsController::class, 'update'])->name('admin.about-us.update');
 Route::post('/admin/about-us/update', [App\Http\Controllers\Admin\AboutUsController::class, 'updateSubmit'])->name('admin.about-us.update');
-
-
 Route::get('/admin/global-seating-plan/index', [App\Http\Controllers\Admin\AboutUsController::class, 'seatingPlanGlobal'])->name('admin.seatingPlanGlobal.index');
-
 Route::get('/admin/global-seating-plan/print', [App\Http\Controllers\Admin\AboutUsController::class, 'printableseatingPlanGlobal'])->name('admin.seatingPlanGlobal.index');
-
-
-
-
 Route::get('/privacy-policy', [App\Http\Controllers\Frontend\FrontendController::class, 'privacyPolicy']);
 Route::get('/terms-conditions', [App\Http\Controllers\Frontend\FrontendController::class, 'termsCondition']);
 Route::get('/faq', [App\Http\Controllers\Frontend\FrontendController::class, 'faq']);
-
-
-
-
 Route::get('/admin/privacy-policy/update', [App\Http\Controllers\Admin\AboutUsController::class, 'privacyPolicy'])->name('admin.privacy-policy.update');
 // terms and conditions
 Route::get('/admin/terms-conditions/update', [App\Http\Controllers\Admin\AboutUsController::class, 'termsCondition'])->name('admin.terms-conditions.update');
-
-
-
-
-
 Route::get('/candidate/details/exports/{booking_id}', [App\Http\Controllers\Admin\CandidateDetailsExportController::class, 'exportcandidatedetails']);
-
-
-
-
-
 // category
 Route::get('/admin/category/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('admin.category.create');
 Route::post('/admin/category/create', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.create');
@@ -661,34 +560,22 @@ Route::get('/admin/category/active/{id}', [App\Http\Controllers\Admin\CategoryCo
 Route::get('/admin/category/deactive/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'deactive']);
 Route::get('/admin/category/edit/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'edit']);
 Route::get('/admin/category/delete/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'delete']);
-
-
 Route::get('/admin/contactmessage/index', [App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('admin.contactmessage.index');
 Route::get('/admin/contactmessage/view/{id}', [App\Http\Controllers\Admin\ContactMessageController::class, 'videmessage']);
 Route::post('/admin/contactmessage/view/{id}', [App\Http\Controllers\Admin\ContactMessageController::class, 'sendreply']);
 Route::get('/admin/contactmessage/delete/{id}', [App\Http\Controllers\Admin\ContactMessageController::class, 'delete']);
 // blog controller
-
 Route::get('/admin/blog-comment/index', [App\Http\Controllers\Admin\BlogController::class, 'blogComment'])->name('admin.blogComment.index');
-
 Route::get('/admin/blog-comment/delete/{id}', [App\Http\Controllers\Admin\BlogController::class, 'blogCommentDelete']);
-
-
-
 Route::get('admin/update/blogcomments', [App\Http\Controllers\Admin\BlogController::class, 'UpdateblogComment']);
-
 Route::get('admin/blog-comment/published/{id}', [App\Http\Controllers\Admin\BlogController::class, 'publishedblogComment']);
 Route::get('admin/blog-comment/unpublished/{id}', [App\Http\Controllers\Admin\BlogController::class, 'unpublishedblogComment']);
-
-
 Route::get('/admin/blog/create', [App\Http\Controllers\Admin\BlogController::class, 'create'])->name('admin.blog.create');
-
 Route::post('/admin/blog/create', [App\Http\Controllers\Admin\BlogController::class, 'store'])->name('admin.blog.create');
 Route::get('/admin/blog/index', [App\Http\Controllers\Admin\BlogController::class, 'index'])->name('admin.blog.index');
 Route::get('/admin/blog/edit/{id}', [App\Http\Controllers\Admin\BlogController::class, 'edit']);
 Route::get('/admin/blog/delete/{id}', [App\Http\Controllers\Admin\BlogController::class, 'delete']);
 Route::post('/admin/blog/update', [App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blog.update');
-
 // student fees
 Route::get('/admin/fees/create', [App\Http\Controllers\Admin\StudentFeesController::class, 'create'])->name('admin.fees.create');
 Route::post('/admin/fees/create', [App\Http\Controllers\Admin\StudentFeesController::class, 'store'])->name('admin.fees.create');
@@ -696,7 +583,6 @@ Route::get('/admin/fees/index', [App\Http\Controllers\Admin\StudentFeesControlle
 Route::get('/admin/fees/edit/{id}', [App\Http\Controllers\Admin\StudentFeesController::class, 'edit']);
 Route::get('/admin/fees/delete/{id}', [App\Http\Controllers\Admin\StudentFeesController::class, 'delete']);
 Route::post('/admin/fees/update', [App\Http\Controllers\Admin\StudentFeesController::class, 'update'])->name('admin.fees.update');
-
 // event conterrolerr
 Route::get('/admin/event/create', [App\Http\Controllers\Admin\EventController::class, 'create'])->name('admin.event.create');
 Route::post('/admin/event/create', [App\Http\Controllers\Admin\EventController::class, 'store'])->name('admin.event.create');
@@ -711,19 +597,12 @@ Route::get('/admin/review/index', [App\Http\Controllers\Admin\ReviewController::
 Route::get('/admin/review/edit/{id}', [App\Http\Controllers\Admin\ReviewController::class, 'edit']);
 Route::get('/admin/review/delete/{id}', [App\Http\Controllers\Admin\ReviewController::class, 'delete']);
 Route::post('/admin/review/update', [App\Http\Controllers\Admin\ReviewController::class, 'update'])->name('admin.review.update');
-
-
-
 //proctor exam
-
 Route::get('/admin/proctor-exam/index', [App\Http\Controllers\Admin\GalleryControlller::class, 'proctorIndex'])->name('admin.proctor-exam.index');
-
 Route::get('/admin/proctor-exam/details/{id}', [App\Http\Controllers\Admin\GalleryControlller::class, 'proctorDetails']);
 Route::get('/admin/proctor-exam/delete/{id}', [App\Http\Controllers\Admin\GalleryControlller::class, 'proctorDelete']);
-
 Route::get('/admin/proctor-exam/exportpdf/{id}', [App\Http\Controllers\Admin\GalleryControlller::class, 'proctorExportPdf']);
 Route::get('admin/get/proctorexam-booking-notes/', [App\Http\Controllers\Admin\GalleryControlller::class, 'proctorExamNotes']);
-
 // 
 Route::get('/admin/gallery/create', [App\Http\Controllers\Admin\GalleryControlller::class, 'create'])->name('admin.gallery.create');
 Route::post('/admin/gallery/create', [App\Http\Controllers\Admin\GalleryControlller::class, 'store'])->name('admin.gallery.create');
@@ -734,82 +613,55 @@ Route::post('/admin/gallery/update', [App\Http\Controllers\Admin\GalleryControll
 Route::get('/admin/gallery/active/{id}', [App\Http\Controllers\Admin\GalleryControlller::class, 'active']);
 Route::get('/admin/gallery/deactive/{id}', [App\Http\Controllers\Admin\GalleryControlller::class, 'deactive']);
 // assesment list
-
 Route::get('/admin/assesment/index', [App\Http\Controllers\Admin\AssesmentController::class, 'index'])->name('admin.assesment.index');
 Route::get('/admin/assesment/active/{id}', [App\Http\Controllers\Admin\AssesmentController::class, 'active']);
 Route::get('/admin/assesment/deactive/{id}', [App\Http\Controllers\Admin\AssesmentController::class, 'deactive']);
 Route::get('/admin/assesment/details/{id}', [App\Http\Controllers\Admin\AssesmentController::class, 'details']);
 // student request
-
 Route::get('/admin/student-request/index', [App\Http\Controllers\Admin\StudentTutorRequestController::class, 'index'])->name('admin.student-request.index');
 Route::get('/admin/student-request/delete/{id}', [App\Http\Controllers\Admin\StudentTutorRequestController::class, 'delete']);
 Route::get('/admin/student-request/view/{id}', [App\Http\Controllers\Admin\StudentTutorRequestController::class, 'view']);
 Route::post('/admin/student-request/approve', [App\Http\Controllers\Admin\StudentTutorRequestController::class, 'approve']);
 Route::get('/admin/assign-tutor/index', [App\Http\Controllers\Admin\StudentTutorRequestController::class, 'assigntutor'])->name('admin.assign-tutor.index');
-
-
 // bnner
 Route::get('/admin/banner/update', [App\Http\Controllers\Admin\BannerController::class, 'bannerupdate'])->name('admin.banner.update');
 Route::post('/admin/banner/update', [App\Http\Controllers\Admin\BannerController::class, 'update'])->name('admin.banner.update');
-
 // tutor manage
-
-
 Route::get('/admin/tutor/list', [App\Http\Controllers\Admin\TuitorController::class, 'index'])->name('admin.tutor.list');
 Route::get('/admin/branchtutor/list', [App\Http\Controllers\Admin\TuitorController::class, 'branchtutor'])->name('admin.branchtutor.list');
 Route::get('/admin/tutor/details/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'details']);
-
 Route::get('/admin/tutor/approve/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'approve']);
 Route::get('/admin/tutor/reject/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'reject']);
-
 Route::get('/admin/tutor/education-details/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'educationdetails']);
 Route::post('/admin/tutor/education-details/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'educationdetailsstatus']);
 Route::get('/admin/tutor/cv-details/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'cvdetails']);
 Route::get('/admin/tutor/history-details/{id}', [App\Http\Controllers\Admin\TuitorController::class, 'history']);
 // payment request
 Route::get('/admin/tutor/payment-request', [App\Http\Controllers\Admin\TuitorController::class, 'paymentrequest'])->name('admin.tutior.paymentrequest');
-
 Route::get('/admin/all-confirmation/bydate', [App\Http\Controllers\Admin\AboutUsController::class, 'allconfirmation']);
-
 Route::get('get/admin/records', [App\Http\Controllers\Admin\AboutUsController::class, 'recordsConfirmation'])->name('get.admin.records');
-
 Route::post('/admin/all-confirmation/bydate', [App\Http\Controllers\Admin\AboutUsController::class, 'searchallconfirmation']);
-
 Route::post('/admin/all-confirmation/bydate/fileUploads', [App\Http\Controllers\Admin\AboutUsController::class, 'fileUploadsconfirmation']);
 Route::post('admin/custom-candidate-confirm-exam/booking', [App\Http\Controllers\Admin\AboutUsController::class, 'addConfirmation']);
-
 // student/Gurdian
-// 
-
 Route::get('/admin/student/list', [App\Http\Controllers\Admin\StudentManageController::class, 'index'])->name('admin.student.list');
 Route::get('/admin/student/details/{id}', [App\Http\Controllers\Admin\StudentManageController::class, 'details']);
 Route::post('/admin/student/details/{id}', [App\Http\Controllers\Admin\StudentManageController::class, 'detailsverified']);
-
-
 Route::get('/admin/user-first-booking/alert/{id}', [App\Http\Controllers\Admin\StudentManageController::class, 'userFristBookingAlert']);
 Route::get('/admin/user-second-booking/alert/{id}', [App\Http\Controllers\Admin\StudentManageController::class, 'userSecondBookingAlert']);
-
 // agents
 Route::get('/admin/agent/list', [App\Http\Controllers\Admin\StudentManageController::class, 'agentindex'])->name('admin.agentindex.list');
 Route::get('/admin/agent/create', [App\Http\Controllers\Admin\StudentManageController::class, 'agentadd'])->name('admin.agentadd.list');
-
 Route::post('/admin/agent/create', [App\Http\Controllers\Admin\StudentManageController::class, 'agentstore'])->name('admin.agentadd.list');
 Route::get('/admin/agent/edit/{id}', [App\Http\Controllers\Admin\StudentManageController::class, 'agentedit']);
 Route::post('/admin/agent/update', [App\Http\Controllers\Admin\StudentManageController::class, 'agentupdate'])->name('admin.agentadd.update');
 Route::post('/admin/agent/passwordupdate', [App\Http\Controllers\Admin\StudentManageController::class, 'agentupdatePassword'])->name('admin.agentupdatePassword.update');
-
 Route::get('/admin/agent/details/{id}', [App\Http\Controllers\Admin\StudentManageController::class, 'agentdetails']);
-
 //paid candidate
 Route::get('/admin/deleted-exambooking/index', [App\Http\Controllers\Admin\PaidCandidateController::class, 'deletedexambooking']);
-
 Route::get('admin/deleted-exambooking/delete-Permanetly/{id}', [App\Http\Controllers\Admin\PaidCandidateController::class, 'deletedexambookingPermanetly']);
-
-
 Route::get('/admin/unpaid-candidate/index', [App\Http\Controllers\Admin\PaidCandidateController::class, 'unpaid']);
-
 Route::get('/admin/paid-candidate/index', [App\Http\Controllers\Admin\PaidCandidateController::class, 'index']);
-
 Route::get('/admin/unverifiedcandidate/index', [App\Http\Controllers\Admin\PaidCandidateController::class, 'unverifiedcandidate']);
 
 
@@ -820,14 +672,11 @@ Route::get('/admin/unverifiedcandidate/index', [App\Http\Controllers\Admin\PaidC
 
 
 // receive payment
-
 Route::get('/admin/payment/receive', [App\Http\Controllers\Admin\PaymentController::class, 'receiveindex'])->name('admin.receiveindex.list');
 Route::get('/admin/payment/pay', [App\Http\Controllers\Admin\PaymentController::class, 'payindex'])->name('admin.payindex.list');
 // mail send/notify
 Route::get('/admin/user/notify/{id}', [App\Http\Controllers\Admin\MailSendController::class, 'create']);
 Route::post('/admin/user/notify/{id}', [App\Http\Controllers\Admin\MailSendController::class, 'store']);
-
-
 Route::get('/admin/admin-user/create', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('admin.adminuser.create');
 Route::post('/admin/admin-user/create', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.adminuser.create');
 Route::get('/admin/admin-user/index', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.adminuser.index');
@@ -1314,6 +1163,18 @@ Route::get('admin/functionalskills-candidate-result-send/{id}', [App\Http\Contro
 
 
 
+Route::get('admin/all-refunded-candidates', [App\Http\Controllers\Admin\AboutUsController::class, 'refundedCandidates']);
+Route::get('admin/all-withdrawn-candidates', [App\Http\Controllers\Admin\AboutUsController::class, 'withdrawnCandidates']);
+
+Route::get('admin/all-series-candidates', [App\Http\Controllers\Admin\AboutUsController::class, 'neaCandidates'])->name('admin.allseries.candiates');
+Route::post('admin/all-series-candidates', [App\Http\Controllers\Admin\AboutUsController::class, 'neaCandidatesSearch'])->name('admin.allseries.candiates');
+
+Route::get('admin/examseries-wise/candidates/{id}', [App\Http\Controllers\Admin\AboutUsController::class, 'examSerieswiseCandidates'])->name('admin.examseries-wise.candidates');
+
+
+
+
+
 Route::get('admin/exam-booking/isrefunded/{id}', [App\Http\Controllers\Admin\AboutUsController::class, 'isrefunded']);
 Route::get('admin/exam-booking/withdrawn/{id}', [App\Http\Controllers\Admin\AboutUsController::class, 'iswithdrawn']);
 
@@ -1579,6 +1440,7 @@ Route::post('/agent/notification', [App\Http\Controllers\Frontend\AgentControlle
 
 Route::get('/add/coupon/insert', [App\Http\Controllers\Frontend\CouponUsedController::class, 'couponInsert']);
 
+Route::get('/get/cancel-coupon/{id}', [App\Http\Controllers\Frontend\CouponUsedController::class, 'couponCancel']);
 // next
 
 Route::post('/admin-add/coupon/insert', [App\Http\Controllers\Admin\AboutUsController::class, 'couponInsert']);

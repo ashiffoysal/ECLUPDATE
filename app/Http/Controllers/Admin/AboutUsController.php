@@ -80,8 +80,8 @@ class AboutUsController extends Controller
     }
     
     public function forchecking(){
-          $alldata=ExamRequest::orderBy('id','DESC')->where('is_completed_from',1)->where('is_deleted',1)->where('is_paid',1)->where('main_exam_type','A Level')->orwhere('main_exam_type','GCSE')->where('is_deleted',1)->where('is_paid',1)->orwhere('main_exam_type','IGCSE')->where('is_deleted',1)->where('is_paid',1)->orwhere('main_exam_type','AS Level')->where('is_deleted',1)->where('is_paid',1)->get();
-    return view('backend.forcheck.index',compact('alldata'));
+        $alldata=ExamRequest::orderBy('id','DESC')->where('is_completed_from',1)->where('is_deleted',1)->where('is_paid',1)->where('main_exam_type','A Level')->orwhere('main_exam_type','GCSE')->where('is_deleted',1)->where('is_paid',1)->orwhere('main_exam_type','IGCSE')->where('is_deleted',1)->where('is_paid',1)->orwhere('main_exam_type','AS Level')->where('is_deleted',1)->where('is_paid',1)->get();
+        return view('backend.forcheck.index',compact('alldata'));
     }
     
     
@@ -2898,9 +2898,82 @@ $allUser = DB::table('supports_inquiry')
              return response('faild');
         }
         
-        
-    
     }
     
+
+
+    public function refundedCandidates(){
+        $alldata=ExamRequest::orderBy('id','DESC')->where('is_refunded',1)->where('is_completed_from',1)->where('is_deleted',1)->where('is_apps_booking',0)->select(['id','first_payment_alert','first_payment_date','second_payment_alert','second_payment_date','main_exam_type','booking_id','first_name','middle_name','last_name','email','phone','is_seen','is_confirm_booking','is_refunded','Candidate_number','is_withdrawn','created_at','payment_option','is_need_pay_sp_fee','enable_pay','is_paid','exam_series','notes'])->limit(1500)->get();
+        return view('backend.refunded.index',compact('alldata'));
+    }
+
+    // 
+
+    public function withdrawnCandidates(){
+        $alldata=ExamRequest::orderBy('id','DESC')->where('is_withdrawn',1)->where('is_completed_from',1)->where('is_deleted',1)->where('is_apps_booking',0)->select(['id','first_payment_alert','first_payment_date','second_payment_alert','second_payment_date','main_exam_type','booking_id','first_name','middle_name','last_name','email','phone','is_seen','is_confirm_booking','is_refunded','Candidate_number','is_withdrawn','created_at','payment_option','is_need_pay_sp_fee','enable_pay','is_paid','exam_series','notes'])->limit(1500)->get();
+        return view('backend.withdrawn.index',compact('alldata'));
+    }
+
+    // 
+
+    public function neaCandidates(){
+        
+        $alldata = ExamRequest::orderBy('id', 'DESC')
+        ->where('is_completed_from', 1)
+        ->where('exam_series', 18)
+        ->where('is_deleted', 1)
+        ->where('is_paid', 1)
+        ->where(function ($q) {
+            $q->where('main_exam_type', 'A Level')
+            ->orWhere('main_exam_type', 'GCSE')
+            ->orWhere('main_exam_type', 'IGCSE')
+            ->orWhere('main_exam_type', 'AS Level');
+        })
+        
+        ->get();
+
+        $examTypes = ['A Level', 'AS Level', 'GCSE', 'IGCSE'];
+        $allSeries=DB::table('examessuedates')->where('is_active',1)->where('is_deleted',0)->orderBy('id','DESC')->get();
+        // $alldata=ExamRequest::orderBy('id','DESC')->where('is_completed_from',1)->where('exam_series',18)->where('is_deleted',1)->where('is_paid',1)->where('main_exam_type','A Level')->orwhere('main_exam_type','GCSE')->where('is_deleted',1)->where('is_paid',1)->orwhere('main_exam_type','IGCSE')->where('is_deleted',1)->where('is_paid',1)->orwhere('main_exam_type','AS Level')->where('is_deleted',1)->where('is_paid',1)->limit(100)->get();
+        return view('backend.nonexamassessment.index',compact('alldata','allSeries','examTypes'));
+    }
+
+    public function neaCandidatesSearch(Request $request){
+            $query = ExamRequest::orderBy('id', 'DESC')
+        ->where('is_completed_from', 1)
+        ->where('is_deleted', 1)
+        ->where('is_paid', 1);
+
+    // ✅ Filter by series if selected
+    if ($request->filled('series')) {
+        $query->where('exam_series', $request->series);
+    }
+
+    // ✅ Filter by exam type if selected
+    if ($request->filled('exam_type')) {
+        $query->where('main_exam_type', $request->exam_type);
+    } else {
+        // If no exam type is selected, include all 4 main types
+        $query->where(function ($q) {
+            $q->where('main_exam_type', 'A Level')
+              ->orWhere('main_exam_type', 'GCSE')
+              ->orWhere('main_exam_type', 'IGCSE')
+              ->orWhere('main_exam_type', 'AS Level');
+        });
+    }
+
+    $alldata = $query->get();
+
+    // For dropdowns
+        $allSeries=DB::table('examessuedates')->where('is_active',1)->where('is_deleted',0)->orderBy('id','DESC')->get();
+        $examTypes = ['A Level', 'AS Level', 'GCSE', 'IGCSE'];
+        return view('backend.nonexamassessment.index',compact('alldata','allSeries','examTypes'));
+    }
+
+    public function examSerieswiseCandidates($id){
+        $series_id=$id;
+        return view('backend.serieswisepaidcandidates.index',compact('series_id'));
+    }
+
 
 }

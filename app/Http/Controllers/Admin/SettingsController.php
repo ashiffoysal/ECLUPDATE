@@ -21,7 +21,7 @@ class SettingsController extends Controller
     // company Information
     public function companyInformation()
     {
-        $edit = CompanyInformation::select(['id', 'company_name', 'company_motto', 'email', 'mobile', 'telephone', 'address', 'google_map', 'logo', 'favicon'])->first();
+        $edit = CompanyInformation::select(['id','company_name','company_motto','email', 'mobile', 'telephone', 'address', 'google_map', 'logo', 'favicon'])->first();
         return view('backend.settings.companyInformation', compact('edit'));
     }
     // company Information Update

@@ -142,191 +142,243 @@ max-width: 80%;
                 <!-- Start Multi-Step Form Contents-->
                 <form id="multiStepForm" action="{{ url('/exam-booking-aslevel') }}" method="post" enctype="multipart/form-data">
                     <!-- Start Step 1: Student Info -->
-                <div class="form-step active">
-                  <div class="single_form_parent">
-                    <div class="single_form_step single_form_column3">
-                      @csrf
-                      <input type="hidden" id="booking_id"  name="booking_id" value="{{ $bookingId }}" />
-                      <input type="hidden" id="user_id"  name="user_id" value="{{ Auth::user()->id }}" />
-                      <input type="hidden" id="main_exam_type" name="main_exam_type" value="AS Level"/>
-                      <label for="id1">First Name<span>*</span></label>
-                      <input type="text" id="id1" name="first_name" placeholder="Please Enter First name" required value="{{ Auth::user()->name }}">
-                    </div>
-                    <div class="single_form_step single_form_column3">
-                      <label for="id2">Middle Name</label>
-                      <input type="text" id="id2" name="middle_name" placeholder="Please Enter Middle name" value="{{ Auth::user()->middle_name }}">
-                    </div>
-                    <div class="single_form_step single_form_column3">
-                      <label for="id3">Last Name<span>*</span></label>
-                      <input type="text" id="id3" name="last_name" placeholder="Please Enter Last name" required value="{{ Auth::user()->last_name }}">
-                    </div>
-                  </div>
-                  <div class="single_form_parent">
-                    <div class="single_form_step single_form_column2">
-                      <label for="id4">Email<span>*</span></label>
-                      <input type="text" name="email" id="id4" placeholder="Please Enter Mail" required value="{{ Auth::user()->email }}">
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="flag1">Phone<span>*</span></label>
-                      <div class="phone-input flag_input_default">
-                        <div class="flag-select">
-                            <img id="flag-icon" src="https://flagcdn.com/w320/gb.png" alt="Country Flag" class="flag-icon">
-                                <select id="country-code" class="country-code">
-                                    <option value="+44" data-flag="https://flagcdn.com/w320/gb.png" selected="">+44 (UK)</option>
-                                    <option value="+1" data-flag="https://flagcdn.com/w320/us.png">+1 (USA)</option>
-                                    <option value="+91" data-flag="https://flagcdn.com/w320/it.png">+39 (Italy)</option>
-                                </select>
-                            </div>
-                            <input type="text" placeholder="Your Number" name="phone" class="phone-number" required value="{{ Auth::user()->phone }}">
-                        </div>
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="id5">Address Line 1<span>*</span></label>
-                      <input type="text" id="id5" placeholder="Please Enter Address Line 1" name="address_line_1" required value="{{ Auth::user()->address }}">
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="id6">Address Line 2<span>*</span></label>
-                      <input type="text" id="id6" placeholder="Please Enter Address Line 2" name="address_line_2" value="{{ Auth::user()->address_line_two }}">
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="id7">City<span>*</span></label>
-                      <input type="text" id="id7" placeholder="Please Enter City" name="city" required value="{{ Auth::user()->city }}">
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="id8">Post Code<span>*</span></label>
-                      <input type="text" id="id8" placeholder="Please Enter Post Code" name="postcode" required value="{{ Auth::user()->zip }}">
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="flag2">Emergency Phone<span>*</span></label>
-                      <div class="phone-input flag_input_default">
-                        <div class="flag-select">
-                            <img id="flag-icon" src="https://flagcdn.com/w320/gb.png" alt="Country Flag" class="flag-icon">
-                                <select id="country-code" class="country-code">
-                                    <option value="+44" data-flag="https://flagcdn.com/w320/gb.png" selected="">+44 (UK)</option>
-                                    <option value="+1" data-flag="https://flagcdn.com/w320/us.png">+1 (USA)</option>
-                                    <option value="+91" data-flag="https://flagcdn.com/w320/it.png">+39 (Italy)</option>
-                                </select>
-                            </div>
-                            <input type="text" placeholder="Your Number" class="phone-number" name="emergency_contact_number" required value="{{ Auth::user()->emergency_contact_number }}">
-                        </div>
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <label for="id9">Date of Birth<span>*</span></label>
-                      <input type="text" id="id9" placeholder="Please Enter Date" name="date_of_birth" required>
-                    </div>
-                  </div>
-                  <div class="single_form_parent">
-                    <div class="single_form_column2 single_form_p">
-                      <p>Gender <span>*</span></p>
-                      <div class="form_step1_radio">
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id10" name="gender" required checked value="Male">
-                          <label for="id10">Male</label>
-                        </div>
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id11" name="gender" required value="Female">
-                          <label for="id11">Female</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="single_form_parent">
-                    <div class="single_form_step single_form_column2">
-                      <div class="single_form_step_title">
-                        <p>Has the candidate sat exams with us previously?</p>
-                        <p><span>This will be on Previous Timetables and Results Information</span></p>
-                      </div>
-                      <div class="form_step1_radio mb-4">
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id12" name="has_a_candidate" value="no" checked>
-                          <label for="id12">NO</label>
-                        </div>
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id13" name="has_a_candidate" 
-                          value="yes">
-                          <label for="id13">YES</label>
-                        </div>
-                      </div>
-                      <div class="form_step_condition" style="display: none">
-                            <label for="id14">Exams Candidate Number<span>*</span></label>
-                            <input type="text" id="id14" name="has_a_candidate_number" placeholder="Please Enter Exams Candidate Number" required>                                    
-                        </div>
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <div class="single_form_step_title">
-                        <p>Do you have a UCI Number ( 13 digits )?</p>
-                        <p><span>This will be on Previous Timetables and Results Information</span> <a type="button" data-toggle="modal" data-target="#exampleModalCenter">FAQs</a></p>
-                      </div>
-                      <div class="form_step1_radio mb-4">
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id15" name="uci" value="no" checked>
-                          <label for="id15">NO</label>
-                        </div>
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id16" name="uci" value="yes">
-                          <label for="id16">YES</label>
-                        </div>
-                      </div>
-                      <div class="form_step_condition" style="display: none">
-                          <label for="id17">UCI Number ( 13 digits )<span>*</span></label>
-                          <input type="text" id="id17" placeholder="Please Enter UCI Number ( 13 digits )" name="uci_number" required>
-                      </div>
-                    </div>
-                    <div class="single_form_step single_form_column2">
-                      <div class="single_form_step_title">
-                        <p>Do you have a ULN Number ( 10 digits )?</p>
-                        <p><span>This will be on Previous Timetables and Results Information</span><a  type="button" data-toggle="modal" data-target="#exampleModalCentertwo">FAQs</a></p>
-                      </div>
-                      <div class="form_step1_radio mb-4">
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id18" name="uln"  value="no" checked>
-                          <label for="id18">NO</label>
-                        </div>
-                        <div class="form_step1_radio_single">
-                          <input type="radio" id="id19" name="uln"  value="yes">
-                          <label for="id19">YES</label>
-                        </div>
-                      </div>
-                      <div class="form_step_condition">
-                          <label for="id20t">ULN Number ( 10 digits )<span>*</span></label>
-                          <input type="text" name="uln_number" id="id20t" placeholder="Please Enter ULN Number ( 10 digits )" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="single_form_parent">
-                      <div class="single_form_step single_form_column2">
-                          <label for="real-file-1">Passport / Driving license<span>*</span></label>
-                          <div class="form_file_upload_design">
-                              <input type="file" id="real-file-1" class="real-file" name="fileUpload" hidden="hidden"  accept="image/jpeg,image/jpg,image/png,application/pdf" required />
-                              <button type="button" class="custom-button">
-                                  <p class="custom-text">PDF or image file<br>
-                                      <span>max size: 5MB</span>
-                                      <a>Choose File</a>
-                                  </p>
-                              </button>
-                          </div>
-                      </div>
-                      <div class="single_form_step single_form_column2">
-                          <label for="real-file-2">Own Recent Photo<span>*</span></label>
-                          <div class="form_file_upload_design">
-                              <input type="file" name="thumbnail_img" id="real-file-2" class="real-file" hidden="hidden"  accept="image/jpeg,image/jpg,image/png,application/pdf" required/>
-                              <button type="button" class="custom-button">
-                                  <p class="custom-text">PDF or image file<br>
-                                      <span>max size: 5MB</span>
-                                      <a>Choose File</a>
-                                  </p>
-                              </button>
-                          </div>
-                      </div>
-                  </div>
+  <div class="form-step active">
+                                    <div class="single_form_parent">
+                                        <div class="single_form_step single_form_column3">
+                                            @csrf
+                                            <input type="hidden" id="booking_id" name="booking_id"
+                                                value="{{ $bookingId }}" />
+                                            <input type="hidden" id="user_id" name="user_id"
+                                                value="{{ Auth::user()->id }}" />
+                                            <input type="hidden" id="main_exam_type" name="main_exam_type"
+                                                value="AS Level" />
+                                            <label for="id1">First Name<span>*</span></label>
+                                            <input type="text" id="id1" name="first_name"
+                                                placeholder="Please Enter First name" required
+                                                value="{{ Auth::user()->name }}">
+                                        </div>
+                                        <div class="single_form_step single_form_column3">
+                                            <label for="id2">Middle Name</label>
+                                            <input type="text" id="id2" name="middle_name"
+                                                placeholder="Please Enter Middle name"
+                                                value="{{ Auth::user()->middle_name }}">
+                                        </div>
+                                        <div class="single_form_step single_form_column3">
+                                            <label for="id3">Last Name<span>*</span></label>
+                                            <input type="text" id="id3" name="last_name"
+                                                placeholder="Please Enter Last name" required
+                                                value="{{ Auth::user()->last_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="single_form_parent">
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id4">Email<span>*</span></label>
+                                            <input type="text" name="email" id="id4"
+                                                placeholder="Please Enter Mail" required
+                                                value="{{ Auth::user()->email }}">
+                                        </div>
+                                          <div class="single_form_step single_form_column2">
+                                            <label for="id6">Emergency Email</label>
+                                            <input type="text" id="id6"
+                                                placeholder="Please EnterEmergency Email" name="address_line_2"
+                                                value="{{ Auth::user()->address_line_two }}">
+                                        </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="flag1">Phone<span>*</span></label>
+                                            <div class="phone-input flag_input_default">
+                                                <div class="flag-select">
+                                                    <img id="flag-icon" src="https://flagcdn.com/w320/gb.png"
+                                                        alt="Country Flag" class="flag-icon">
+                                                    <select id="country-code" class="country-code">
+                                                        <option value="+44" data-flag="https://flagcdn.com/w320/gb.png"
+                                                            selected="">+44 (UK)</option>
+                                                        <option value="+1"
+                                                            data-flag="https://flagcdn.com/w320/us.png">+1 (USA)</option>
+                                                        <option value="+91"
+                                                            data-flag="https://flagcdn.com/w320/it.png">+39 (Italy)
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <input type="text" placeholder="Your Number" name="phone"
+                                                    class="phone-number" required value="{{ Auth::user()->phone }}">
+                                            </div>
+                                        </div>
+                                         <div class="single_form_step single_form_column2">
+                                            <label for="flag2">Emergency Phone<span>*</span></label>
+                                            <div class="phone-input flag_input_default">
+                                                <div class="flag-select">
+                                                    <img id="flag-icon" src="https://flagcdn.com/w320/gb.png"
+                                                        alt="Country Flag" class="flag-icon">
+                                                    <select id="country-code" class="country-code">
+                                                        <option value="+44" data-flag="https://flagcdn.com/w320/gb.png"
+                                                            selected="">+44 (UK)</option>
+                                                        <option value="+1"
+                                                            data-flag="https://flagcdn.com/w320/us.png">+1 (USA)</option>
+                                                        <option value="+91"
+                                                            data-flag="https://flagcdn.com/w320/it.png">+39 (Italy)
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <input type="text" placeholder="Your Number" class="phone-number"
+                                                    name="emergency_contact_number" required
+                                                    value="{{ Auth::user()->emergency_contact_number }}">
+                                            </div>
+                                        </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id5">Address<span>*</span></label>
+                                            <input type="text" id="id5"
+                                                placeholder="Please Enter Address Line 1" name="address_line_1" required
+                                                value="{{ Auth::user()->address }}">
+                                        </div>
+                                      
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id7">City<span>*</span></label>
+                                            <input type="text" id="id7" placeholder="Please Enter City"
+                                                name="city" required value="{{ Auth::user()->city }}">
+                                        </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id8">Post Code<span>*</span></label>
+                                            <input type="text" id="id8" placeholder="Please Enter Post Code"
+                                                name="postcode" required value="{{ Auth::user()->zip }}">
+                                        </div>
+                                       
+                                        <div class="single_form_step single_form_column2">
+                                            <label for="id9">Date of Birth<span>*</span></label>
+                                            <input type="text" id="id9" placeholder="Please Enter Date"
+                                                name="date_of_birth" required>
+                                        </div>
+                                    </div>
+                                    <div class="single_form_parent">
+                                        <div class="single_form_column2 single_form_p">
+                                            <p>Gender <span>*</span></p>
+                                            <div class="form_step1_radio">
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id10" name="gender" required checked
+                                                        value="Male">
+                                                    <label for="id10">Male</label>
+                                                </div>
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id11" name="gender" required
+                                                        value="Female">
+                                                    <label for="id11">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="single_form_parent">
+                                        <div class="single_form_step single_form_column2">
+                                            <div class="single_form_step_title">
+                                                <p>Has the candidate sat exams with us previously?</p>
+                                                <p><span>This will be on Previous Timetables and Results Information</span>
+                                                </p>
+                                            </div>
+                                            <div class="form_step1_radio mb-4">
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id12" name="has_a_candidate"
+                                                        value="no" checked>
+                                                    <label for="id12">NO</label>
+                                                </div>
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id13" name="has_a_candidate"
+                                                        value="yes">
+                                                    <label for="id13">YES</label>
+                                                </div>
+                                            </div>
+                                            <div class="form_step_condition" style="display: none">
+                                                <label for="id14">Exams Candidate Number<span>*</span></label>
+                                                <input type="text" id="id14" name="has_a_candidate_number"
+                                                    placeholder="Please Enter Exams Candidate Number" required>
+                                            </div>
+                                        </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <div class="single_form_step_title">
+                                                <p>Do you have a UCI Number ( 13 digits )?</p>
+                                                <p><span>This will be on Previous Timetables and Results Information</span>
+                                                    <a type="button" data-toggle="modal"
+                                                        data-target="#exampleModalCenter">FAQs</a></p>
+                                            </div>
+                                            <div class="form_step1_radio mb-4">
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id15" name="uci" value="no"
+                                                        checked>
+                                                    <label for="id15">NO</label>
+                                                </div>
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id16" name="uci" value="yes">
+                                                    <label for="id16">YES</label>
+                                                </div>
+                                            </div>
+                                            <div class="form_step_condition" style="display: none">
+                                                <label for="id17">UCI Number ( 13 digits )<span>*</span></label>
+                                                <input type="text" id="id17"
+                                                    placeholder="Please Enter UCI Number ( 13 digits )" name="uci_number"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="single_form_step single_form_column2">
+                                            <div class="single_form_step_title">
+                                                <p>Do you have a ULN Number ( 10 digits )?</p>
+                                                <p><span>This will be on Previous Timetables and Results
+                                                        Information</span><a type="button" data-toggle="modal"
+                                                        data-target="#exampleModalCentertwo">FAQs</a></p>
+                                            </div>
+                                            <div class="form_step1_radio mb-4">
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id18" name="uln" value="no"
+                                                        checked>
+                                                    <label for="id18">NO</label>
+                                                </div>
+                                                <div class="form_step1_radio_single">
+                                                    <input type="radio" id="id19" name="uln" value="yes">
+                                                    <label for="id19">YES</label>
+                                                </div>
+                                            </div>
+                                            <div class="form_step_condition">
+                                                <label for="id20t">ULN Number ( 10 digits )<span>*</span></label>
+                                                <input type="text" id="id20t" name="uln_number"
+                                                    placeholder="Please Enter ULN Number ( 10 digits )" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
 
-                  <p class="error-message" style="display: none; color: red;">
-                      Please fill out all required fields before continuing.
-                  </p>
-                  <div class="form_single_step_btns">
-                    <button type="button" class="btn_style next-btn">Continue <span><img src="{{ asset('frontend/updatedesign') }}/assets/images/home/arrow-right.png" alt=""></span></button>
-                  </div>
-                </div>
+                                    <div class="single_form_parent">
+                                      <div class="single_form_step single_form_column2">
+                                          <label for="real-file-1">Passport / Driving license<span>*</span></label>
+                                          <div class="form_file_upload_design">
+                                              <input type="file"  name="fileUpload" id="real-file-1" class="real-file" hidden="hidden" required   accept="image/jpeg,image/jpg,image/png,application/pdf"/>
+                                              <button type="button" class="custom-button">
+                                                  <p class="custom-text">PDF or image file<br>
+                                                      <span>max size: 5MB</span>
+                                                      <a>Choose File</a>
+                                                  </p>
+                                              </button>
+                                          </div>
+                                      </div>
+                                      <div class="single_form_step single_form_column2">
+                                          <label for="real-file-2">Own Recent Photo<span>*</span></label>
+                                          <div class="form_file_upload_design">
+                                              <input type="file" id="real-file-2" name="thumbnail_img" class="real-file" hidden="hidden" required  accept="image/jpeg,image/jpg,image/png,application/pdf"/>
+                                              <button type="button" class="custom-button">
+                                                  <p class="custom-text">PDF or image file<br>
+                                                      <span>max size: 5MB</span>
+                                                      <a>Choose File</a>
+                                                  </p>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  
+                                    <p class="error-message" style="display: none; color: red;">
+                                      <!-- Please Field your Unfield input -->
+                                  </p>
+                                    <div class="form_single_step_btns">
+                                        <button type="button" class="btn_style next-btn">Continue <span><img
+                                                    src="{{ asset('frontend/updatedesign') }}/assets/images/home/arrow-right.png"
+                                                    alt=""></span></button>
+                                    </div>
+                                </div>
                     <!-- End Step 1: Student Info -->
 
                 <!-- Start Step 2: Exam Details -->

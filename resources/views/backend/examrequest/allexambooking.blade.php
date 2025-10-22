@@ -120,6 +120,10 @@ div.dataTables_wrapper div.dataTables_filter input {
                                              
                                              @endif
                                              <span class="badge badge-danger">{{  $data->Candidate_number}}</span>
+                                           
+                                                    @if($data->is_mock_fees_paid==1)
+                                                    <span style="color:rgb(45, 0, 247)">Mock Fees Paid.</span><br>
+                                                     @endif
                                             </td>
                                             <td> 
                                             <a style="color:black" href="{{url('admin/exambooking/maindetails/'.$data->id)}}"> {{ $data->main_exam_type }} </a><br>
@@ -136,9 +140,6 @@ div.dataTables_wrapper div.dataTables_filter input {
                                                 @if($data->is_withdrawn==1)
                                                 <span class="badge badge-warning">Withdrawn</span> <br>
                                                 @endif
-                                                
-                                                
-                                                
                                                   <br>
                                                 @if($data->first_payment_alert==1)
                                                 <span class="badge badge-danger">First Payment Alert Send ({{ $data->first_payment_date }})</span> 

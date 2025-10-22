@@ -83,7 +83,7 @@ class FrontendController extends Controller
     
     
     public function ilstallmentrefundpolicy(){
-        return view('frontend.termscondition.ilstallrefund');
+        return view('frontend.ilstallment.ilstalmentprocedure');
     }
     
     // 
@@ -296,7 +296,7 @@ class FrontendController extends Controller
             ]);
             
             $support_id=rand(11111,99999);
-              $insert=DB::table('supports_inquiry')->insert([
+            $insert=DB::table('supports_inquiry')->insert([
                 'name'=>$request->name,
                 'support_id'=>$support_id,
                 'email'=>$request->email,
@@ -331,9 +331,6 @@ class FrontendController extends Controller
                 Alert::error('Faild', 'Message Send Faild');
                 return redirect()->back();
             }
-            
-            
-            
             
         }else{
              Alert::error('Faild', 'Please Enter Valid Number');

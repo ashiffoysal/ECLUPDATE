@@ -108,14 +108,14 @@
 								                             
 								                              <tbody>
 								                                  @php
-								                                    $paidStatus=App\Models\ExamRequest::where('booking_id',$data->booking_id)->select(['is_paid'])->first();
+								                                    $paidStatus=App\Models\ExamRequest::where('booking_id',$data->booking_id)->select(['is_mock_fees_paid'])->first();
 								                                  @endphp
 								                                  <tr>
 								                                      <td>{{ $data->booking_id }}</td>
 								                                      <td>{{ $data->first_name }} {{ $data->middle_name }} {{ $data->last_name }}</td>
 								                                      <td>{{ $data->email }}</td>
 								                                      <td>{{ $data->phone }}</td>
-								                                      <td>@if($paidStatus->is_paid==0) <span class="badge badge-danger">Unpaid</span> @else <span class="badge badge-success">Paid</span>  @endif</td>
+								                                      <td>@if($paidStatus->is_mock_fees_paid==0) <span class="badge badge-danger">Unpaid</span> @else <span class="badge badge-success">Paid</span>  @endif</td>
 								                                      <td>{{ $data->created_at }}</td>
 								                                  </tr>
 								                              	

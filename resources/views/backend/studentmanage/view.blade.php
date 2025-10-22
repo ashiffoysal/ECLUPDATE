@@ -212,7 +212,7 @@ padding: 0rem 1rem;
 											<!--begin::Col-->
 											<div class="col-lg-8 fv-row">
 												<span class="fw-bold fs-6">{{ $data->email }}</span>
-												<span class="badge badge-success">Verified</span>
+												@if($data->is_verified==1)<span class="badge badge-success">Verified </span> @else <span class="badge badge-danger">unverified </span> @endif
 											</div>
 											<!--end::Col-->
 										</div>

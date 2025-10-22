@@ -176,7 +176,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="payment_tab_right_main">
+                                        <div class="payment_tab_right_main active">
                                             <div class="payment_tab_right">
                                                 <div class="payment-section">
                                                     <div class="payment-section-title">
@@ -197,7 +197,7 @@
                                                         </label>
 
                                                     </div>
-                                                    <div class="payment-content card-content">
+                                                    <div class="payment-content card-content active">
                                                         <form action="{{ url('cardpayment-duepayment/session') }}" method="POST">
                                                             <div class="payment_card_contents">
                                                                 <p><img src="{{ asset('frontend/updatedesign') }}/assets/images/payment/alert.png"

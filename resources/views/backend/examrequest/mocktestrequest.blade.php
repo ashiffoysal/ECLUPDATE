@@ -115,7 +115,7 @@ div.dataTables_wrapper div.dataTables_filter input {
                                             <td>{{ $data->email }}</td>
                                             @php
                                                 $myseries=App\Models\Examessuedate::where('id',$data->exam_series)->select(['exam_name'])->first();
-                                                $paidStatus=App\Models\ExamRequest::where('booking_id',$data->booking_id)->select(['is_paid'])->first();
+                                                $paidStatus=App\Models\ExamRequest::where('booking_id',$data->booking_id)->select(['is_mock_fees_paid'])->first();
                                                 
                                             @endphp
                                             
@@ -127,7 +127,7 @@ div.dataTables_wrapper div.dataTables_filter input {
                                                 
                                                <td>
                                                    
-                                                  @if($paidStatus) @if($paidStatus->is_paid==0) <span class="btn-sm btn-warning" style="color:#fff;">unpaid</span>@elseif($paidStatus->is_paid==1) <span class="btn-sm btn-success" style="color:#fff;">paid</span> @endif @endif
+                                                  @if($paidStatus) @if($paidStatus->is_mock_fees_paid==0) <span class="btn-sm btn-warning" style="color:#fff;">unpaid</span>@elseif($paidStatus->is_mock_fees_paid==1) <span class="btn-sm btn-success" style="color:#fff;">paid</span> @endif @endif
                                                    
                                                 </td>
                                                 <td>
