@@ -92,7 +92,10 @@ class UserLoginController extends Controller
         User::where('id', $insert)->update([
             'code' => $code,
         ]);
-        Mail::to($request->email)->send(new UserRegister($code));
+
+
+        
+         Mail::to($request->email)->send(new UserRegister($code));
 
         return redirect('/email/verify/' . $email . '/' . $insert);
     }

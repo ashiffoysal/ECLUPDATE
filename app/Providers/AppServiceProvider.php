@@ -22,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {   
+
+
+
+            $companyInformation = CompanyInformation::first();
+
+    if ($companyInformation) {
+        view()->share('companyInformation', $companyInformation);
+        app()->instance('companyInformation', $companyInformation);
+    }
         
        $allSeen = Wallet::where('amount_type', 'Dabit')
     ->where('is_seen', 0)
@@ -33,12 +42,12 @@ class AppServiceProvider extends ServiceProvider
     ->count();
 
         $allseries=DB::table('examessuedates')->where('is_deleted',0)->orderBy('id','DESC')->get();
-        $companyInformation = CompanyInformation::first();
+
         $seo = Seo::first();
         $social = Social::first();
         $galari = Gallery::where('is_deleted',0)->where('status',1)->orderBy('id','DESC')->limit(9)->get();
         $allcate = Category::where('is_deleted',0)->limit(6)->get();
-        view()->share('companyInformation', $companyInformation);
+      
         view()->share('social', $social);
         view()->share('galari', $galari);
         view()->share('allcate', $allcate);

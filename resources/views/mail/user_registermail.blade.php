@@ -92,7 +92,7 @@
         
         <!-- Header Section -->
         <div class="header">
-            <img src="https://www.examcentrelondon.co.uk/uploads/logo/logo_1662996021.png" alt="ECL Logo">
+            <img src="{{ asset('uploads/logo/'.$companyInformation->logo) }}" alt="ECL Logo">
             <h1>Exam Centre London</h1>
         </div>
         
@@ -112,11 +112,11 @@
         
         <!-- Footer Section -->
         <div class="footer">
-            <p>📞 Phone: 0208 616 2526</p>
-            <p>📧 Email: <a href="mailto:info@examcentrelondon.co.uk">info@examcentrelondon.co.uk</a></p>
-            <p>🌐 <a href="https://www.examcentrelondon.co.uk" target="_blank">www.examcentrelondon.co.uk</a></p>
+            <p>📞 Phone: {{ $companyInformation->mobile }}</p>
+            <p>📧 Email: <a href="mailto:{{ $companyInformation->email }}">{{ $companyInformation->email }}</a></p>
+            <p>🌐 <a href="{{ $companyInformation->website }}" target="_blank">{{ $companyInformation->website }}</a></p>
             <p>&copy; {{ \Carbon\Carbon::now()->format('Y') }}
-                Exam Centre London. All rights reserved.</p>
+                {{ $companyInformation->company_mail_name }}. All rights reserved.</p>
         </div>
 
     </div>
