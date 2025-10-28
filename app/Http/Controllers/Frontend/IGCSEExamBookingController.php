@@ -33,12 +33,12 @@ class IGCSEExamBookingController extends Controller
     }
 
     public function exambookingigcse(){
-        $subjects = Subject::where([
+      $subjects = Subject::where([
             ['exam_type', 'IGCSE'],
-            ['exam_board', 'Cambridge CIE'],
+            ['exam_board', 'Edexcel'],
             ['is_deleted', 0],
             ['is_ac', 1],
-            ['november_cie_availability', 1]
+            ['june_availability', 1]
         ])->get();
         
         $mainData = ExamRequest::where([
@@ -53,7 +53,7 @@ class IGCSEExamBookingController extends Controller
             ['is_deleted', 0]
         ])->get();
         
-        $examBoards = ['Cambridge CIE','Edexcel'];
+        $examBoards = ['Edexcel','Cambridge CIE'];
         $bookingId = Auth::id() . rand(11111, 99999);
         
         return view('frontend.exambooking.igcse', compact('subjects', 'mainData', 'examSeries', 'examBoards','bookingId'));

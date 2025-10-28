@@ -33,7 +33,7 @@ class GCSEExamBookingController extends Controller
     }
 
     public function exambookinggcse(){
-        $dateOfBirthThreshold = Carbon::now()->format('Y-m-d');
+          $dateOfBirthThreshold = Carbon::now()->format('Y-m-d');
         // Fetch subjects for A Level exams with specific criteria
         $subjects = Subject::where([
         ['exam_type', 'GCSE'],

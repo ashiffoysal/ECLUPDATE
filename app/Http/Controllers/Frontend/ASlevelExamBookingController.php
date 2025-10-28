@@ -32,15 +32,16 @@ class ASlevelExamBookingController extends Controller
         $this->middleware('auth');
     }
     public function exambookingaslevel(){
-                    // Calculate the minimum date of birth for eligibility (11 years ago from today)
+
+                  // Calculate the minimum date of birth for eligibility (11 years ago from today)
             $dateOfBirthThreshold = Carbon::now()->format('Y-m-d');
 
             // Fetch subjects for A Level exams with specific criteria
             $subjects = Subject::where([
             ['exam_type', 'AS Level'],
-            ['exam_board', 'Cambridge CIE'],
+            ['exam_board', 'Edexcel'],
             ['is_deleted', 0],
-            ['november_cie_availability', 1],
+            ['june_availability', 1],
             ['is_ac', 1],
             ])->get();
             // Fetch all active series for A Level exams
@@ -54,7 +55,7 @@ class ASlevelExamBookingController extends Controller
             $bookingId = Auth::id() . rand(11111, 99999);
 
             // Define available exam boards
-            $examBoards = ['Cambridge CIE', 'AQA', 'OCR', 'WJEC','Edexcel' ];
+            $examBoards = ['Edexcel','AQA','OCR','Cambridge CIE', 'WJEC' ];
 
             // Return the view with the prepared data
             return view('frontend.exambooking.aslevel', compact(
@@ -64,7 +65,8 @@ class ASlevelExamBookingController extends Controller
             'dateOfBirthThreshold',
             'bookingId'
             ));
-            }
+         
+    }
 
             // alevel Store
             public function exambookingaslevelstore(Request $request){

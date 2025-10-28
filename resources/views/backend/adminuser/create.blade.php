@@ -128,9 +128,7 @@
                             <label class="form-check-label small-muted" for="selectAllGlobal">Select all</label>
                         </div>
                     </div>
-
-                    <hr />
-
+                    <hr/>
                     <div id="permissionsContainer">
 
                         <!-- Category: Dashboard -->
@@ -175,7 +173,6 @@
                                     <label class="form-check-label small-muted" for="cat-candidates-all">All</label>
                                 </div>
                             </div>
-
                             <div class="list-group list-group-flush mt-2" data-category="Candidates">
                                 <label class="list-group-item d-flex gap-2 align-items-start">
                                     <div class="form-check mt-1">

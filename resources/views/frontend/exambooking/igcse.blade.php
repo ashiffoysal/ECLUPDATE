@@ -455,7 +455,7 @@ max-width: 80%;
                                                     <select name="subject[]" onchange="subjectChange(this)"
                                                         id="subject_0" required>
                                                         <option selected disabled>Select</option>
-                                                        <option value="">Select</option>
+                                                       
                                                         @foreach ($subjects as $sub)
                                                             <option value="{{ $sub->id }}">{{ $sub->subject_name }}
                                                             </option>
